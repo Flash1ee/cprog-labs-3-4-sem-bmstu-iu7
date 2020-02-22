@@ -9,7 +9,7 @@ int main(void)
     double perimetr,rightsize;
     printf("Input upsize,downsize,h:\n");
     if (scanf("%lf",&up)!=1||scanf("%lf",&down)!=1||scanf("%lf",&h)!=1||\
-    (h<0)||(down<0)||(up<0)||(down>=up))
+    (h<0)||(down<0)||(up<0)||(down<=up))
     {
         printf("Incorrect input\n");
         return EXIT_FAILURE;
