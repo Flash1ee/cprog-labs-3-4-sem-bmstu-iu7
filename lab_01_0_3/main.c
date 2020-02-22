@@ -6,8 +6,7 @@ int main(void)
     setbuf(stdout, NULL);
     double high, chest_len, mass;
     double normal_weight, index_mass;
-    printf("Input high, chest_len,mass: ");
-    scanf("%lf%lf%lf", &high,&chest_len,&mass);
+    scanf("%lf%lf%lf", &high, &chest_len, &mass);
     normal_weight = high * chest_len / 240;
     high = high / 100;
     index_mass = mass / (high * high);
