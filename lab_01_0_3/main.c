@@ -8,7 +8,7 @@ int main(void)
     double normal_weight, index_mass;
     printf("Input high, chest_len,mass: ");
     if (scanf("%lf", &high) != 1 || scanf("%lf", &chest_len) != 1 || scanf("%lf", &mass) != 1
-        || (high <= 0) || (chest_len <= 0) || (mass <= 0)) 
+        || (high == 0)) 
     {
         printf("Incorrect input");
         return EXIT_FAILURE;
