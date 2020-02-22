@@ -4,10 +4,10 @@
 int main(void)
 {
     setbuf(stdout, NULL);
-    double high, chest_len, mass;
-    double normal_weight, index_mass;
+    float high, chest_len, mass;
+    float normal_weight, index_mass;
     printf("Input high, chest_len,mass: ");
-    if (scanf("%lf", &high) != 1 || scanf("%lf", &chest_len) != 1 || scanf("%lf", &mass) != 1
+    if (scanf("%f", &high) != 1 || scanf("%f", &chest_len) != 1 || scanf("%f", &mass) != 1
         || (high <= 0) || (chest_len < 0) || (mass < 0)) 
     {
         printf("Incorrect input\n");
@@ -16,6 +16,6 @@ int main(void)
     normal_weight = high * chest_len / 240;
     high = high / 100;
     index_mass = mass / (high * high);
-    printf("Normal weight = %lf,Index mass = %lf\n", normal_weight, index_mass);
+    printf("Normal weight = %f,Index mass = %f\n", normal_weight, index_mass);
     return EXIT_SUCCESS;
 }
