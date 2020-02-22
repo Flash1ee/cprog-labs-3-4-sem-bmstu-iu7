@@ -8,9 +8,9 @@ int main(void)
     double normal_weight, index_mass;
     printf("Input high, chest_len,mass: ");
     if (scanf("%lf", &high) != 1 || scanf("%lf", &chest_len) != 1 || scanf("%lf", &mass) != 1
-        || (high == 0)) 
+        || (high <= 0) || (chest_len <= 0) || (mass <= 0)) 
     {
-        printf("Incorrect input");
+        printf("Incorrect input\n");
         return EXIT_FAILURE;
     }
     normal_weight = high * chest_len / 240;
