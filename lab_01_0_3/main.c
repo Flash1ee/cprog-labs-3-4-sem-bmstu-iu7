@@ -16,6 +16,6 @@ int main(void)
     normal_weight = high * chest_len / 240;
     high = high / 100;
     index_mass = mass / (high * high);
-    printf("Normal weight = %.5lf,Index mass = %.5lf\n", normal_weight, index_mass);
+    printf("Normal weight = %lf,Index mass = %lf\n", normal_weight, index_mass);
     return EXIT_SUCCESS;
 }
