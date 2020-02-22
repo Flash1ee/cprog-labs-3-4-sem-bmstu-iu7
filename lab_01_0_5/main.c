@@ -3,13 +3,14 @@
 long int nod(long int a, long int b);
 int main()
 {
-    long int a, b;
+    long int a, b,x;
     if (scanf("%ld%ld", &a, &b) != 2 || (a < 1) || (b < 1)) 
     {
         printf("Incorrect input\n");
         return EXIT_FAILURE;
     }
-    printf("%ld", nod(a, b));
+    x = nod(a, b);
+    printf("%ld", x);
     return EXIT_SUCCESS;
 }
 
