@@ -7,10 +7,10 @@ void print_result(long int res);
 int main(void)
 {
     setbuf(stdout, NULL);
-    long int x1, y1, x2, y2, xA, yA, result;
+    long int x1, y1, x2, y2, xpoint, ypoint, result;
     printf("Input coords x1 y1 x2 y2 of line ");
     printf("and coords point for check xA yA: ");
-    if ((scanf("%ld%ld%ld%ld", &x1, &y1, &x2, &y2) != 4) || scanf("%ld%ld", &xA, &yA) != 2
+    if ((scanf("%ld%ld%ld%ld", &x1, &y1, &x2, &y2) != 4) || scanf("%ld%ld", &xpoint, &ypoint) != 2
         || ((x1 == x2) && (y1 == y2)))
     {
         printf("Invalid input.\n");
@@ -26,7 +26,7 @@ int main(void)
         x2 = tmp_x;
         y2 = tmp_y;
     }
-    result = vector_prod(x2 - x1, y2 - y1, xA - x1, yA - y1);
+    result = vector_prod(x2 - x1, y2 - y1, xpoint - x1, ypoint - y1);
     print_result(result);
     return EXIT_SUCCESS;
 }
