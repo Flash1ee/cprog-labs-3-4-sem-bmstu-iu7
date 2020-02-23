@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 long int vector_prod(long int ax, long int ay, long int bx, long int by);
 void print_result(long int res);
+
 int main(void)
 {
     setbuf(stdout, NULL);
     long int x1, y1, x2, y2, xA, yA, result;
-    printf("Input coords x1 y1 x2 y2 of line and coords point for check xA yA: ");
-    if (scanf("%ld%ld%ld%ld%ld%ld", &x1, &y1, &x2, &y2, &xA, &yA) != 6) {
+    printf("Input coords x1 y1 x2 y2 of line ");
+    printf("and coords point for check xA yA: ");
+    if (scanf("%ld%ld%ld%ld", &x1, &y1, &x2, &y2) != 4 || scanf("%ld%ld", &xA, &yA) != 2) 
+    {
         printf("Invalid input.\n");
         return EXIT_FAILURE;
     }
@@ -24,21 +28,27 @@ int main(void)
     print_result(result);
     return EXIT_SUCCESS;
 }
-long int vector_prod(long int ax, long int ay, long int bx, long int by)
+
+long int vector_prod(long int ax, long int ay,
+    long int bx, long int by)
 {
     long int s;
     s = (ax * by - bx * ay);
     return s;
 }
+
 void print_result(long int result)
 {
-    if (result > 0) {
+    if (result > 0) 
+    {
         printf("Upper line => %d", 0);
     }
-    else if (result == 0) {
+    else if (result == 0) 
+    {
         printf("On line => %d", 1);
     }
-    else {
+    else 
+    {
         printf("Down of line => %d", 2);
     }
 }
