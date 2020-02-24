@@ -40,8 +40,9 @@ int main(void)
     {
         relative_error = fabs((func_res - sum) / func_res);
     }
-    printf("Sum of row with eps {%.6lf} = %.6lf\n", eps, sum);
-    printf("Absolute error = %.6lf\nRelative error = .6%lf\n", abs_error, relative_error);
+    printf("Sum of row with eps = %.6lf\n", sum);
+    printf("Absolute error = %.6lf\n", abs_error);
+    printf("Relative error = .6%lf\n", relative_error);
 
     return EXIT_SUCCESS;
 }
