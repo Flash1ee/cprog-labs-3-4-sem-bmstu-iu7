@@ -15,7 +15,7 @@ int main(void)
     long int k = 0;
     double sum = 0, func_res, abs_error, relative_error;
 
-    if (scanf("%lf%lf", &x, &eps) != 2 || eps <= 0 || (x > 1) || (x < -1) || (x == 0))
+    if (scanf("%lf%lf", &x, &eps) != 2 || eps <= 0 || (x > 1) || (x < -1))
     {
         printf("Incorrect input\n");
         return EXIT_FAILURE;
@@ -28,11 +28,18 @@ int main(void)
         sum = sum + cur_x;
         cur_x = cur_x * (-1) * (x * x) * (2 * k - 1) / (2 * k + 1);
     }
-
+    
+    
     func_res = atan(x);
     abs_error = fabs(func_res - sum);
+    if (func_res == 0 && sum == 0)
+    {
+    relative_error = 0;
+    }
+    else
+    {
     relative_error = fabs((func_res - sum) / func_res);
-
+    }
     printf("Sum of row with eps {%lf} = %lf\n", eps, sum);
     printf("Absolute error = %lf\nRelative error = %lf\n", abs_error, relative_error);
 
