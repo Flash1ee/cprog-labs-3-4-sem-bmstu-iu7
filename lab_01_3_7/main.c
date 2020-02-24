@@ -15,7 +15,7 @@ int main(void)
     long int k = 0;
     double sum = 0, func_res, abs_error, relative_error;
 
-    if (scanf("%lf%lf", &x, &eps) != 2 || eps <= 0 || (x > 1) || (x < -1))
+    if (scanf("%lf%lf", &x, &eps) != 2 || eps <= 0 || (x > 1) || (x < -1) || (x == 0))
     {
         printf("Incorrect input\n");
         return EXIT_FAILURE;
