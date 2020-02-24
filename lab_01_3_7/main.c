@@ -14,6 +14,7 @@ int main(void)
     double x, eps, cur_x;
     long int k = 0;
     double sum = 0, func_res, abs_error, relative_error;
+    printf("Input x, eps\n");
 
     if (scanf("%lf%lf", &x, &eps) != 2 || eps <= 0 || (x >= 1) || (x <= -1))
     {
