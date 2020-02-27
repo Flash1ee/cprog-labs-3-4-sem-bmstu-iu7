@@ -1,2 +1,0 @@
-Input h, upsize,downsize:
-Perimetr of figure = 7.23607
