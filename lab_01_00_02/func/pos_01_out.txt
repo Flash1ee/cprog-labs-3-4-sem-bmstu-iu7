@@ -1,3 +1,2 @@
-Input upsize,downsize,h:1 1 1
+Input upsize, downsize, h:
 Perimetr of figure = 4.00000
-
