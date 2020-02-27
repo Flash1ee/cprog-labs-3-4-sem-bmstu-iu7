@@ -1,3 +1,6 @@
+/*Определить взаимное расположение точки и прямой: лежит выше прямой, на прямой, под
+прямой.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,11 +12,11 @@ int main(void)
     setbuf(stdout, NULL);
     long int x1, y1, x2, y2, xpoint, ypoint, result;
     printf("Input coords x1 y1 x2 y2 of line ");
-    printf("and coords point for check xA yA: ");
+    printf("and coords point for check xA yA:\n");
     if ((scanf("%ld%ld%ld%ld", &x1, &y1, &x2, &y2) != 4) || scanf("%ld%ld", &xpoint, &ypoint) != 2
         || ((x1 == x2) && (y1 == y2)))
     {
-        printf("Invalid input.\n");
+        printf("Invalid input\n");
         return EXIT_FAILURE;
     }
     if (x2 < x1)
