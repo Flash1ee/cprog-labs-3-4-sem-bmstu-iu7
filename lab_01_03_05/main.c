@@ -5,7 +5,7 @@ int main()
 {
     setbuf(stdout,NULL);
     long int a, b, x;
-    printf("Input two nubmers: ");
+    printf("Input two numbers:\n");
     if (scanf("%ld%ld", &a, &b) != 2 || (a < 1) || (b < 1)) 
     {
         printf("Incorrect input\n");
