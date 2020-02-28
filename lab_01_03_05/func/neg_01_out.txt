@@ -1,2 +1,0 @@
-Input two numbers:
-Incorrect input

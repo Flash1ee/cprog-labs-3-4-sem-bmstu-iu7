@@ -1,1 +1,0 @@
-Input high, chest_len,mass: Incorrect input

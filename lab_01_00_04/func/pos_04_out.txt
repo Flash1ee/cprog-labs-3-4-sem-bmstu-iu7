@@ -1,2 +1,0 @@
-Input counts of money:
-Count of bottles with water 3
