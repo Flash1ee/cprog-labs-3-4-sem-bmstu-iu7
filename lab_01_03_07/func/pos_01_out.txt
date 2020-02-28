@@ -1,4 +1,4 @@
 Input x, eps
 Sum of row with eps = 0.458333
-Absolute error = 0.005314
-Relative error = 0.011462
+Absolute diff = 0.005314
+Relative diff = 0.011462

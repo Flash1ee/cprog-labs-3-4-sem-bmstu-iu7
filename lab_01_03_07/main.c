@@ -13,8 +13,8 @@ int main(void)
 {
     setbuf(stdout,NULL);	
     double x, eps, cur_x;
-    long int k = 0;
-    double sum = 0, func_res, abs_error, relative_error;
+    long k = 0;
+    double sum = 0, func_res, abs_diff, relative_diff;
     printf("Input x, eps\n");
 
     if (scanf("%lf%lf", &x, &eps) != 2 || eps <= 0 || (x >= 1) || (x <= -1))
@@ -33,18 +33,18 @@ int main(void)
     
     
     func_res = atan(x);
-    abs_error = fabs(func_res - sum);
+    abs_diff = fabs(func_res - sum);
     if (func_res <= eps && sum <= eps)
     {
-        relative_error = 0;
+        relative_diff = 0;
     }
     else
     {
-        relative_error = fabs((func_res - sum) / func_res);
+        relative_diff = fabs((func_res - sum) / func_res);
     }
     printf("Sum of row with eps = %.6lf\n", sum);
-    printf("Absolute error = %.6lf\n", abs_error);
-    printf("Relative error = %.6lf\n", relative_error);
+    printf("Absolute diff = %.6lf\n", abs_diff);
+    printf("Relative diff = %.6lf\n", relative_diff);
 
     return EXIT_SUCCESS;
 }
