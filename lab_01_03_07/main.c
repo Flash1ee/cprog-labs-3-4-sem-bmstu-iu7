@@ -11,6 +11,7 @@
 
 int main(void)
 {
+    setbuf(stdout,NULL);	
     double x, eps, cur_x;
     long int k = 0;
     double sum = 0, func_res, abs_error, relative_error;
@@ -33,7 +34,7 @@ int main(void)
     
     func_res = atan(x);
     abs_error = fabs(func_res - sum);
-    if (func_res == 0 && sum == 0)
+    if (func_res <= eps && sum <= eps)
     {
         relative_error = 0;
     }
@@ -43,7 +44,7 @@ int main(void)
     }
     printf("Sum of row with eps = %.6lf\n", sum);
     printf("Absolute error = %.6lf\n", abs_error);
-    printf("Relative error = .6%lf\n", relative_error);
+    printf("Relative error = %.6lf\n", relative_error);
 
     return EXIT_SUCCESS;
 }
