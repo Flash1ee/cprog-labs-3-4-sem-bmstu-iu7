@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-long int nod(long int a, long int b);
+long int gcd(long int a, long int b);
 int main()
 {
     setbuf(stdout,NULL);
@@ -11,12 +11,12 @@ int main()
         printf("Incorrect input\n");
         return EXIT_FAILURE;
     }
-    x = nod(a, b);
+    x = gcd(a, b);
     printf("NOD of two numbers is %ld", x);
     return EXIT_SUCCESS;
 }
 
-long int nod(long int a, long int b)
+long int gcd(long int a, long int b)
 {
     long int tmp;
     if (a < b)
