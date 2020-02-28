@@ -4,13 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-long int vector_prod(long int ax, long int ay, long int bx, long int by);
-void print_result(long int res);
+long int vector_prod(long ax, long ay, long bx, long by);
+void print_result(long res);
 
 int main(void)
 {
     setbuf(stdout, NULL);
-    long int x1, y1, x2, y2, xpoint, ypoint, result;
+    long x1, y1;
+    long x2, y2;
+    long xpoint, ypoint, result;
     printf("Input coords x1 y1 x2 y2 of line ");
     printf("and coords point for check xA yA:\n");
     if ((scanf("%ld%ld%ld%ld", &x1, &y1, &x2, &y2) != 4) || scanf("%ld%ld", &xpoint, &ypoint) != 2
@@ -21,7 +23,7 @@ int main(void)
     }
     if (x2 < x1)
     {
-        long int tmp_x, tmp_y;
+        long tmp_x, tmp_y;
         tmp_x = x1;
         tmp_y = y1;
         x1 = x2;
@@ -34,14 +36,14 @@ int main(void)
     return EXIT_SUCCESS;
 }
 
-long int vector_prod(long int ax, long int ay, long int bx, long int by)
+long int vector_prod(long ax, long ay, long bx, long by)
 {
-    long int s;
+    long s;
     s = (ax * by - bx * ay);
     return s;
 }
 
-void print_result(long int result)
+void print_result(long result)
 {
     if (result > 0)
     {
