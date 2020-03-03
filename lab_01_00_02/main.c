@@ -17,7 +17,7 @@ int main(void)
         printf("Incorrect input\n");
         return EXIT_FAILURE;
     }
-    rightsize = h * h + (up - down) * (up - down) / 4;
+    rightsize = h * h + (up - down) * (up - down) / 4.;
     perimetr = up + down + sqrt(rightsize) * 2;
     printf("Perimetr of figure = %.5lf\n", perimetr);
     return EXIT_SUCCESS;
