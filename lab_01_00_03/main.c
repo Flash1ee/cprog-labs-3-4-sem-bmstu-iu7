@@ -16,8 +16,8 @@ int main(void)
         printf("Incorrect input\n");
         return EXIT_FAILURE;
     }
-    normal_weight = high * chest_len / 240;
-    high = high / 100;
+    normal_weight = high * chest_len / 240.;
+    high = high / 100.;
     index_mass = mass / (high * high);
     printf("Normal weight = %.5lf\n", normal_weight);
     printf("Index mass = %.5lf", index_mass);
