@@ -7,3 +7,4 @@
 *.gcno
 *.h.gcov
 *.c.gcov
+*.gitkeep
