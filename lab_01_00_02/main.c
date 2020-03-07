@@ -1,6 +1,3 @@
-/*Даны основания и высота равнобедренной трапеции. 
-Найти периметр трапеции
-*/
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -11,8 +8,12 @@ int main(void)
     double up, down, h;
     double perimetr, rightsize;
     printf("Input upsize, downsize, h:\n");
-    if (scanf("%lf", &up) != 1 || scanf("%lf", &down) != 1 || scanf("%lf", &h) != 1 || (h < 0)
-        || (down < 0) || (up < 0))
+    if (scanf("%lf", &up) != 1 || scanf("%lf", &down) != 1 || scanf("%lf", &h) != 1)
+    {
+        printf("Incorrect input\n");
+        return EXIT_FAILURE;
+    }
+    else if ((h < 0) || (down < 0) || (up < 0))
     {
         printf("Incorrect input\n");
         return EXIT_FAILURE;
