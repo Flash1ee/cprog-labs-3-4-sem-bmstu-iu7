@@ -3,8 +3,8 @@
 #include <math.h>
 #define N 10
 
-int input_pos_massiv(int* mas, int k, int* len);
-double get_pos_element_prod(int* mas, int k);
+int input_pos_massiv(int *mas, int k, int *len);
+double get_pos_element_prod(int *mas, int k);
 int main()
 {
     int k, a[N], len_pos = 0;
@@ -18,7 +18,7 @@ int main()
     return EXIT_SUCCESS;
 }
 
-int input_pos_massiv(int* mas, int k, int* len)
+int input_pos_massiv(int *mas, int k, int *len)
 {
     for (int i = 0; i < k; i++)
     {
@@ -31,7 +31,7 @@ int input_pos_massiv(int* mas, int k, int* len)
         return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
-double get_pos_element_prod(int* mas, int k)
+double get_pos_element_prod(int *mas, int k)
 {
     double prod = 1.0;
     for (int i = 0; i < k; i++)
