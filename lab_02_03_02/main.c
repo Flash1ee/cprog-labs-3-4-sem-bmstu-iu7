@@ -4,8 +4,8 @@
 
 #define N 10
 
-long input_mas(long* a, long n);
-long armstrong_numb(long* a, long* out, long n);
+long input_mas(long *a, long n);
+long armstrong_numb(long *a, long *out, long n);
 long count_digit(long x);
 
 int main()
@@ -28,7 +28,7 @@ int main()
 }
 
 
-long input_mas(long* a, long n)
+long input_mas(long *a, long n)
 {
     for (long i = 0; i < n; i++)
     {
@@ -38,7 +38,7 @@ long input_mas(long* a, long n)
     return EXIT_SUCCESS;
 }
 
-long armstrong_numb(long* a, long* out, long n)
+long armstrong_numb(long *a, long *out, long n)
 {
     long pos = 0;
     for (long i = 0; i < n; i++)
