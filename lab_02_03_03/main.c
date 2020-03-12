@@ -14,7 +14,7 @@ long power(long x, long exp);
 int main(void)
 {
     long n, a[2 * N];
-    if ((scanf("%ld", &n) != 1) || (n<=0) || (n > N) || (input_mas(a, &n) != 0))
+    if ((scanf("%ld", &n) != 1) || (n <= 0) || (n > N) || (input_mas(a, &n) != 0))
     {
         return EXIT_FAILURE;
     }
