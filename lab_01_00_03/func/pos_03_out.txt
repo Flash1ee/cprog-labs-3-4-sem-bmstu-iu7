@@ -1,0 +1,2 @@
+Input high, chest_girth,mass: Normal weight = 49.58333
+Index mass = 69.20415

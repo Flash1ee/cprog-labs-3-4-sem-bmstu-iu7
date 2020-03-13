@@ -3,3 +3,8 @@
 *.out
 *.gcov
 **/.idea/**
+*.gcda
+*.gcno
+*.h.gcov
+*.c.gcov
+*.gitkeep
