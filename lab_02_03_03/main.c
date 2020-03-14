@@ -25,7 +25,7 @@ int main(void)
 }
 
 
-long input(long *a, long *n)
+long input(long a[], long *n)
 {
     for (long i = 0; i < *n; i++)
     {
@@ -35,7 +35,7 @@ long input(long *a, long *n)
     return EXIT_SUCCESS;
 }
 
-long get_new(long *a, long *n, long *new_elem)
+long get_new(long a[], long *n, long *new_elem)
 {
     long i = 0;
     long new_len = *n + *new_elem;
@@ -84,12 +84,12 @@ long count_digit(long x)
     return k;
 }
 
-void output(long *a, long *n, long *new_elem)
+void output(long a[], long *n, long *new_elem)
 {
     for (int i = 0; i < (*n + *new_elem); i++)
         printf("%ld ", a[i]);
 }
-long get_pos_el(long *a, long *n)
+long get_pos_el(long a[], long *n)
 {
     long k = 0;
     for (int i = 0; i < *n; i++)
