@@ -18,8 +18,7 @@ int main(void)
     if ((scanf("%ld", &n) != 1) || (n <= 0) || (n > N) || (input(a, &n) != 0))
         return EXIT_FAILURE;
     long new_elem = get_pos_el(a, &n);
-    if (get_new(a, &n, &new_elem)!=0)
-	return EXIT_FAILURE;
+    get_new(a, &n, &new_elem);
     output(a, &n, &new_elem);
     return EXIT_SUCCESS;
 }
@@ -47,22 +46,18 @@ long get_new(long a[], long *n, long *new_elem)
                 a[j + 1] = a[j];
             unsigned long long reverse_numb = 0, cur_numb = a[i];
             long long k = count_digit(a[i]) - 1;
-            while (k > k/2)
+            while (k > k / 2)
             {
                 long digit = get_digit(cur_numb, k);
-                if (reverse_numb > (ULLONG_MAX - digit))
-                    return EXIT_FAILURE;
-                reverse_numb = reverse_numb + get_digit(cur_numb, k);
+                reverse_numb = reverse_numb + digit;
                 cur_numb /= 10;
                 k -= 1;
             }
-            k= k / 2;
+            k = k / 2;
             while (k >= 0)
             {
                 long digit = get_digit(cur_numb, k);
-                if (reverse_numb > (ULLONG_MAX - digit))
-                    return EXIT_FAILURE;
-                reverse_numb = reverse_numb + get_digit(cur_numb, k);
+                reverse_numb = reverse_numb + digit;
                 cur_numb /= 10;
                 k -= 1;
             }
@@ -89,7 +84,7 @@ void output(long a[], long *n, long *new_elem)
     for (int i = 0; i < (*n + *new_elem); i++)
         printf("%ld ", a[i]);
 }
-long get_pos_el(long a[], long *n)
+long get_pos_el(long a[], long* n)
 {
     long k = 0;
     for (int i = 0; i < *n; i++)

@@ -4,3 +4,5 @@
 .gitkeep
 *.gcno
 *.gcda
+.idea
+.vscode
