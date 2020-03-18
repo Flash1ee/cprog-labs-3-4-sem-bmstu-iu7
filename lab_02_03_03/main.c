@@ -84,7 +84,7 @@ void output(long a[], long *n, long *new_elem)
     for (int i = 0; i < (*n + *new_elem); i++)
         printf("%ld ", a[i]);
 }
-long get_pos_el(long a[], long* n)
+long get_pos_el(long a[], long *n)
 {
     long k = 0;
     for (int i = 0; i < *n; i++)
