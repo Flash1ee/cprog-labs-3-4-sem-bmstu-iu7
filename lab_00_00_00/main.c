@@ -13,7 +13,7 @@ int main(void)
 
     buf = a;
     a = b;
-	b = buf;
+    b = buf;
 
     printf("%ld %ld", a, b);
 
