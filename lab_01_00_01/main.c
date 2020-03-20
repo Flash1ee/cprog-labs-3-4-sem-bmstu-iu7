@@ -4,6 +4,6 @@ int main()
 {
     int s;
     s = 56;
-    printf("Year has %d weeks\n",s);
+    printf("Year has %d weeks\n", s);
     return 0;
 }
