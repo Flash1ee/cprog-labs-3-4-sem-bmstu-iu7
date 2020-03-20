@@ -8,3 +8,5 @@
 *.h.gcov
 *.c.gcov
 *.gitkeep
+*.vscode
+
