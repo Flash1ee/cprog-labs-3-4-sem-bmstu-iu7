@@ -8,3 +8,4 @@ DEL *.gcov
 DEL *.gcno
 DEL pos_0*.txt
 DEL report*
+DEL *.txt

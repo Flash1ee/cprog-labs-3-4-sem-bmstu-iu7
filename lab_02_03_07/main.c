@@ -1,9 +1,7 @@
-#define __USE_MINGW_ANSI_STDIO 1
 #include <stdio.h>
-#include <inttypes.h>
 #include <stdlib.h>
 
-#define N 1000000
+#define N 100000
 
 long input(long a[], long *n);
 void output(long a[], long *n);
@@ -37,7 +35,7 @@ void output(long a[], long *n)
 {
     for (long i = 0; i < *n; i++)
     {
-        printf("%ld " , a[i]);
+        printf("%ld ", a[i]);
     }
 }
 void bubble_sort(long a[], long *n)

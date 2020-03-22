@@ -1,6 +1,6 @@
 @ECHO OFF
 CHCP 65001
-gcc -std=c99 -Wall -g -pg main.c -o app.exe
+gcc -std=c99 -Wall -Werror -Wextra -Wpedantic -Wvla -g -pg -o app.exe main.c
 python make_massivs.py
 .\app.exe < pos_010_in.txt > pos_010_out.txt
 gprof app.exe > report1.txt
