@@ -18,7 +18,7 @@ int main()
     long long b[N * N];
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || \
-     n <= 0 || n > 10 || m <= 1 || m > 10)
+    	n <= 0 || n > 10 || m <= 1 || m > 10)
         return EXIT_FAILURE;
 
     if (input(a, n, m) != 0)
