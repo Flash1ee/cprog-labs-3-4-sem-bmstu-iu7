@@ -25,7 +25,7 @@ int main()
         return EXIT_FAILURE;
     check_matrix(a, &n, &m, k);
     if (output(a, &n, &m) != 0)
-    	return EXIT_FAILURE;
+        return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
