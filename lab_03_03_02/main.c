@@ -1,11 +1,12 @@
 #define __USE_MINGW_ANSI_STDIO 1
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define N 10
 
 int input(long long a[][N], size_t *n, size_t *m);
-void output(long long a[][N], size_t *n, size_t *m);
+int output(long long a[][N], size_t *n, size_t *m);
 void check_matrix(long long a[][N], size_t *n, size_t *m, long k);
 int check_numb(long long x, long k);
 void swap_column(long long a[][N], size_t *column, size_t *count_str, size_t *count_col);
@@ -23,7 +24,8 @@ int main()
     if (input(a, &n, &m) != 0)
         return EXIT_FAILURE;
     check_matrix(a, &n, &m, k);
-    output(a, &n, &m);
+    if (output(a, &n, &m) != 0)
+    	return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
@@ -36,16 +38,17 @@ int input(long long a[][N], size_t *n, size_t *m)
     return EXIT_SUCCESS;
 }
 
-void output(long long a[][N], size_t *n, size_t *m)
+int output(long long a[][N], size_t *n, size_t *m)
 {
     if (*m == 0)
-        return;
+        return EXIT_FAILURE;
     for (size_t i = 0; i < *n; i++)
     {
         for (size_t j = 0; j < *m; j++)
             printf("%lld ", a[i][j]);
         printf("\n");
     }
+    return EXIT_SUCCESS;
 }
 
 void check_matrix(long long a[][N], size_t *n, size_t *m, long k)
@@ -80,6 +83,8 @@ void check_matrix(long long a[][N], size_t *n, size_t *m, long k)
 int check_numb(long long x, long k)
 {
     long long digit;
+    if (x < 0)
+        x *= (-1);
     if ((x == 0) && (x == k))
         return 1;
     while (x > 0)

@@ -17,8 +17,8 @@ int main()
     size_t n, m;
     long long b[N * N];
 
-    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || \
-    	n <= 0 || n > 10 || m < 1 || m > 10)
+    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n <= 0
+     || n > 10 || m < 1 || m > 10)
         return EXIT_FAILURE;
 
     if (input(a, n, m) != 0)
@@ -54,6 +54,8 @@ void output(long long a[], size_t n)
 int monotonic_sequence(long long a[], size_t m)
 {
     int flag = 0;
+    if (m <= 1)
+        return flag;
     decreasing_sequence(a, m, &flag);
     increasing_sequence(a, m, &flag);
     return flag;
