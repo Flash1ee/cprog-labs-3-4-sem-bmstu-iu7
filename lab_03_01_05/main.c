@@ -7,7 +7,7 @@
 
 int input(long long a[][N], size_t *n, size_t *m);
 void output(long long a[][N], size_t *n, size_t *m);
-void search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m, size_t *k);
+int search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m, size_t *k);
 long sum_digits(long long x);
 void cyclic_shift(long long b[], size_t *n);
 void replace(long long a[][N], long long b[], size_t *n, size_t *m, size_t *vector_size);
@@ -24,7 +24,8 @@ int main()
     if (input(a, &n, &m) != 0)
         return EXIT_FAILURE;
 
-    search_adding_numbers(a, b, &n, &m, &size);
+    if (search_adding_numbers(a, b, &n, &m, &size) == 0)
+        return EXIT_FAILURE;
     cyclic_shift(b, &size);
     replace(a, b, &n, &m, &size);
     output(a, &n, &m);
@@ -51,15 +52,18 @@ void output(long long a[][N], size_t *n, size_t *m)
         printf("\n");
     }
 }
-void search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m, size_t *k)
+int search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m, size_t *k)
 {
+    int flag = 0;
     for (size_t i = 0; i < *n; i++)
         for (size_t j = 0; j < *m; j++)
             if (sum_digits(a[i][j]) > 10)
             {
+                flag += 1;
                 b[*k] = a[i][j];
                 *k += 1;
             }
+    return flag;
 }
 long sum_digits(long long x)
 {
@@ -72,7 +76,7 @@ long sum_digits(long long x)
 
     return sum;
 }
-void cyclic_shift(long long b[], size_t* n)
+void cyclic_shift(long long b[], size_t *n)
 {
     for (size_t i = 0; i < SHIFT; i++)
     {
