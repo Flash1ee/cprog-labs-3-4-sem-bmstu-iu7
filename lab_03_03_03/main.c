@@ -65,7 +65,7 @@ void sort(long long min[][N], size_t *col)
     for (size_t i = 0; i < *col - 1; i++)
         for (size_t j = 0; j < *col - i - 1; j++)
         {
-            if (min[0][j] > min[0][j + 1])
+            if (min[0][j] < min[0][j + 1])
             {
                 long long tmp = min[0][j];
                 min[0][j] = min[0][j + 1];

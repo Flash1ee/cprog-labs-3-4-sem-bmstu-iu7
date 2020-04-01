@@ -63,11 +63,14 @@ int search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m,
                 b[*k] = a[i][j];
                 *k += 1;
             }
+    
     return flag;
 }
 long sum_digits(long long x)
 {
     long sum = 0;
+    if (x < 0)
+        x *= -1;
     while (x > 0)
     {
         sum += x % 10;

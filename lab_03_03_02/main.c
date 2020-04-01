@@ -19,9 +19,9 @@ int main()
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > 10 || m < 1 || m > 10)
         return EXIT_FAILURE;
-    if (scanf("%ld", &k) != 1 || k < 0 || k > 9)
-        return EXIT_FAILURE;
     if (input(a, &n, &m) != 0)
+        return EXIT_FAILURE;
+    if (scanf("%ld", &k) != 1 || k < 0 || k > 9)
         return EXIT_FAILURE;
     check_matrix(a, &n, &m, k);
     if (output(a, &n, &m) != 0)
@@ -84,7 +84,7 @@ int check_numb(long long x, long k)
 {
     long long digit;
     if (x < 0)
-        x *= (-1);
+        x *= -1;
     if ((x == 0) && (x == k))
         return 1;
     while (x > 0)
