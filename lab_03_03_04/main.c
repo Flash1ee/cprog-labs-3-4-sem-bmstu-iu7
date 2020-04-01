@@ -47,10 +47,9 @@ void sort(long long a[][N], size_t *n)
     long long tmp;
     for (size_t i = 0; i < *n / 2; i++)
         for (size_t j = i; j < *n - i; j++)
-            {
-                tmp = a[j][i];
-                a[j][i] = a[j][*n - i - 1];
-                a[j][*n - i - 1] = tmp;
-
-            }
+        {
+            tmp = a[j][i];
+            a[j][i] = a[j][*n - i - 1];
+            a[j][*n - i - 1] = tmp;
+        }
 }
