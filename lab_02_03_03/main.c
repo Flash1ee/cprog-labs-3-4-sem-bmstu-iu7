@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -5,50 +6,56 @@
 
 #define N 10
 
-long input(long a[], long *n);
-void output(long a[], long *n, long *new_elem);
-long get_new(long a[], long *n, long *new_elem);
-long count_digit(long x);
-long get_pos_el(long a[], long *n);
-long get_digit(long numb, long k);
+int input(long long a[], size_t n);
+void output(long long a[], size_t n);
+void append_reverse(long long a[], size_t n);
+size_t get_count_pos(long long a[], size_t n);
+long long get_digit(long long numb, long k);
+size_t count_digit(long long x);
 
-int main(void)
+int main()
 {
-    long n, a[2 * N];
-    if ((scanf("%ld", &n) != 1) || (n <= 0) || (n > N) || (input(a, &n) != 0))
+    size_t n;
+    size_t count;
+    long long a[2 * N];
+    if ((scanf("%zu", &n) != 1) || (n <= 0) || (n > N))
         return EXIT_FAILURE;
-    long new_elem = get_pos_el(a, &n);
-    get_new(a, &n, &new_elem);
-    output(a, &n, &new_elem);
+    if (input(a, n) != EXIT_SUCCESS)
+        return EXIT_FAILURE;
+    count = get_count_pos(a, n);
+    append_reverse(a, n + count);
+    output(a, n + count);
     return EXIT_SUCCESS;
 }
 
 
-long input(long a[], long *n)
+int input(long long a[], size_t n)
 {
-    for (long i = 0; i < *n; i++)
-    {
-        if (scanf("%ld", &a[i]) != 1)
+    for (size_t i = 0; i < n; i++)
+        if (scanf("%lld", &a[i]) != 1)
             return EXIT_FAILURE;
-    }
     return EXIT_SUCCESS;
 }
 
-long get_new(long a[], long *n, long *new_elem)
+void append_reverse(long long a[], size_t n)
 {
-    long i = 0;
-    long new_len = *n + *new_elem;
+    size_t i = 0;
+    size_t new_len = n;
     while (i < new_len)
     {
         if (a[i] > 0)
         {
-            for (long j = new_len; j > i; j--)
+            for (size_t j = new_len; j > i; j--)
                 a[j + 1] = a[j];
-            unsigned long long reverse_numb = 0, cur_numb = a[i];
-            long long k = count_digit(a[i]) - 1;
+
+            long long reverse_numb = 0;
+            long long cur_numb = a[i];
+            long k = count_digit(a[i]) - 1;
+            long digit;
+
             while (k > k / 2)
             {
-                long digit = get_digit(cur_numb, k);
+                digit = get_digit(cur_numb, k);
                 reverse_numb = reverse_numb + digit;
                 cur_numb /= 10;
                 k -= 1;
@@ -56,7 +63,7 @@ long get_new(long a[], long *n, long *new_elem)
             k = k / 2;
             while (k >= 0)
             {
-                long digit = get_digit(cur_numb, k);
+                digit = get_digit(cur_numb, k);
                 reverse_numb = reverse_numb + digit;
                 cur_numb /= 10;
                 k -= 1;
@@ -66,11 +73,11 @@ long get_new(long a[], long *n, long *new_elem)
         }
         i++;
     }
-    return EXIT_SUCCESS;
 }
-long count_digit(long x)
+
+size_t count_digit(long long x)
 {
-    long k = 0;
+    size_t k = 0;
     while (x > 0)
     {
         k += 1;
@@ -79,24 +86,24 @@ long count_digit(long x)
     return k;
 }
 
-void output(long a[], long *n, long *new_elem)
+void output(long long a[], size_t n)
 {
-    for (int i = 0; i < (*n + *new_elem); i++)
-        printf("%ld ", a[i]);
+    for (size_t i = 0; i < n; i++)
+        printf("%lld ", a[i]);
 }
-long get_pos_el(long a[], long *n)
+
+size_t get_count_pos(long long a[], size_t n)
 {
-    long k = 0;
-    for (int i = 0; i < *n; i++)
-    {
+    size_t k = 0;
+    for (size_t i = 0; i < n; i++)
         if (a[i] > 0)
             k += 1;
-    }
     return k;
 }
-long get_digit(long numb, long k)
+
+long long get_digit(long long numb, long k)
 {
-    long num = 1;
+    long long num = 1;
     while (k > 0)
     {
         num *= 10;

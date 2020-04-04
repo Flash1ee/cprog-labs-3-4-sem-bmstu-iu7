@@ -5,16 +5,16 @@
 
 #define N 10
 
-long input(long a[], size_t n);
-void output(long a[], size_t n);
-int is_armstrong(long elem);
-long count(long x);
-long append_armstrong(long a[], long out[], size_t n);
+int input(long long a[], size_t n);
+void output(long long a[], size_t n);
+int is_armstrong(long long elem);
+long count(long long x);
+long append_armstrong(long long a[], long long out[], size_t n);
 
 int main()
 {
     size_t n, pos;
-    long a[N], out[N] = { 0 };
+    long long a[N], out[N] = { 0 };
 
     if (scanf("%zu", &n) != 1 || n <= 0 || n > N)
         return EXIT_FAILURE;
@@ -32,18 +32,18 @@ int main()
 }
 
 
-long input(long a[], size_t n)
+int input(long long a[], size_t n)
 {
     for (size_t i = 0; i < n; i++)
-        if (scanf("%ld", &a[i]) != 1)
+        if (scanf("%lld", &a[i]) != 1)
             return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
-int is_armstrong(long elem)
+int is_armstrong(long long elem)
 {
-    long numb_check = 0;
-    long last, cur;
+    long long cur, numb_check = 0;
+    long last;
     long k = count(elem);
     cur = elem;
     while (cur > 0)
@@ -57,7 +57,7 @@ int is_armstrong(long elem)
     return EXIT_FAILURE;
 }
 
-long append_armstrong(long a[], long out[], size_t n)
+long append_armstrong(long long a[], long long out[], size_t n)
 {
     size_t len = 0;
     for (size_t i = 0; i < n; i++)
@@ -71,7 +71,7 @@ long append_armstrong(long a[], long out[], size_t n)
     return len;
 }
 
-long count(long x)
+long count(long long x)
 {
     long k = 0;
     while (x > 0)
@@ -82,8 +82,8 @@ long count(long x)
     return k;
 }
 
-void output(long a[], size_t n)
+void output(long long a[], size_t n)
 {
     for (size_t i = 0; i < n; i++)
-        printf("%ld ", a[i]);
+        printf("%lld ", a[i]);
 }
