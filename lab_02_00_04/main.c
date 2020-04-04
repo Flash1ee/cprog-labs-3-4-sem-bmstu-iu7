@@ -1,50 +1,52 @@
+#define __USE_MINGW_ANSI_STDIO
 #include <stdio.h>
 #include <stdlib.h>
 
 #define N 10
 
-long input(long a[], long *n);
-void output(long a[], long *n);
-void bubble_sort(long a[], long *n);
+int input(long long a[], size_t n);
+void output(long long a[], size_t n);
+void bubble_sort(long long a[], size_t n);
 
-int main(void)
+int main()
 {
-    long n;
-    long a[N];
-    if (scanf("%ld", &n) != 1 || n > N || n <= 0 || input(a, &n) != 0)
-    {
+    size_t n;
+    long long a[N];
+
+    if (scanf("%zu", &n) != 1 || n > N || n <= 0 )
         return EXIT_FAILURE;
-    }
-    bubble_sort(a, &n);
-    output(a, &n);
+
+    if (input(a, n) != EXIT_SUCCESS)
+        return EXIT_FAILURE;
+
+    bubble_sort(a, n);
+    output(a, n);
+
     return EXIT_SUCCESS;
 }
 
 
-long input(long a[], long *n)
+int input(long long a[], size_t n)
 {
-    for (long i = 0; i < *n; i++)
-    {
-        if (scanf("%ld", &a[i]) != 1)
+    for (size_t i = 0; i < n; i++)
+        if (scanf("%lld", &a[i]) != 1)
             return EXIT_FAILURE;
-    }
     return EXIT_SUCCESS;
 }
 
-void output(long a[], long *n)
+void output(long long a[], size_t n)
 {
-    for (long i = 0; i < *n; i++)
-    {
-        printf("%ld ", a[i]);
-    }
+    for (size_t i = 0; i < n; i++)
+        printf("%lld ", a[i]);
 }
-void bubble_sort(long a[], long *n)
+
+void bubble_sort(long long a[], size_t n)
 {
-    for (long i = 0; i < *n; i++)
-        for (long j = 1; j < *n - i; j++)
+    for (size_t i = 0; i < n; i++)
+        for (size_t j = 1; j < n - i; j++)
             if (a[j - 1] > a[j])
             {
-                long tmp;
+                long long tmp;
                 tmp = a[j - 1];
                 a[j - 1] = a[j];
                 a[j] = tmp;
