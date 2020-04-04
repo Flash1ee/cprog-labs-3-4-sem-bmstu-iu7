@@ -3,41 +3,42 @@
 #include <math.h>
 #define N 10
 
-int input_pos(int mas[], int k, int *len);
-double get_pos_element_prod(int mas[], int k);
+int input(long mas[], long n);
+int get_pos(long mas[], long k, long *len);
+double get_pos_element_prod(long mas[], long n);
 int main()
 {
-    int k, a[N], len_pos = 0;
-    if (scanf("%d", &k) != 1 || k > 10 || k <= 0)
-    {
+    long n, a[N], len_pos = 0;
+    if (scanf("%ld", &n) != 1 || n > 10 || n <= 0)
         return EXIT_FAILURE;
-    }
-    if (input_pos(a, k, &len_pos) != 0)
+    if (input(a, n) != EXIT_SUCCESS || get_pos(a, n, &len_pos) != EXIT_SUCCESS)
         return EXIT_FAILURE;
-    printf("%lf", pow(get_pos_element_prod(a, k), 1.0 / (double)len_pos));
+    printf("%lf", pow(get_pos_element_prod(a, n), 1.0 / len_pos));
     return EXIT_SUCCESS;
 }
 
-int input_pos(int mas[], int k, int *len)
+int get_pos(long mas[], long n, long *len)
 {
-    for (int i = 0; i < k; i++)
-    {
-        if (scanf("%d", &mas[i]) != 1)
-            return EXIT_FAILURE;
+    for (long i = 0; i < n; i++)
         if (mas[i] > 0)
             *len += 1;
-    }
     if (!*len)
         return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
-double get_pos_element_prod(int mas[], int k)
+
+int input(long mas[], long n)
+{
+    for (long i = 0; i < n; i++)
+        if (scanf("%ld", &mas[i]) != 1)
+            return EXIT_FAILURE;
+    return EXIT_SUCCESS;
+}
+double get_pos_element_prod(long mas[], long n)
 {
     double prod = 1.0;
-    for (int i = 0; i < k; i++)
-    {
+    for (long i = 0; i < n; i++)
         if (mas[i] > 0)
             prod *= mas[i];
-    }
     return prod;
 }
