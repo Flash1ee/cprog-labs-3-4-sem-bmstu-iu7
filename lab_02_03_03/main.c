@@ -11,7 +11,7 @@ void output(long long a[], size_t n);
 void append_reverse(long long a[], size_t n);
 size_t get_count_pos(long long a[], size_t n);
 long long get_digit(long long numb, long k);
-size_t count_digit(long long x);
+size_t count_digits(long long x);
 
 int main()
 {
@@ -50,7 +50,7 @@ void append_reverse(long long a[], size_t n)
 
             long long reverse_numb = 0;
             long long cur_numb = a[i];
-            long k = count_digit(a[i]) - 1;
+            long k = count_digits(a[i]) - 1;
             long digit;
 
             while (k > k / 2)
@@ -75,7 +75,7 @@ void append_reverse(long long a[], size_t n)
     }
 }
 
-size_t count_digit(long long x)
+size_t count_digits(long long x)
 {
     size_t k = 0;
     while (x > 0)
