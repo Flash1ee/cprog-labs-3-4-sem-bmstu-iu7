@@ -5,4 +5,3 @@ DEL *.exe
 DEL *.gcda
 DEL *.gcov
 DEL *.gcno
-DEL *.txt

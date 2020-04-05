@@ -2,10 +2,6 @@
 CHCP 65001
 DEL *.o
 DEL *.exe
-DEL *.out
 DEL *.gcda
 DEL *.gcov
 DEL *.gcno
-DEL pos_0*.txt
-DEL report*
-DEL *.txt

@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
@@ -5,11 +6,10 @@
 
 #define N 100000
 
-int input(long a[], size_t *n);
-void form(long long a[], size_t *n);
-long long process_1(long long a[], size_t *n);
-long long process_2(long long a[], long *n);
-long long process_3(long long* start, long long *stop);
+void form(long long a[], size_t n);
+long long process_1(long long a[], size_t n);
+long long process_2(long long a[], size_t n);
+long long process_3(long long *start, long long *stop);
 int search_min(long a[], size_t n);
 int search_max(long a[], size_t n);
 void search_sum(long a[], size_t n, long long *sum);
@@ -42,18 +42,18 @@ int main()
             size_t k = size[j];
             for (size_t m = 0; m < k; m++)
             {
-                form(a, &k);
+                form(a, k);
                 gettimeofday(&tv_start, NULL);
-                process_1(a, &n);
+                process_1(a, n);
                 gettimeofday(&tv_stop, NULL);
                 time_1[m] = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL
                     + (tv_stop.tv_usec - tv_start.tv_usec);
                 gettimeofday(&tv_start, NULL);
-                process_2(a, &(counts[i]));
+                process_2(a, counts[i]);
                 gettimeofday(&tv_stop, NULL);
                 time_2[m] = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL
                     + (tv_stop.tv_usec - tv_start.tv_usec);
-                long long* ptr_end = (a + counts[i]);
+                long long *ptr_end = (a + counts[i]);
                 gettimeofday(&tv_start, NULL);
                 process_3(a, ptr_end);
                 gettimeofday(&tv_stop, NULL);
@@ -80,26 +80,20 @@ int main()
     }
     return EXIT_SUCCESS;
 }
-int input(long a[], size_t *n)
-{
-    for (size_t i = 0; i < *n; i++)
-        if (scanf("%ld", &a[i]) != 1)
-            return EXIT_FAILURE;
-    return EXIT_SUCCESS;
-}
-long long process_1(long long a[], size_t *n)
+
+long long process_1(long long a[], size_t n)
 {
     long long minp = a[0] * a[1];
-    for (size_t i = 0; i < *n - 1; i++)
+    for (size_t i = 0; i < n - 1; i++)
         if (a[i] * a[i + 1] < minp)
             minp = a[i] * a[i + 1];
     return minp;
 }
 
-long long process_2(long long a[], long *n)
+long long process_2(long long a[], size_t n)
 {
     long long minp = *a * *(a + 1);
-    for (long i = 0; i < (*n - 1); i++)
+    for (size_t i = 0; i < n - 1; i++)
         if (*(a + i) * *(a + i + 1) < minp)
             minp = *(a + i) * *(a + i + 1);
     return minp;
@@ -109,7 +103,7 @@ long long process_3(long long *start, long long *stop)
     long long minp = *start + *(start + 1);
     while (start < stop - 1)
     {
-        long frst, sec;
+        long long frst, sec;
         frst = *start;
         sec = *(start + 1);
         if (frst * sec < minp)
@@ -122,17 +116,18 @@ void make_table_header(void)
 {
 
     printf("┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃\n");
-    printf("┃%9s  ┃%9s   ┃%9s┃%-9s┃%9s┃\n", "Повторы", "Размер", "a[i]", "*(a+i)", "Указатели");
+    printf("┃%9s  ┃%9s   ┃%9s┃%-9s┃%9s┃\n", "Повторы", "Размер", "a[i]", "*(a+i)",
+            "Указатели");
     printf("┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃\n");
 }
 void make_table_data(long iter_count, size_t size, long time_1, long time_2, long time_3)
 {
     printf("┃%9ld┃%9ld┃%9ld┃%9ld┃%9ld┃\n", iter_count, (long)size, time_1, time_2, time_3);
 }
-void form(long long a[], size_t *n)
+void form(long long a[], size_t n)
 {
     srand(time(NULL));
-    for (size_t i = 0; i < *n; i++)
+    for (size_t i = 0; i < n; i++)
         a[i] = rand();
 }
 int search_min(long a[], size_t n)
@@ -166,9 +161,7 @@ int search_max(long a[], size_t n)
         }
     }
     for (size_t i = ind + 1; i < n - 1; i++)
-    {
         a[i - 1] = a[i];
-    }
     return EXIT_SUCCESS;
 }
 void search_sum(long a[], size_t n, long long *sum)

@@ -13,7 +13,7 @@ int main()
     size_t n;
     long long a[N];
 
-    if (scanf("%zu", &n) != 1 || n > N || n <= 0 )
+    if (scanf("%zu", &n) != 1 || n > N || n <= 0)
         return EXIT_FAILURE;
 
     if (input(a, n) != EXIT_SUCCESS)

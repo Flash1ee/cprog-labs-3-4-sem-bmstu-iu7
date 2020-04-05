@@ -47,11 +47,11 @@ int is_armstrong(long long elem)
     long k = count(elem);
     cur = elem;
     while (cur > 0)
-        {
-            last = cur % 10;
-            numb_check += pow(last, k);
-            cur /= 10;
-        }
+    {
+        last = cur % 10;
+        numb_check += pow(last, k);
+        cur /= 10;
+    }
     if (numb_check == elem)
         return EXIT_SUCCESS;
     return EXIT_FAILURE;
