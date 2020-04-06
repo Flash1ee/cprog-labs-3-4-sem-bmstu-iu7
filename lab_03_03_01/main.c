@@ -54,8 +54,10 @@ void output(long long a[], size_t n)
 int monotonic_sequence(long long a[], size_t m)
 {
     int flag = 0;
+    
     if (m <= 1)
         return flag;
+        
     decreasing_sequence(a, m, &flag);
     increasing_sequence(a, m, &flag);
     
@@ -65,19 +67,15 @@ int monotonic_sequence(long long a[], size_t m)
 void increasing_sequence(long long a[N], size_t m, int *flag)
 {
     for (size_t i = 0; i < m - 1; i++)
-    {
         if (a[i] > a[i + 1])
             return;
-    }
     *flag = 1;
 }
 
 void decreasing_sequence(long long a[N], size_t m, int *flag)
 {
     for (size_t i = 0; i < m - 1; i++)
-    {
         if (a[i] < a[i + 1])
             return;
-    }
     *flag = 1;
 }
