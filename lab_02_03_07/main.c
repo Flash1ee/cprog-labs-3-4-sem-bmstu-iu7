@@ -31,6 +31,7 @@ int input(long long a[], size_t n)
     for (size_t i = 0; i < n; i++)
         if (scanf("%lld", &a[i]) != 1)
             return EXIT_FAILURE;
+            
     return EXIT_SUCCESS;
 }
 
@@ -39,6 +40,7 @@ void output(long long a[], size_t n)
     for (size_t i = 0; i < n; i++)
         printf("%lld ", a[i]);
 }
+
 void bubble_sort(long long a[], size_t n)
 {
     for (size_t i = 0; i < n; i++)
