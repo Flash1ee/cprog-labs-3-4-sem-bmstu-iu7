@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-long int gcd(long int a, long int b);
+
+long gcd(long a, long b);
+
 int main()
 {
     setbuf(stdout,NULL);
-    long int a, b, x;
+    
+    long a, b, x;
+    
     printf("Input two numbers:\n");
     if (scanf("%ld%ld", &a, &b) != 2 || (a < 1) || (b < 1)) 
     {
@@ -13,12 +17,13 @@ int main()
     }
     x = gcd(a, b);
     printf("NOD of two numbers is %ld", x);
+    
     return EXIT_SUCCESS;
 }
 
-long int gcd(long int a, long int b)
+long gcd(long a, long b)
 {
-    long int tmp;
+    long tmp;
     if (a < b)
     {
         tmp = a;
