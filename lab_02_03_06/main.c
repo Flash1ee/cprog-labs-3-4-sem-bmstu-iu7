@@ -98,6 +98,7 @@ long long process_2(long long a[], size_t n)
             minp = *(a + i) * *(a + i + 1);
     return minp;
 }
+
 long long process_3(long long *start, long long *stop)
 {
     long long minp = *start + *(start + 1);
@@ -112,6 +113,7 @@ long long process_3(long long *start, long long *stop)
     }
     return minp;
 }
+
 void make_table_header(void)
 {
 
@@ -120,16 +122,19 @@ void make_table_header(void)
             "Указатели");
     printf("┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃━━━━━━━━━┃\n");
 }
+
 void make_table_data(long iter_count, size_t size, long time_1, long time_2, long time_3)
 {
     printf("┃%9ld┃%9ld┃%9ld┃%9ld┃%9ld┃\n", iter_count, (long)size, time_1, time_2, time_3);
 }
+
 void form(long long a[], size_t n)
 {
     srand(time(NULL));
     for (size_t i = 0; i < n; i++)
         a[i] = rand();
 }
+
 int search_min(long a[], size_t n)
 {
     long long min = a[0];
@@ -146,8 +151,10 @@ int search_min(long a[], size_t n)
     {
         a[i - 1] = a[i];
     }
+    
     return EXIT_SUCCESS;
 }
+
 int search_max(long a[], size_t n)
 {
     long long max = a[0];
@@ -162,8 +169,10 @@ int search_max(long a[], size_t n)
     }
     for (size_t i = ind + 1; i < n - 1; i++)
         a[i - 1] = a[i];
+        
     return EXIT_SUCCESS;
 }
+
 void search_sum(long a[], size_t n, long long *sum)
 {
     for (size_t i = 0; i < n; i++)
