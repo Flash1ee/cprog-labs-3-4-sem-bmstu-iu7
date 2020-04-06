@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void)
+int main()
 {
     setbuf(stdout, NULL);
+    
     double high, chest_girth, mass;
     double normal_weight, index_mass;
+    
     printf("Input high, chest_girth,mass: ");
     if (scanf("%lf", &high) != 1 || scanf("%lf", &chest_girth) != 1 || (high <= 0))
     {
@@ -20,7 +22,9 @@ int main(void)
     normal_weight = high * chest_girth / 240.;
     high = high / 100.;
     index_mass = mass / (high * high);
+    
     printf("Normal weight = %.5lf\n", normal_weight);
     printf("Index mass = %.5lf", index_mass);
+    
     return EXIT_SUCCESS;
 }
