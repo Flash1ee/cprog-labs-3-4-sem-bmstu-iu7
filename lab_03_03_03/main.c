@@ -71,8 +71,8 @@ void sort(long long min[][N], size_t *col)
         {
             if (min[0][j] < min[0][j + 1])
             {
-                swap(&min[0][j], &min[0][j+1]);
-                swap(&min[1][j], &min[1][j+1]);
+                swap(&min[0][j], &min[0][j + 1]);
+                swap(&min[1][j], &min[1][j + 1]);
             }
         }
 }
