@@ -4,6 +4,7 @@
 
 #define N 10
 #define SHIFT 3
+#define SUM 10
 
 int input(long long a[][N], size_t *n, size_t *m);
 void output(long long a[][N], size_t *n, size_t *m);
@@ -11,6 +12,7 @@ int search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m,
 long sum_digits(long long x);
 void cyclic_shift(long long b[], size_t *n);
 void replace(long long a[][N], long long b[], size_t *n, size_t *m, size_t *vector_size);
+
 int main()
 {
     long long a[N][N];
@@ -18,7 +20,7 @@ int main()
     size_t size = 0;
     size_t n, m;
 
-    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > 10 || m < 1 || m > 10)
+    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
         return EXIT_FAILURE;
 
     if (input(a, &n, &m) != 0)
@@ -26,6 +28,7 @@ int main()
 
     if (search_adding_numbers(a, b, &n, &m, &size) == 0)
         return EXIT_FAILURE;
+        
     cyclic_shift(b, &size);
     replace(a, b, &n, &m, &size);
     output(a, &n, &m);
@@ -57,7 +60,7 @@ int search_adding_numbers(long long a[][N], long long b[], size_t *n, size_t *m,
     int flag = 0;
     for (size_t i = 0; i < *n; i++)
         for (size_t j = 0; j < *m; j++)
-            if (sum_digits(a[i][j]) > 10)
+            if (sum_digits(a[i][j]) > SUM)
             {
                 flag += 1;
                 b[*k] = a[i][j];
