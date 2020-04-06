@@ -10,6 +10,7 @@ void output(long long a[][N], size_t *n, size_t *m);
 void search_min(long long a[][N], long long min[][N], size_t *n, size_t *m);
 void sort(long long min[][N], size_t *col);
 void swap_str(long long a[][N], long long b[][N], long long min[], size_t *str, size_t *col);
+void swap(long long *a, long long *b);
 
 int main()
 {
@@ -18,14 +19,16 @@ int main()
     long long min[IND][N];
     size_t n, m;
 
-    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > 10 || m < 1 || m > 10)
+    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
         return EXIT_FAILURE;
     if (input(a, &n, &m) != 0)
         return EXIT_FAILURE;
+        
     search_min(a, min, &n, &m);
     sort(min, &n);
     swap_str(a, b, min[1], &n, &m);
     output(b, &n, &m);
+    
     return EXIT_SUCCESS;
 }
 
@@ -35,6 +38,7 @@ int input(long long a[][N], size_t *n, size_t *m)
         for (size_t j = 0; j < *m; j++)
             if (scanf("%lld", &a[i][j]) != 1)
                 return EXIT_FAILURE;
+                
     return EXIT_SUCCESS;
 }
 
@@ -67,12 +71,8 @@ void sort(long long min[][N], size_t *col)
         {
             if (min[0][j] < min[0][j + 1])
             {
-                long long tmp = min[0][j];
-                min[0][j] = min[0][j + 1];
-                min[0][j + 1] = tmp;
-                tmp = min[1][j];
-                min[1][j] = min[1][j + 1];
-                min[1][j + 1] = tmp;
+                swap(&min[0][j], &min[0][j+1]);
+                swap(&min[1][j], &min[1][j+1]);
             }
         }
 }
@@ -86,4 +86,12 @@ void swap_str(long long a[][N], long long b[][N], long long min[], size_t *str, 
         for (size_t j = 0; j < *col; j++)
             b[i][j] = a[cur_str][j];
     }
+}
+
+void swap(long long *a, long long *b)
+{
+    long long tmp;
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
