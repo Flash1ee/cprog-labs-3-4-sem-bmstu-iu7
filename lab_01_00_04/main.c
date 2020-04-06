@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #define PRICE_BUY 45
 #define PRICE_SELL 20
-int main(void)
+
+int main()
 {
-    long int s, k;
-    k = 0;
     setbuf(stdout, NULL);
+    
+    long s, k;
+    k = 0;
+    
     printf("Input counts of money:\n");
     if ((scanf("%ld", &s) != 1) || (s < 0)) 
     {
@@ -20,5 +24,6 @@ int main(void)
         s = s + PRICE_SELL;
     }
     printf("Count of bottles with water %ld\n", k);
+    
     return EXIT_SUCCESS;
 }
