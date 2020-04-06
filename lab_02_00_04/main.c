@@ -7,6 +7,7 @@
 int input(long long a[], size_t n);
 void output(long long a[], size_t n);
 void bubble_sort(long long a[], size_t n);
+void swap(long long *a, long long *b);
 
 int main()
 {
@@ -45,10 +46,13 @@ void bubble_sort(long long a[], size_t n)
     for (size_t i = 0; i < n; i++)
         for (size_t j = 1; j < n - i; j++)
             if (a[j - 1] > a[j])
-            {
-                long long tmp;
-                tmp = a[j - 1];
-                a[j - 1] = a[j];
-                a[j] = tmp;
-            }
+                swap(&a[j - 1], &a[j]);
+}
+
+void swap(long long *a, long long *b)
+{
+    long long tmp;
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
