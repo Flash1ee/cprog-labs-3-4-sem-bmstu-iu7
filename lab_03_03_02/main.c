@@ -17,15 +17,17 @@ int main()
     size_t n, m;
     long k;
 
-    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > 10 || m < 1 || m > 10)
+    if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
         return EXIT_FAILURE;
     if (input(a, &n, &m) != 0)
         return EXIT_FAILURE;
     if (scanf("%ld", &k) != 1 || k < 0 || k > 9)
         return EXIT_FAILURE;
+        
     check_matrix(a, &n, &m, k);
     if (output(a, &n, &m) != 0)
         return EXIT_FAILURE;
+        
     return EXIT_SUCCESS;
 }
 
@@ -35,6 +37,7 @@ int input(long long a[][N], size_t *n, size_t *m)
         for (size_t j = 0; j < *m; j++)
             if (scanf("%lld", &a[i][j]) != 1)
                 return EXIT_FAILURE;
+                
     return EXIT_SUCCESS;
 }
 
@@ -48,6 +51,7 @@ int output(long long a[][N], size_t *n, size_t *m)
             printf("%lld ", a[i][j]);
         printf("\n");
     }
+    
     return EXIT_SUCCESS;
 }
 
@@ -83,10 +87,12 @@ void check_matrix(long long a[][N], size_t *n, size_t *m, long k)
 int check_numb(long long x, long k)
 {
     long long digit;
+    
     if (x < 0)
         x *= -1;
     if ((x == 0) && (x == k))
         return 1;
+        
     while (x > 0)
     {
         digit = x % 10;
@@ -94,6 +100,7 @@ int check_numb(long long x, long k)
         if (digit == k)
             return 1;
     }
+    
     return 0;
 }
 void swap_column(long long a[][N], size_t *column, size_t *count_str, size_t *count_col)
