@@ -17,7 +17,7 @@ int main()
     long long b[N];
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n <= 0
-        || n > 10 || m < 1 || m > 10)
+        || n > N || m < 1 || m > N)
         return EXIT_FAILURE;
 
     if (input(a, n, m) != 0)
@@ -31,6 +31,7 @@ int main()
             b[i] = 0;
     }
     output(b, n);
+    
     return EXIT_SUCCESS;
 }
 
@@ -40,6 +41,7 @@ int input(long long a[][N], size_t n, size_t m)
         for (size_t j = 0; j < m; j++)
             if (scanf("%lld", &a[i][j]) != 1)
                 return EXIT_FAILURE;
+                
     return EXIT_SUCCESS;
 }
 
@@ -48,6 +50,7 @@ void output(long long a[], size_t n)
     for (size_t i = 0; i < n; i++)
         printf("%lld ", a[i]);
 }
+
 int monotonic_sequence(long long a[], size_t m)
 {
     int flag = 0;
@@ -55,8 +58,10 @@ int monotonic_sequence(long long a[], size_t m)
         return flag;
     decreasing_sequence(a, m, &flag);
     increasing_sequence(a, m, &flag);
+    
     return flag;
 }
+
 void increasing_sequence(long long a[N], size_t m, int *flag)
 {
     for (size_t i = 0; i < m - 1; i++)
@@ -66,6 +71,7 @@ void increasing_sequence(long long a[N], size_t m, int *flag)
     }
     *flag = 1;
 }
+
 void decreasing_sequence(long long a[N], size_t m, int *flag)
 {
     for (size_t i = 0; i < m - 1; i++)
