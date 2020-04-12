@@ -1,20 +1,18 @@
 #define __USE_MINGW_ANSI_STDIO 1
 #include <stdio.h>
 #include <stdlib.h>
+#include "array.h"
 
-#define N 10
-
-int input(long long a[][N], size_t n, size_t m);
-void output(long long a[], size_t n);
-int monotonic_sequence(long long a[], size_t m);
-void increasing_sequence(long long a[], size_t m, int *flag);
-void decreasing_sequence(long long a[], size_t m, int *flag);
+void output_m(my_int a[], size_t n);
+int monotonic_sequence(my_int a[], size_t m);
+void increasing_sequence(my_int a[], size_t m, int *flag);
+void decreasing_sequence(my_int a[], size_t m, int *flag);
 
 int main()
 {
-    long long a[N][N];
+    my_int a[N][N];
     size_t n, m;
-    long long b[N];
+    my_int b[N];
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n <= 0
         || n > N || m < 1 || m > N)
@@ -30,28 +28,18 @@ int main()
         else
             b[i] = 0;
     }
-    output(b, n);
+    output_m(b, n);
     
     return EXIT_SUCCESS;
 }
 
-int input(long long a[][N], size_t n, size_t m)
-{
-    for (size_t i = 0; i < n; i++)
-        for (size_t j = 0; j < m; j++)
-            if (scanf("%lld", &a[i][j]) != 1)
-                return EXIT_FAILURE;
-                
-    return EXIT_SUCCESS;
-}
-
-void output(long long a[], size_t n)
+void output_m(my_int a[], size_t n)
 {
     for (size_t i = 0; i < n; i++)
         printf("%lld ", a[i]);
 }
 
-int monotonic_sequence(long long a[], size_t m)
+int monotonic_sequence(my_int a[], size_t m)
 {
     int flag = 0;
     
@@ -64,7 +52,7 @@ int monotonic_sequence(long long a[], size_t m)
     return flag;
 }
 
-void increasing_sequence(long long a[N], size_t m, int *flag)
+void increasing_sequence(my_int a[N], size_t m, int *flag)
 {
     for (size_t i = 0; i < m - 1; i++)
         if (a[i] > a[i + 1])
@@ -72,7 +60,7 @@ void increasing_sequence(long long a[N], size_t m, int *flag)
     *flag = 1;
 }
 
-void decreasing_sequence(long long a[N], size_t m, int *flag)
+void decreasing_sequence(my_int a[N], size_t m, int *flag)
 {
     for (size_t i = 0; i < m - 1; i++)
         if (a[i] < a[i + 1])
