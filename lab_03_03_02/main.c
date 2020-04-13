@@ -2,62 +2,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "array.h"
 
-#define N 10
-
-int input(long long a[][N], size_t *n, size_t *m);
-int output(long long a[][N], size_t *n, size_t *m);
-void check_matrix(long long a[][N], size_t *n, size_t *m, long k);
-int check_numb(long long x, long k);
-void swap_column(long long a[][N], size_t *column, size_t *count_str, size_t *count_col);
+void check(my_int a[][N], size_t n, size_t *m, long k);
+int check_numb(my_int x, long k);
+void swap_col(my_int a[][N], size_t col, size_t count_str, size_t count_col);
 
 int main()
 {
-    long long a[N][N];
+    my_int a[N][N];
     size_t n, m;
     long k;
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
         return EXIT_FAILURE;
-    if (input(a, &n, &m) != 0)
+    if (input(a, n, m) != 0)
         return EXIT_FAILURE;
     if (scanf("%ld", &k) != 1 || k < 0 || k > 9)
         return EXIT_FAILURE;
         
-    check_matrix(a, &n, &m, k);
-    if (output(a, &n, &m) != 0)
+    check(a, n, &m, k);
+    if (output(a, n, m) != 0)
         return EXIT_FAILURE;
         
     return EXIT_SUCCESS;
 }
 
-int input(long long a[][N], size_t *n, size_t *m)
+void check(my_int a[][N], size_t n, size_t *m, long k)
 {
-    for (size_t i = 0; i < *n; i++)
-        for (size_t j = 0; j < *m; j++)
-            if (scanf("%lld", &a[i][j]) != 1)
-                return EXIT_FAILURE;
-                
-    return EXIT_SUCCESS;
-}
-
-int output(long long a[][N], size_t *n, size_t *m)
-{
-    if (*m == 0)
-        return EXIT_FAILURE;
-    for (size_t i = 0; i < *n; i++)
-    {
-        for (size_t j = 0; j < *m; j++)
-            printf("%lld ", a[i][j]);
-        printf("\n");
-    }
-    
-    return EXIT_SUCCESS;
-}
-
-void check_matrix(long long a[][N], size_t *n, size_t *m, long k)
-{
-    long long x;
+    my_int x;
     int flag = 0;
     size_t i = 0;
     size_t j = 0;
@@ -66,12 +39,12 @@ void check_matrix(long long a[][N], size_t *n, size_t *m, long k)
     {
         flag = 0;
         //строки
-        while (j < *n)
+        while (j < n)
         {
             x = a[j][i];
             if (check_numb(x, k) == 1)
             {
-                swap_column(a, &i, n, m);
+                swap_col(a, i, n, *m);
                 flag = 1;
                 *m -= 1;
                 break;
@@ -84,9 +57,9 @@ void check_matrix(long long a[][N], size_t *n, size_t *m, long k)
         j = 0;
     }
 }
-int check_numb(long long x, long k)
+int check_numb(my_int x, long k)
 {
-    long long digit;
+    my_int digit;
     
     if (x < 0)
         x *= -1;
@@ -103,9 +76,9 @@ int check_numb(long long x, long k)
     
     return 0;
 }
-void swap_column(long long a[][N], size_t *column, size_t *count_str, size_t *count_col)
+void swap_col(my_int a[][N], size_t column, size_t count_str, size_t count_col)
 {
-    for (size_t i = *column + 1; i < *count_col; i++)
-        for (size_t j = 0; j < *count_str; j++)
+    for (size_t i = column + 1; i < count_col; i++)
+        for (size_t j = 0; j < count_str; j++)
             a[j][i - 1] = a[j][i];
 }
