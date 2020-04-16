@@ -11,11 +11,11 @@ int main()
     size_t n, m;
     
     if (scanf("%zu", &n) != 1 || n < 1 || n > N)
-        return EXIT_FAILURE;
+        return SIZE_ERROR;
     if (scanf("%zu", &m) != 1 || m < 1 || m > N || m != n)
-        return EXIT_FAILURE;
+        return SIZE_ERROR;
     if (input(a, n, n) != 0)
-        return EXIT_FAILURE;
+        return INPUT_ERROR;
         
     sort(a, n);
     output(a, n, n);

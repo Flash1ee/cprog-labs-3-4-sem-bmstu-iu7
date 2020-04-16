@@ -17,15 +17,16 @@ int main()
     size_t n, m;
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
-        return EXIT_FAILURE;
+        return SIZE_ERROR;
     if (input(a, n, m) != 0)
-        return EXIT_FAILURE;
+        return INPUT_ERROR;
         
     search_min(a, min, n, m);
     sort(min, n);
     swap_str(a, b, min[1], n, m);
-    output(b, n, m);
-    
+    if (output(b, n, m) != EXIT_SUCCESS)
+        return EMPTY_OUT;
+        
     return EXIT_SUCCESS;
 }
 

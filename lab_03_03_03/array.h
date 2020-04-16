@@ -5,6 +5,9 @@
 #include <stdlib.h>
 
 #define N 10
+#define SIZE_ERROR 2
+#define INPUT_ERROR 3
+#define EMPTY_OUT 4
 
 typedef long long my_int;
 typedef my_int array_t[N][N];

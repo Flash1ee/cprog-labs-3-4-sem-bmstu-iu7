@@ -16,10 +16,10 @@ int main()
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n <= 0
         || n > N || m < 1 || m > N)
-        return EXIT_FAILURE;
+        return SIZE_ERROR;
 
     if (input(a, n, m) != 0)
-        return EXIT_FAILURE;
+        return INPUT_ERROR;
 
     for (size_t i = 0; i < n; i++)
     {

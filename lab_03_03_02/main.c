@@ -4,6 +4,8 @@
 #include <math.h>
 #include "array.h"
 
+#define INPUT_NUM_ERROR 5
+
 void check(my_int a[][N], size_t n, size_t *m, long k);
 int check_numb(my_int x, long k);
 void swap_col(my_int a[][N], size_t col, size_t count_str, size_t count_col);
@@ -15,15 +17,15 @@ int main()
     long k;
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
-        return EXIT_FAILURE;
+        return SIZE_ERROR;
     if (input(a, n, m) != 0)
-        return EXIT_FAILURE;
+        return INPUT_ERROR;
     if (scanf("%ld", &k) != 1 || k < 0 || k > 9)
-        return EXIT_FAILURE;
+        return INPUT_NUM_ERROR;
         
     check(a, n, &m, k);
     if (output(a, n, m) != 0)
-        return EXIT_FAILURE;
+        return EMPTY_OUT;
         
     return EXIT_SUCCESS;
 }

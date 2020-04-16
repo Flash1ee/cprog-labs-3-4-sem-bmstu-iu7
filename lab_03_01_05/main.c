@@ -5,6 +5,7 @@
 
 #define SHIFT 3
 #define SUM 10
+#define NO_NUMBERS_OVER_SUM 5
 
 int search_by_property(my_int a[][N], my_int b[], size_t n, size_t m, size_t *k);
 long sum_digits(my_int x);
@@ -19,13 +20,13 @@ int main()
     size_t n, m;
 
     if (scanf("%zu", &n) != 1 || scanf("%zu", &m) != 1 || n < 1 || n > N || m < 1 || m > N)
-        return EXIT_FAILURE;
+        return SIZE_ERROR;
 
     if (input(a, n, m) != 0)
-        return EXIT_FAILURE;
+        return INPUT_ERROR;
 
     if (search_by_property(a, b, n, m, &size) == 0)
-        return EXIT_FAILURE;
+        return NO_NUMBERS_OVER_SUM;
         
     cyclic_shift(b, size);
     replace(a, b, n, m, size);
