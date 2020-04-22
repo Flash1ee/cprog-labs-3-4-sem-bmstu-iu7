@@ -3,72 +3,72 @@
 #include <stdlib.h>
 #include <string.h>
 #include "string.h"
-void func_strchr(const char *str, int el);
-//Если не символа в строке нет => возвращает NULL
+
+#define TESTS 6
+
+void func_strcspn(const char *str, const char *temp, size_t ind);
+void func_strpbrk(const char *str, const char *temp, size_t ind);
+void func_strspn(const char *str, const char *temp, size_t ind);
+void func_strrchr(const char *str, int el, size_t ind);
+void func_strchr(const char *str, int el, size_t ind);
 int main()
 {
-    const char *temp = " ,.!";
+    // const char *temp = " ,.!";
     const char *symbols = "abcde";
-    const char *test1 = "$Unclea Sasha!";
-    const char *test2 = "aMoscow?";
-    const char *test3 = "";
-    const char *test4 = "00 0";
-    const char *test5 = "aa,a";
-    const char *test6 = "123456789";
-    func_strchr(test1,'S');
-    func_strchr(test2, '\0');
-    func_strchr(test3, '\0');
-    func_strchr(test4, '1');
-    func_strchr(test5, 'A');
-    func_strchr(test6, '0');
-    printf("%d\n", strpbrk(test1,temp)==my_strpbrk(test1,temp));
-    printf("%d\n", strpbrk(test2,temp)==my_strpbrk(test2,temp));
-    printf("%d\n", strpbrk(test3,temp)==my_strpbrk(test3,temp));
-    printf("%d\n", strpbrk(test4,temp)==my_strpbrk(test4,temp));
-    printf("%d\n", strpbrk(test5,temp)==my_strpbrk(test5,temp));
-    printf("%d\n", strpbrk(test6,temp)==my_strpbrk(test6,temp));
+    const char test[][15] = { "$Unclea Sasha!", "aMoscow?", "", "00 0", "aa,a", "123456789", "S",
+        "\0", "\0", "1", "A", "0" };
 
-    printf("%d\n", strspn(test6,temp)==my_strspn(test6,temp));
-    printf("%d\n", strspn(test6,temp)==my_strspn(test6,temp));
-    printf("%d\n", strspn(test6,temp)==my_strspn(test6,temp));
-    printf("%d\n", strspn(test6,temp)==my_strspn(test6,temp));
-    printf("%d\n", strspn(test6,temp)==my_strspn(test6,temp));
-    printf("%d\n", strspn(test6,temp)==my_strspn(test6,temp));
-
-    printf("%d\n", strspn(test6,symbols)==my_strspn(test6,symbols));
-    printf("%d\n", strspn(test6,symbols)==my_strspn(test6,symbols));
-    printf("%d\n", strspn(test6,symbols)==my_strspn(test6,symbols));
-    printf("%d\n", strspn(test6,symbols)==my_strspn(test6,symbols));
-    printf("%d\n", strspn(test6,symbols)==my_strspn(test6,symbols));
-    printf("%d\n", strspn(test6,symbols)==my_strspn(test6,symbols));
-
-    printf("%d\n", strcspn(test1,temp)==my_strcspn(test1,temp));
-    printf("%d\n", strcspn(test2,temp)==my_strcspn(test2,temp));
-    printf("%d\n", strcspn(test3,temp)==my_strcspn(test3,temp));
-    printf("%d\n", strcspn(test4,temp)==my_strcspn(test4,temp));
-    printf("%d\n", strcspn(test5,temp)==my_strcspn(test5,temp));
-    printf("%lld %lld\n",strcspn(test5,temp),my_strcspn(test5,temp));
-    printf("%d\n", strcspn(test6,temp)==my_strcspn(test6,temp));
-
-    printf("%d\n", strrchr(test1,'a')==my_strrchr(test1,'a'));
-    printf("%d\n", strrchr(test2,'o')==my_strrchr(test2,'o'));
-    printf("%d\n", strrchr(test3,' ')==my_strrchr(test3,' '));
-    printf("%d\n", strrchr(test4,'0')==my_strrchr(test4,'0'));
-    printf("%d\n", strrchr(test5,'b')==my_strrchr(test5,'b'));
-    printf("%d\n", strrchr(test6,'0')==my_strrchr(test6,'0'));
-
-
-    
-
-    
+    const char test_1[][2] = { "a", "o", " ", "0", "b", "0" };
+    for (size_t i = 0; i < (sizeof(test) / sizeof(test[1])) / 2; i++)
+        func_strchr(test[i], (int)test[i + TESTS][0], i + 1);
+    printf("\n");
+    for (size_t i = 0; i < sizeof(test_1) / sizeof(test_1[0]); i++)
+        func_strrchr(test[i], (int)test_1[i][0], i + 1);
+    printf("\n");
+    for (size_t i = 0; i < TESTS; i++)
+        func_strpbrk(test[i], symbols, i + 1);
+    printf("\n");
+    for (size_t i = 0; i < TESTS; i++)
+        func_strspn(test[i], symbols, i + 1);
+    printf("\n");
+    for (size_t i = 0; i < TESTS; i++)
+        func_strcspn(test[i], symbols, i + 1);
 
     return EXIT_SUCCESS;
 }
 
-void func_strchr(const char *str, int el)
+void func_strchr(const char *str, int el, size_t ind)
 {
-    if (my_strchr(str, el) == strchr(str,el))
-        printf("TEST PASSED\n");
-    else printf("TEST FAILED\n");
-
+    if (my_strchr(str, el) == strchr(str, el))
+        printf("TEST_STRCHR_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRCHR_%zu FAILED\n", ind);
+}
+void func_strrchr(const char *str, int el, size_t ind)
+{
+    if (my_strrchr(str, el) == strrchr(str, el))
+        printf("TEST_STRRCHR_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRRCHR_%zu FAILED\n", ind);
+}
+void func_strpbrk(const char *str, const char *temp, size_t ind)
+{
+    if (my_strpbrk(str, temp) == strpbrk(str, temp))
+        printf("TEST_STRPBRK_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRPBRK_%zu FAILED\n", ind);
+}
+void func_strspn(const char *str, const char *temp, size_t ind)
+{
+    if (my_strspn(str, temp) == strspn(str, temp))
+        printf("TEST_STRSPN_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRSPN_%zu FAILED\n", ind);
+}
+void func_strcspn(const char *str, const char *temp, size_t ind)
+{
+    if (my_strcspn(str, temp) == strcspn(str, temp))
+        printf("TEST_STRCSPN_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRCSPN_%zu FAILED\n", ind);
 }
