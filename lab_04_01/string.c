@@ -15,10 +15,13 @@ char *my_strchr(const char *str, int symbol)
 char *my_strrchr(const char *str, int symbol)
 //Поиск последнего вхождения указанного символа.(включая '\0') или NULL;
 {
-    char* tmp = NULL;
-    for (size_t i = 0; str[i] != '\0'; i++)
+    char *tmp = NULL;
+    size_t i;
+    for (i = 0; str[i] != '\0'; i++)
         if ((int)str[i] == symbol)
             tmp = (char*)&str[i];
+    if (str[i] == symbol)
+        return (char*)&str[i];
     return tmp;
 }
 char *my_strpbrk(const char *str, const char *temp)
