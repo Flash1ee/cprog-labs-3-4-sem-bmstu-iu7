@@ -47,3 +47,49 @@ void delete_repeat_symbol(my_str word[])
         }
     }
 }
+
+int split_line(my_str s1[], word_matrix words, my_str delim[], size_t *cnt)
+{
+    char *ptr;
+    int empty_err = 0;
+    ptr = strtok(s1, delim);
+    size_t i = 0;
+    while (ptr != NULL)
+    {
+        if (strlen(ptr) > MAXWORD)
+            return LEN_WORD;
+        if (!empty_err)
+            empty_err = 1;
+        strncpy(words[i++], ptr, MAXWORD + 1);
+        ptr = strtok(NULL, delim);
+    }
+    *cnt = i;
+    if (!empty_err)
+        return ERROR_IO;
+
+    return OK;
+}
+int make_output_line(word_matrix words, my_str output[], size_t cnt)
+{
+    int error_io = 0;
+    my_word word_flag;
+    my_word new_word;
+    strncpy(word_flag, words[cnt - 1], MAXWORD + 1);
+    for (int j = cnt - 2; j >= 0; j--)
+    {
+        if (strcmp(words[j], word_flag) != 0)
+        {
+            error_io = 1;
+            strncpy(new_word, words[j], MAXWORD + 1);
+            delete_repeat_symbol(new_word);
+            strcat(output, new_word);
+            strcat(output, " ");
+        }
+    }
+    if (output[strlen(output) - 1] == ' ')
+        output[strlen(output) - 1] = '\0';
+
+    if (!error_io)
+        return ERROR_IO;
+    return OK;
+}

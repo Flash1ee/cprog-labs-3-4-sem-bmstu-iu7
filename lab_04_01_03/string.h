@@ -8,7 +8,7 @@
 #define MAXWORD 16
 #define SPLIT_CHAR 8
 
-#define EXIT_SUCCESS 0
+#define OK 0
 #define ERROR_IO 1
 #define LEN_WORD 3
 #define EQUAL_ROWS 2
@@ -20,5 +20,7 @@ typedef my_str word_matrix[MAXSTR][MAXWORD + 1];
 
 my_str *read_line(my_str str[]);
 void delete_repeat_symbol(my_str word[]);
+int split_line(my_str s1[], word_matrix words, my_str delim[], size_t *cnt);
+int make_output_line(word_matrix words, my_str output[], size_t cnt);
 
 #endif
