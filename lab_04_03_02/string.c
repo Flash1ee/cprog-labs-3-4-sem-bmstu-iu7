@@ -13,79 +13,65 @@ my_str *read_line(my_str line[])
     line[i] = '\0';
     return line;
 }
-int split_line(my_str line[], my_str words[], my_str split_symbols[])
+int split_line(my_str line[], matrix_word words, my_str split_symbols[], size_t *cnt)
 {
+    my_str word[MAXWORD + 1];
+    size_t i = 0;
     int flag = 0;
     size_t ind_line = 0;
-    size_t ind_words = 0;
+    size_t ind_word = 0;
     size_t word_len = 0;
 
+
+    for (size_t k = 0; k < MAXWORD; k++)
+        word[k] = '\0';
     while (line[ind_line] != '\0')
     {
         for (size_t j = 0; j < SPLIT_CHAR; j++)
-        {
             if (line[ind_line] == split_symbols[j])
-            {
                 flag = 1;
-                break;
-            }
-        }
         if (flag)
         {
             if (word_len > MAXWORD)
                 return LONG_WORD;
-            else if (word_len != 0)
+            if (word_len != 0)
             {
-                word_len = 0;
-                words[ind_words++] = ' ';
+                word_len = 0, ind_word = 0;
+                strncpy(words[i++], word, MAXWORD + 1);
+                for (size_t k = 0; k < MAXWORD + 1; k++)
+                    word[k] = '\0';
             }
             flag = 0;
         }
         else
         {
-            words[ind_words++] = line[ind_line];
+            word[ind_word++] = line[ind_line];
             word_len++;
         }
         ind_line++;
     }
-    words[ind_words] = '\0';
+    if (word_len != 0)
+        strncpy(words[i++], word, MAXWORD + 1);
+    for (size_t k = 0; k < MAXWORD + 1; k++)
+        word[k] = '\0';
+    *cnt = i;
     return OK;
 }
-void search_word(my_str s1[], my_str s2[], int *empty)
+void search_word(matrix_word s1, matrix_word s2, int *empty, size_t cnt_1, size_t cnt_2)
 {
     my_word word_1;
-    my_word word_2;
-    matrix_word check_words;
-    size_t check = 0;
-    size_t i = 0;
-    size_t m = 0;
-    size_t j_1 = 0;
-    size_t j_2 = 0;
     int flag = 0;
-    while (s1[i] != '\0')
+    for (size_t k = 0; k < MAXWORD; k++)
+        word_1[k] = '\0';
+
+    for (size_t i = 0; i < cnt_1; i++)
     {
-        while (s1[i] != ' ' && s1[i] != '\0')
-            word_1[j_1++] = s1[i++];
-        word_1[j_1] = '\0';
-        if (s1[i] != '\0')
-            i++;
-        while (s2[m] != '\0')
-        {
-            while (s2[m] != ' ' && s2[m] != '\0')
-                word_2[j_2++] = s2[m++];
-            word_2[j_2] = '\0';
-            if (s2[m] != '\0')
-                m++;
-            if (strcmp(word_1, word_2) == 0)
-            {
+        strncpy(word_1, s1[i], MAXWORD + 1);
+        for (size_t j = 0; j < cnt_2; j++)
+            if (strcmp(word_1, s2[j]) == 0)
                 flag = 1;
-                j_2 = 0;
-                break;
-            }
-            j_2 = 0;
-        }
-        for (size_t k = 0; k < check; k++)
-            if (strcmp(check_words[k], word_1) == 0)
+        for (size_t j = 0; j < cnt_1; j++)
+            if ((j != i) && strcmp(word_1, s1[j]) == 0)
                 flag = 1;
         if (!flag)
         {
@@ -94,8 +80,7 @@ void search_word(my_str s1[], my_str s2[], int *empty)
                 *empty = 1;
         }
         flag = 0;
-        m = 0;
-        j_1 = 0;
-        strncpy(check_words[check++], word_1, MAXWORD + 1);
+        for (size_t k = 0; k < MAXWORD; k++)
+            word_1[k] = '\0';
     }
 }
