@@ -43,9 +43,9 @@ void delete_repeat_symbol(my_str word[])
     }
 }
 
-int split_line(my_str s1[], word_matrix words, my_str delim[], size_t* cnt)
+int split_line(my_str s1[], word_matrix words, my_str delim[], size_t *cnt)
 {
-    char* ptr;
+    char *ptr;
     int empty_err = 0;
     ptr = strtok(s1, delim);
     size_t i = 0;
