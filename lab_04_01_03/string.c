@@ -15,19 +15,15 @@ my_str *read_line(my_str line[])
 
 void delete_repeat_symbol(my_str word[])
 {
-    // ASCII [97:122] - нижние буквы;
-    // ASCII [65:90] - верхние буквы;
     char *beg;
     char *end;
     char symbol;
     my_word cur_word;
     my_word tmp;
-    for (size_t i = 0; i < MAXWORD; i++)
-        tmp[i] = '\0';
     size_t size;
     for (size_t i = 0; word[i] != '\0'; i++)
     {
-        if ((word[i] >= 65 && word[i] <= 90) || (word[i] >= 97 && word[i] <= 122))
+        if (isalpha(word[i]))
         {
             symbol = word[i];
             beg = strchr(word, symbol);
@@ -38,9 +34,8 @@ void delete_repeat_symbol(my_str word[])
                 strcpy(cur_word, end + 1);
                 strcpy(tmp, word);
                 strncpy(word, tmp, (size - strlen(end)));
-                for (size_t i = 0; i < MAXWORD; i++)
-                    tmp[i] = '\0';
                 *end = '\0';
+                //Зануление,чтобы корректно сконкатенировать строки.
                 strcat(word, cur_word);
                 end = strrchr(word, symbol);
             }
@@ -48,9 +43,9 @@ void delete_repeat_symbol(my_str word[])
     }
 }
 
-int split_line(my_str s1[], word_matrix words, my_str delim[], size_t *cnt)
+int split_line(my_str s1[], word_matrix words, my_str delim[], size_t* cnt)
 {
-    char *ptr;
+    char* ptr;
     int empty_err = 0;
     ptr = strtok(s1, delim);
     size_t i = 0;
@@ -60,7 +55,7 @@ int split_line(my_str s1[], word_matrix words, my_str delim[], size_t *cnt)
             return LEN_WORD;
         if (!empty_err)
             empty_err = 1;
-        strncpy(words[i++], ptr, MAXWORD + 1);
+        strncpy(words[i++], ptr, strlen(ptr) + 1);
         ptr = strtok(NULL, delim);
     }
     *cnt = i;
@@ -74,13 +69,13 @@ int make_output_line(word_matrix words, my_str output[], size_t cnt)
     int error_io = 0;
     my_word word_flag;
     my_word new_word;
-    strncpy(word_flag, words[cnt - 1], MAXWORD + 1);
+    strncpy(word_flag, words[cnt - 1], strlen(words[cnt - 1]) + 1);
     for (int j = cnt - 2; j >= 0; j--)
     {
         if (strcmp(words[j], word_flag) != 0)
         {
             error_io = 1;
-            strncpy(new_word, words[j], MAXWORD + 1);
+            strncpy(new_word, words[j], strlen(words[j]) + 1);
             delete_repeat_symbol(new_word);
             strcat(output, new_word);
             strcat(output, " ");

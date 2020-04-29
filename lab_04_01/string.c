@@ -68,3 +68,40 @@ size_t my_strcspn(const char *str, const char *temp)
     }
     return cnt;
 }
+
+void func_strchr(const char *str, int el, size_t ind)
+{
+    if (my_strchr(str, el) == strchr(str, el))
+        printf("TEST_STRCHR_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRCHR_%zu FAILED\n", ind);
+}
+void func_strrchr(const char *str, int el, size_t ind)
+{
+    if (my_strrchr(str, el) == strrchr(str, el))
+        printf("TEST_STRRCHR_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRRCHR_%zu FAILED\n", ind);
+}
+void func_strpbrk(const char *str, const char *temp, size_t ind)
+{
+    if (my_strpbrk(str, temp) == strpbrk(str, temp))
+        printf("TEST_STRPBRK_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRPBRK_%zu FAILED\n", ind);
+}
+void func_strspn(const char *str, const char *temp, size_t ind)
+{
+    if (my_strspn(str, temp) == strspn(str, temp))
+        printf("TEST_STRSPN_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRSPN_%zu FAILED\n", ind);
+}
+void func_strcspn(const char *str, const char *temp, size_t ind)
+{
+    if (my_strcspn(str, temp) == strcspn(str, temp))
+        printf("TEST_STRCSPN_%zu PASSED\n", ind);
+    else
+        printf("TEST_STRCSPN_%zu FAILED\n", ind);
+}
+

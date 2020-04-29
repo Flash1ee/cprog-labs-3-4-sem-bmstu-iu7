@@ -12,16 +12,13 @@ int main()
 
     word_matrix s1_words;
     char split_symbols[] = ",;:-.!? ";
+    s2[0] = '\0';
 
     if (read_line(s1) == NULL)
         return ERROR_IO;
 
-    for (size_t i = 0; i < MAXWORD; i++)
-        s2[i] = '\0';
-
     if (split_line(s1, s1_words, split_symbols, &cnt) != OK)
         return ERROR_IO;
-
 
     if (make_output_line(s1_words, s2, cnt) != OK)
         return ERROR_IO;

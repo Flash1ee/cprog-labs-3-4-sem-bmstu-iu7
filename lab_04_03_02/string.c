@@ -22,9 +22,6 @@ int split_line(my_str line[], matrix_word words, my_str split_symbols[], size_t 
     size_t ind_word = 0;
     size_t word_len = 0;
 
-
-    for (size_t k = 0; k < MAXWORD; k++)
-        word[k] = '\0';
     while (line[ind_line] != '\0')
     {
         for (size_t j = 0; j < SPLIT_CHAR; j++)
@@ -36,10 +33,9 @@ int split_line(my_str line[], matrix_word words, my_str split_symbols[], size_t 
                 return LONG_WORD;
             if (word_len != 0)
             {
+                word[ind_word] = '\0';
                 word_len = 0, ind_word = 0;
-                strncpy(words[i++], word, MAXWORD + 1);
-                for (size_t k = 0; k < MAXWORD + 1; k++)
-                    word[k] = '\0';
+                strncpy(words[i++], word, strlen(word) + 1);
             }
             flag = 0;
         }
@@ -51,9 +47,10 @@ int split_line(my_str line[], matrix_word words, my_str split_symbols[], size_t 
         ind_line++;
     }
     if (word_len != 0)
-        strncpy(words[i++], word, MAXWORD + 1);
-    for (size_t k = 0; k < MAXWORD + 1; k++)
-        word[k] = '\0';
+    {
+        word[ind_word] = '\0';
+        strncpy(words[i++], word, strlen(word) + 1);
+    }
     *cnt = i;
     return OK;
 }
@@ -61,12 +58,10 @@ void search_word(matrix_word s1, matrix_word s2, int *empty, size_t cnt_1, size_
 {
     my_word word_1;
     int flag = 0;
-    for (size_t k = 0; k < MAXWORD; k++)
-        word_1[k] = '\0';
 
     for (size_t i = 0; i < cnt_1; i++)
     {
-        strncpy(word_1, s1[i], MAXWORD + 1);
+        strncpy(word_1, s1[i], strlen(s1[i]) + 1);
         for (size_t j = 0; j < cnt_2; j++)
             if (strcmp(word_1, s2[j]) == 0)
                 flag = 1;
@@ -80,7 +75,5 @@ void search_word(matrix_word s1, matrix_word s2, int *empty, size_t cnt_1, size_
                 *empty = 1;
         }
         flag = 0;
-        for (size_t k = 0; k < MAXWORD; k++)
-            word_1[k] = '\0';
     }
 }
