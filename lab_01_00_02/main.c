@@ -21,9 +21,9 @@ int main()
         return EXIT_FAILURE;
     }
     lateral_side = h * h + (up_side - down_side) * (up_side - down_side) / 4.;
-    perimetr = up_side + down_side + sqrt(lateral_side) * 2;
+    perimeter = up_side + down_side + sqrt(lateral_side) * 2;
     
-    printf("Perimetr of figure = %.5lf\n", perimetr);
+    printf("Perimeter of figure = %.5lf\n", perimeter);
     
     return EXIT_SUCCESS;
 }
