@@ -1,9 +1,9 @@
 *.o
 *.exe
 .gitkeep
+
+
 *.gcno
 *.gcda
-.idea
 .vscode
 *.out
-*.gcov 
