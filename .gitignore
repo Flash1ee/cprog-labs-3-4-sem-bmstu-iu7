@@ -1,8 +1,8 @@
 *.o
 *.exe
 .gitkeep
-
-
+*.gcov
+**/.idea/**
 *.gcno
 *.gcda
 .vscode
