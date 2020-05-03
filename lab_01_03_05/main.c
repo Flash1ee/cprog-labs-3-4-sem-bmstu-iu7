@@ -5,7 +5,7 @@ long gcd(long a, long b);
 
 int main()
 {
-    setbuf(stdout,NULL);
+    setbuf(stdout, NULL);
     
     long a, b, x;
     
