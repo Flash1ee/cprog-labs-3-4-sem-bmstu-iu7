@@ -7,7 +7,7 @@ int main()
     setbuf(stdout, NULL);
     
     double up_side, down_side, h;
-    double perimetr, lateral_side;
+    double perimeter, lateral_side;
     
     printf("Input up_side, down_side, h:\n");
     if (scanf("%lf", &up_side) != 1 || scanf("%lf", &down_side) != 1 || scanf("%lf", &h) != 1)
