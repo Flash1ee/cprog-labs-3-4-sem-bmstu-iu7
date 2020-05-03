@@ -1,1 +1,1 @@
-Input high, chest_girth,mass: Incorrect input
+Input high, chest_len,mass: Incorrect input
