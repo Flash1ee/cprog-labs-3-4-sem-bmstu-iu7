@@ -2,7 +2,7 @@
 #include <string.h>
 
 
-my_str *read_line(my_str line[])
+char *read_line(char line[])
 {
     int el;
     size_t i = 0;
@@ -13,9 +13,9 @@ my_str *read_line(my_str line[])
     line[i] = '\0';
     return line;
 }
-int split_line(my_str line[], matrix_word words, my_str split_symbols[], size_t *cnt)
+int split_line(char line[], matrix_word words, char split_symbols[], size_t *cnt)
 {
-    my_str word[MAXWORD + 1];
+    char word[MAXWORD + 1];
     size_t i = 0;
     int flag = 0;
     size_t ind_line = 0;

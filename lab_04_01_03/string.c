@@ -1,7 +1,8 @@
+#define __USE_MINGW_ANSI_STDIO 1
 #include <string.h>
 #include "string.h"
 
-my_str *read_line(my_str line[])
+char *read_line(char line[])
 {
     int el;
     size_t i = 0;
@@ -13,7 +14,7 @@ my_str *read_line(my_str line[])
     return line;
 }
 
-void delete_repeat_symbol(my_str word[])
+void delete_repeat_symbol(char word[])
 {
     char *beg;
     char *end;
@@ -43,28 +44,24 @@ void delete_repeat_symbol(my_str word[])
     }
 }
 
-int split_line(my_str s1[], word_matrix words, my_str delim[], size_t *cnt)
+int split_line(char s1[], word_matrix words, char delim[], size_t *cnt)
 {
-    char *ptr;
     int empty_err = 0;
-    ptr = strtok(s1, delim);
-    size_t i = 0;
+    char *ptr = strtok(s1, delim);
     while (ptr != NULL)
     {
         if (strlen(ptr) > MAXWORD)
             return LEN_WORD;
         if (!empty_err)
             empty_err = 1;
-        strncpy(words[i++], ptr, strlen(ptr) + 1);
+        strncpy(words[(*cnt)++], ptr, strlen(ptr) + 1);
         ptr = strtok(NULL, delim);
     }
-    *cnt = i;
     if (!empty_err)
         return ERROR_IO;
-
     return OK;
 }
-int make_output_line(word_matrix words, my_str output[], size_t cnt)
+int make_output_line(word_matrix words, char output[], size_t cnt)
 {
     int error_io = 0;
     my_word word_flag;

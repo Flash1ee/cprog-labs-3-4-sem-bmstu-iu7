@@ -13,13 +13,12 @@
 #define MAXSTR 256
 #define MAXWORD 16
 
-typedef char my_str;
-typedef my_str string_t[MAXSTR + 1];
-typedef my_str my_word[MAXWORD + 1];
-typedef my_str matrix_word[MAXSTR][MAXWORD + 1];
+typedef char string_t[MAXSTR + 1];
+typedef char my_word[MAXWORD + 1];
+typedef char matrix_word[MAXSTR][MAXWORD + 1];
 
-my_str *read_line(my_str str[]);
-int split_line(my_str line[], matrix_word words, my_str split_symbols[], size_t *cnt);
+char *read_line(char str[]);
+int split_line(char line[], matrix_word words, char split_symbols[], size_t *cnt);
 void search_word(matrix_word s1, matrix_word s2, int *empty, size_t cnt_1, size_t cnt_2);
 
 
