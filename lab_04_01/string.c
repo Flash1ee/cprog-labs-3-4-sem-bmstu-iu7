@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO 1
 #include "string.h"
 
 
@@ -7,9 +8,9 @@ char *my_strchr(const char *str, int symbol)
     size_t i;
     for (i = 0; str[i] != '\0'; i++)
         if ((int)str[i] == symbol)
-            return (char*)&str[i];
+            return (char*)str + i;
     if (str[i] == symbol)
-        return (char*)&str[i];
+        return (char*)str+i;
     return NULL;
 }
 char *my_strrchr(const char *str, int symbol)
@@ -19,9 +20,9 @@ char *my_strrchr(const char *str, int symbol)
     size_t i;
     for (i = 0; str[i] != '\0'; i++)
         if ((int)str[i] == symbol)
-            tmp = (char*)&str[i];
+            tmp = (char*)str+i;
     if (str[i] == symbol)
-        return (char*)&str[i];
+        return (char*)str+i;
     return tmp;
 }
 char *my_strpbrk(const char *str, const char *temp)
@@ -30,7 +31,7 @@ char *my_strpbrk(const char *str, const char *temp)
     for (size_t i = 0; str[i] != '\0'; i++)
         for (size_t j = 0; temp[j] != '\0'; j++)
             if (temp[j] == str[i])
-                return (char*)&str[i];
+                return (char*)str+i;
     return NULL;
 }
 size_t my_strspn(const char *str, const char *temp)
