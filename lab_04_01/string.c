@@ -16,7 +16,7 @@ char *my_strchr(const char *str, int symbol)
 char *my_strrchr(const char *str, int symbol)
 //Поиск последнего вхождения указанного символа.(включая '\0') или NULL;
 {
-    char* tmp = NULL;
+    char *tmp = NULL;
     size_t i;
     for (i = 0; str[i] != '\0'; i++)
         if ((int)str[i] == symbol)
