@@ -7,10 +7,10 @@ int process(FILE *f, size_t *cnt)
     size_t k = 0;
     if (fscanf(f, "%lld", &frst) == 1)
     {
-        k+=1;
+        k += 1;
         while (fscanf(f, "%lld", &scnd) == 1)
         {
-            k+=1;
+            k += 1;
             if ((frst >= 0 && scnd < 0) || (frst < 0 && scnd >= 0))
                 *cnt += 1;
             frst = scnd;
