@@ -7,7 +7,6 @@ int main()
     size_t cnt = 0;
     if (process(stdin, &cnt))
         return ERROR_IN;
-
     printf("%zu", cnt);
 
     return OK;
