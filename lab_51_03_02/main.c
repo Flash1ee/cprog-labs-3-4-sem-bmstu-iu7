@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        fprintf(stderr,"Error count of arguments != 2");
+        fprintf(stderr, "Error count of arguments != 2");
         return ARG_ERR;
     }
 
@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
     if (f)
     {
+        rc = get_avg();
         if (!get_avg(f, &average))
         {
             fseek(f, 0, SEEK_SET);
@@ -37,10 +38,10 @@ int main(int argc, char *argv[])
                 rc = DISP_ERR;
                 fprintf(stderr, "AVG_ERR\n");
             }
-        }  
+        }
         else
         {
-            rc =  AVG_ERR;
+            rc = AVG_ERR;
             fprintf(stderr, "AVG_ERR\n");
         }
         fclose(f);
@@ -52,7 +53,7 @@ int main(int argc, char *argv[])
     }
     if (rc)
         printf("0");
-    else 
+    else
         printf("1");
     return rc;
 }

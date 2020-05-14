@@ -6,7 +6,7 @@
 
 #define OK 0
 #define ERROR_IN -1
-#define EMPTY_IO -2 
+#define EMPTY_IO -2
 #define ARG_ERR -3
 #define OPEN_ERR -4
 #define AVG_ERR -5
