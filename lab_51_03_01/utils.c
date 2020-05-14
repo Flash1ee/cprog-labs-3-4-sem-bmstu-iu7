@@ -15,7 +15,8 @@ int process(FILE *f, size_t *cnt)
                 *cnt += 1;
             frst = scnd;
         }
-        if (k < 2) return FEW_PARAM;
+        if (k < 2) 
+            return FEW_PARAM;
         return OK;
     }
     return ERROR_IN;

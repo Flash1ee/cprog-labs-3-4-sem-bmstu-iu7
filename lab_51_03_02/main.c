@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 
     if (f)
     {
-        rc = get_avg();
         if (!get_avg(f, &average))
         {
             fseek(f, 0, SEEK_SET);
