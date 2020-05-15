@@ -76,7 +76,7 @@ int check_three_sigma(FILE *f, double variance, double average)
                 p_in++;
         }
         // printf("p_in = %zu, p_out = %zu\n", p_in, p_out);
-        if (fabs((double)p_in / (p_out + p_in) - THREE_SIGM_EPS) < eps)
+        if ((double)p_in / (p_out + p_in) - THREE_SIGM_EPS < eps)
             return SIGM_ERR;
         return OK;
     }
