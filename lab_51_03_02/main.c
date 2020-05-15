@@ -21,10 +21,12 @@ int main(int argc, char *argv[])
 
     if (f)
     {
-        if (!get_avg(f, &average))
+        rc = get_avg(f, &average);
+        if (!rc)
         {
             fseek(f, 0, SEEK_SET);
-            if (!get_disp(f, &average, &disp))
+            rc = get_disp(f, &average, &disp);
+            if (!rc)
             {
                 variance = sqrt(disp);
                 fseek(f, 0, SEEK_SET);
@@ -33,26 +35,25 @@ int main(int argc, char *argv[])
                     fprintf(stderr, "SIGM_ERR\n");
             }
             else
-            {
-                rc = DISP_ERR;
-                fprintf(stderr, "AVG_ERR\n");
-            }
+                fprintf(stderr, "DISP_ERR\n");
         }
         else
-        {
-            rc = AVG_ERR;
             fprintf(stderr, "AVG_ERR\n");
-        }
         fclose(f);
     }
     else
     {
-        fprintf(stderr, "Failed open %s", argv[1]);
+        fprintf(stderr, "Failed open %s\n", argv[1]);
         rc = OPEN_ERR;
     }
+
+    if (rc == OPEN_ERR || rc == ERROR_IN)
+        return rc;
+
     if (rc)
         printf("0");
     else
         printf("1");
+
     return rc;
 }

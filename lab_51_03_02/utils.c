@@ -17,7 +17,7 @@ int get_avg(FILE *f, double *average)
             n += 1;
         }
         *average = sum / n;
-        //printf("avg = %lf\n", *average);
+        // printf("avg = %lf\n", *average);
         return OK;
     }
     else
@@ -39,7 +39,7 @@ int get_disp(FILE *f, double *average, double *dispersion)
             n += 1;
         }
         *dispersion = sum / n;
-        //printf("disp = %lf\n", *dispersion);
+        // printf("disp = %lf\n", *dispersion);
         return OK;
     }
     else
@@ -49,34 +49,35 @@ int get_disp(FILE *f, double *average, double *dispersion)
 int check_three_sigma(FILE *f, double variance, double average)
 {
     double x;
-    double eps = 1e-8;
+    double eps = 1e-6;
     size_t p_in, p_out;
     p_in = p_out = 0;
     int flag;
-    if (fabs(average + 3 * variance) - fabs(average - 3 * variance) <= eps)
+    double left = average - 3 * variance;
+    double right = average + 3 * variance;
+
+    if (2 * right - 2 * left < eps)
         return NO_INTERVAL;
     if (fscanf(f, "%lf", &x) == 1)
     {
-        flag = ((x >= 0) && (x - (average + 3 * variance) >= eps))
-            || ((x < 0) && ((average - 3 * variance) - x >= eps));
+        flag = ((x >= 0) && (x - right > eps)) || ((x < 0) && ((left - x > eps)));
         if (flag)
             p_out++;
         else
             p_in++;
-        //printf("x = %lf, avg = %lf, variance = %lf PASSED\n", x, average, variance);
+        // printf("x = %lf, avg = %lf, variance = %lf PASSED\n", x, average, variance);
         while (fscanf(f, "%lf", &x) == 1)
         {
-            //printf("x = %lf, avg = %lf, variance = %lf PASSED\n", x, average, variance);
-            flag = ((x >= 0) && (x - (average + 3 * variance) >= eps))
-                || ((x < 0) && ((average - 3 * variance) - x >= eps));
+            // printf("x = %lf, avg = %lf, variance = %lf PASSED\n", x, average, variance);
+            flag = ((x >= 0) && (x - right >= eps)) || ((x < 0) && (left - x >= eps));
             if (flag)
                 p_out++;
             else
                 p_in++;
         }
-        //printf("p_in = %zu, p_out = %zu\n", p_in, p_out);
+        // printf("p_in = %zu, p_out = %zu\n", p_in, p_out);
         if ((double)p_in / (p_out + p_in) - THREE_SIGM_EPS < eps)
-            return ERROR_IN;
+            return SIGM_ERR;
         return OK;
     }
     return ERROR_IN;

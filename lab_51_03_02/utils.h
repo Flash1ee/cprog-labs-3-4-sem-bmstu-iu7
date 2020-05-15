@@ -6,13 +6,12 @@
 
 #define OK 0
 #define ERROR_IN -1
-#define EMPTY_IO -2
-#define ARG_ERR -3
-#define OPEN_ERR -4
-#define AVG_ERR -5
-#define DISP_ERR -6
-#define SIGM_ERR -7
-#define NO_INTERVAL -8
+#define ARG_ERR -2
+#define OPEN_ERR -3
+#define AVG_ERR -4
+#define DISP_ERR -5
+#define SIGM_ERR -6
+#define NO_INTERVAL -7
 
 #define THREE_SIGM_EPS 0.9973
 
