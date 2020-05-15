@@ -61,7 +61,6 @@ int check_three_sigma(FILE *f, double variance, double average)
     if (fscanf(f, "%lf", &x) == 1)
     {
         flag = ((x - right) >= eps) && ((x - left) <= eps);
-        printf("%lf", x);
         if (flag)
             p_out++;
         else
