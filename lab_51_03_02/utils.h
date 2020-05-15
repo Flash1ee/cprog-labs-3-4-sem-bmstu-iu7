@@ -15,8 +15,8 @@
 
 #define THREE_SIGM_EPS 0.9973
 
-int get_avg(FILE *f, double *average);
-int get_disp(FILE *f, double *average, double *dispersion);
+int avg(FILE *f, double *average);
+int disp(FILE *f, double *average, double *dispersion);
 int check_three_sigma(FILE *f, double variance, double average);
 
 

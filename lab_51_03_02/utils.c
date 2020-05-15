@@ -2,7 +2,7 @@
 #include "utils.h"
 
 
-int get_avg(FILE *f, double *average)
+int avg(FILE *f, double *average)
 {
     size_t n = 0;
     double x;
@@ -24,7 +24,7 @@ int get_avg(FILE *f, double *average)
         return ERROR_IN;
 }
 
-int get_disp(FILE *f, double *average, double *dispersion)
+int disp(FILE *f, double *average, double *dispersion)
 {
     size_t n = 0;
     double sum = 0;
@@ -76,7 +76,7 @@ int check_three_sigma(FILE *f, double variance, double average)
                 p_in++;
         }
         // printf("p_in = %zu, p_out = %zu\n", p_in, p_out);
-        if ((double)p_in / (p_out + p_in) - THREE_SIGM_EPS < eps)
+        if (fabs((double)p_in / (p_out + p_in) - THREE_SIGM_EPS) < eps)
             return SIGM_ERR;
         return OK;
     }

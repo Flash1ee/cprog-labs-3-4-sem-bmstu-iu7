@@ -15,20 +15,20 @@ int main(int argc, char *argv[])
     FILE *f;
     f = fopen(argv[1], "r");
     double average = 0;
-    double disp = 0;
+    double dispers = 0;
     double variance = 0; //корень из дисперсии
     int rc = OK;
 
     if (f)
     {
-        rc = get_avg(f, &average);
+        rc = avg(f, &average);
         if (!rc)
         {
             fseek(f, 0, SEEK_SET);
-            rc = get_disp(f, &average, &disp);
+            rc = disp(f, &average, &dispers);
             if (!rc)
             {
-                variance = sqrt(disp);
+                variance = sqrt(dispers);
                 fseek(f, 0, SEEK_SET);
                 rc = check_three_sigma(f, variance, average);
                 if (rc)
