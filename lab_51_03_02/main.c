@@ -31,11 +31,9 @@ int main(int argc, char *argv[])
                 variance = sqrt(dispers);
                 fseek(f, 0, SEEK_SET);
                 rc = check_three_sigma(f, variance, average);
-                if (rc)
+                if (rc == SIGM_ERR)
                     fprintf(stderr, "SIGM_ERR\n");
             }
-            else
-                fprintf(stderr, "DISP_ERR\n");
         }
         else
             fprintf(stderr, "AVG_ERR\n");
@@ -50,10 +48,10 @@ int main(int argc, char *argv[])
     if (rc == OPEN_ERR || rc == ERROR_IN)
         return rc;
 
-    if (rc)
+    if (rc == SIGM_ERR)
         printf("0");
     else
         printf("1");
 
-    return rc;
+    return OK;
 }
