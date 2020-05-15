@@ -60,7 +60,7 @@ int check_three_sigma(FILE *f, double variance, double average)
         return NO_INTERVAL; 
     if (fscanf(f, "%lf", &x) == 1)
     {
-        flag = ((x >= 0) && (x - right > eps)) || ((x < 0) && ((left - x > eps)));
+        flag = ((x - right) >= eps) && ((x - left) <= eps);
         printf("%lf",x);
         if (flag)
             p_out++;
@@ -70,7 +70,7 @@ int check_three_sigma(FILE *f, double variance, double average)
         while (fscanf(f, "%lf", &x) == 1)
         {
             // printf("x = %lf, avg = %lf, variance = %lf PASSED\n", x, average, variance);
-            flag = ((x >= 0) && (x - right >= eps)) || ((x < 0) && (left - x >= eps));
+            flag = ((x - right) >= eps) && ((x - left) <= eps);
             if (flag)
                 p_out++;
             else
