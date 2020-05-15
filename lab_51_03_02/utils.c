@@ -49,7 +49,7 @@ int disp(FILE *f, double *average, double *dispersion)
 int check_three_sigma(FILE *f, double variance, double average)
 {
     double x;
-    double eps = 1e-4;
+    double eps = 0.0001;
     size_t p_in, p_out;
     p_in = p_out = 0;
     int flag;
