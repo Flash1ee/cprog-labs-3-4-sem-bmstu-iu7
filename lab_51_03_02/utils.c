@@ -49,7 +49,7 @@ int disp(FILE *f, double *average, double *dispersion)
 int check_three_sigma(FILE *f, double variance, double average)
 {
     double x;
-    double eps = 0.0001;
+    double eps = 0.000001;
     size_t p_in, p_out;
     p_in = p_out = 0;
     int flag;
@@ -60,7 +60,7 @@ int check_three_sigma(FILE *f, double variance, double average)
         return NO_INTERVAL; 
     if (fscanf(f, "%lf", &x) == 1)
     {
-        flag = ((x - right) >= eps) && ((x - left) <= eps);
+        flag = ((x >= right) && (x <= left));
         if (flag)
             p_out++;
         else
@@ -69,14 +69,14 @@ int check_three_sigma(FILE *f, double variance, double average)
         while (fscanf(f, "%lf", &x) == 1)
         {
             // printf("x = %lf, avg = %lf, variance = %lf PASSED\n", x, average, variance);
-            flag = ((x - right) >= eps) && ((x - left) <= eps);
+            flag = ((x >= right) && (x <= left));
             if (flag)
                 p_out++;
             else
                 p_in++;
         }
         // printf("p_in = %zu, p_out = %zu\n", p_in, p_out);
-        if ((double)p_in / (p_out + p_in) - THREE_SIGM_EPS < eps)
+        if ((double)p_in / (p_out + p_in) < THREE_SIGM_EPS)
             return SIGM_ERR;
         return OK;
     }
