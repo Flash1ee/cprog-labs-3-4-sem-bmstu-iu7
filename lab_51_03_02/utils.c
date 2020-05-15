@@ -56,7 +56,7 @@ int check_three_sigma(FILE *f, double variance, double average)
     double left = average - 3 * variance;
     double right = average + 3 * variance;
 
-    if (fabs(2 * right) - fabs(2 * left) <= eps)
+    if (fabs(2 * right - 2 * left) <= eps)
         return NO_INTERVAL; 
     if (fscanf(f, "%lf", &x) == 1)
     {
