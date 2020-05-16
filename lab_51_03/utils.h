@@ -22,7 +22,7 @@
 
 int write_rand(FILE *f, size_t cnt);
 int print(FILE *f, size_t size);
-int file_size(FILE *f , size_t *size);
+int file_size(FILE *f, size_t *size);
 int get_number_by_pos(FILE *f, size_t pos, int *num);
 int put_number_by_pos(FILE *f, size_t pos, int *num);
 int bubble_sort(FILE *f, size_t j);
