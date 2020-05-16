@@ -16,6 +16,7 @@
 #define READ_ERR -7
 #define SIZE_ERR -8
 #define SORT_ERR -9
+#define BEATEN_FILE -10
 
 #define DIGITS 1000
 
