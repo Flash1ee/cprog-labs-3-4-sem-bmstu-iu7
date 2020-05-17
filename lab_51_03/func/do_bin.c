@@ -20,7 +20,6 @@ int create_bin_file(FILE *f, FILE *in)
 
 int main(int argc, char *argv[])
 {
-
     FILE *f;
     FILE *in;
     int rc;
