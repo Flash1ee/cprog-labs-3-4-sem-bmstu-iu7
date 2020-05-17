@@ -58,7 +58,7 @@ int write_rand(FILE *f, size_t cnt)
     int buf;
     for (size_t i = 0; i < cnt; i++)
     {
-        buf = (rand() % DIGITS * 2) - DIGITS;
+        buf = (rand() % DIGITS) - DIGITS / 2;
         if (fwrite(&buf, sizeof(int), 1, f) != 1)
             return WRITE_ERR;
     }

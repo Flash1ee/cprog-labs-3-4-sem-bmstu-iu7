@@ -20,9 +20,10 @@ int main(int argc, char *argv[])
         if (!(cnt = strtol(argv[2], NULL, 10)))
             return ERR_CNT;
 
-        FILE* f;
-        f = fopen(argv[3], "w");
-
+        FILE *f;
+        f = fopen(argv[3], "wb");
+        if (!f)
+                return OPEN_ERR;
         if (write_rand(f, cnt))
         {
             fclose(f);
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
         {
             size_t size;
             FILE *f;
-            f = fopen(argv[2], "r");
+            f = fopen(argv[2], "rb");
             if (!f)
                 return OPEN_ERR;
             if (file_size(f, &size))
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
                 fclose(f);
                 return READ_ERR;
             }
-            if ((size % sizeof(int)))
+            if (size % sizeof(int))
                 return BEATEN_FILE;
             rc = print(f, size);
             if (rc)
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
                 fclose(f);
                 return READ_ERR;
             }
-            if ((size % sizeof(int)))
+            if (size % sizeof(int))
                 return BEATEN_FILE;
             for (size_t i = 0; i < size - sizeof(int); i += sizeof(int))
                 for (size_t j = 0; j < size - i - sizeof(int); j += sizeof(int))
