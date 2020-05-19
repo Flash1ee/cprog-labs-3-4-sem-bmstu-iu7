@@ -18,22 +18,25 @@
 #define SORT_ERR 9
 #define BEATEN_FILE 10
 
-struct product {
-        char name[NAME + 1];
-        char manufacture[MAKER + 1];
-        uint32_t price;
-        uint32_t count;
-    };
+struct product
+{
+    char name[NAME + 1];
+    char manufacture[MAKER + 1];
+    uint32_t price;
+    uint32_t count;
+};
+
 int sort(FILE *in, size_t size, struct product *s1, struct product *s2);
 int file_size(FILE *in, size_t *size);
 int get_struct(FILE *in, size_t pos, size_t size, struct product *s1);
 int put_struct(FILE *in, size_t pos, size_t size, struct product *var);
-int search_struct(FILE *in, const char *value, size_t size);
-int file_copy(FILE *dst, FILE *drc);
+int search_struct(FILE *in, const char *value);
+int file_copy(FILE *src, FILE *dst);
 int insert(FILE *in, size_t size);
-int struct_shift(FILE *in, size_t cnt, size_t st, size_t end);
+int struct_shift(FILE *in, size_t st, size_t end);
 int add_struct(FILE *in);
 int print(FILE *f, size_t size);
+
 int main(int argc, char *argv[])
 {
     setbuf(stdout, NULL);
@@ -45,15 +48,15 @@ int main(int argc, char *argv[])
     size_t size = 0;
     int rc = 0;
     if (strcmp(mode, "d") && strcmp(mode, "sb") && strcmp(mode, "p") && strcmp(mode, "fb")
-    && strcmp(mode, "ab"))
+        && strcmp(mode, "ab"))
         return ARG_ERR;
-    if (argc == 4) 
+    if (argc == 4)
     {
         if (mode[0] == 's' && mode[1] == 'b')
         {
             FILE *in;
             FILE *out;
-            in = fopen(argv[2], "rb");
+            in = fopen(argv[2], "rb+");
             out = fopen(argv[3], "wb");
             if (!in || !out)
                 return OPEN_ERR;
@@ -71,26 +74,27 @@ int main(int argc, char *argv[])
             }
             size = size / sizeof(struct product);
             struct product s1, s2;
+
             rc = sort(in, size, &s1, &s2);
             if (rc)
             {
                 fclose(in);
                 fclose(out);
                 return rc;
-                }
+            }
 
-                if (file_copy(in, out))
-                {
-                    fclose(in);
-                    fclose(out);
-                    return COPY_ERR;
-                }
+            if (file_copy(in, out))
+            {
                 fclose(in);
                 fclose(out);
-                return EXIT_SUCCESS;
+                return COPY_ERR;
+            }
+            fclose(in);
+            fclose(out);
+            return EXIT_SUCCESS;
         }
         else if (mode[0] == 'f' && mode[1] == 'b')
-        {     
+        {
             const char *end = argv[3];
             FILE *in;
             in = fopen(argv[2], "rb");
@@ -107,19 +111,21 @@ int main(int argc, char *argv[])
                 return BEATEN_FILE;
             }
             size = size / sizeof(struct product);
-            rc = search_struct(in, end, size);
-            if (rc) 
+            rc = search_struct(in, end);
+            if (rc)
             {
                 fclose(in);
                 return rc;
             }
             fclose(in);
             return EXIT_SUCCESS;
-            }
         }
-    if (argc == 3)
+        else
+            return ARG_ERR;
+    }
+    else if (argc == 3)
     {
-         if (mode[0] == 'd')
+        if (mode[0] == 'd')
         {
             FILE *in;
             struct product s1;
@@ -146,7 +152,7 @@ int main(int argc, char *argv[])
             fclose(in);
             return EXIT_SUCCESS;
         }
-        if (mode[0] == 'p')
+        else if (mode[0] == 'p')
         {
             FILE *in;
             size_t size = 0;
@@ -156,7 +162,6 @@ int main(int argc, char *argv[])
                 fclose(in);
                 return SIZE_ERR;
             }
-            printf("SIZE = %zu sizeof struct = %zu\n", size, sizeof(struct product));
             if (size % sizeof(struct product))
                 return BEATEN_FILE;
 
@@ -168,7 +173,7 @@ int main(int argc, char *argv[])
             fclose(in);
             return EXIT_SUCCESS;
         }
-        if (mode[0] == 'a' && mode[1] == 'b')
+        else if (mode[0] == 'a' && mode[1] == 'b')
         {
             FILE *in;
             in = fopen(argv[2], "rb+");
@@ -177,7 +182,7 @@ int main(int argc, char *argv[])
             if (file_size(in, &size) || size < 1)
                 return SIZE_ERR;
             size = size / sizeof(struct product);
-            
+
             if (insert(in, size))
             {
                 fclose(in);
@@ -185,11 +190,10 @@ int main(int argc, char *argv[])
                 return WRITE_ERR;
             }
         }
-
-
-
+        else
+            return ARG_ERR;
     }
-    
+
     return EXIT_SUCCESS;
 }
 int sort(FILE *in, size_t size, struct product *s1, struct product *s2)
@@ -197,17 +201,21 @@ int sort(FILE *in, size_t size, struct product *s1, struct product *s2)
     for (size_t i = 0; i < size - 1; i++)
         for (size_t j = 0; j < size - i - 1; j++)
         {
-            if (get_struct(in, j, size, s1) || get_struct(in, j+1, size, s2))
-                return READ_ERR;
-            
-            if (s2->price > s1->price)
+            if (get_struct(in, j, sizeof(struct product), s1)
+                || get_struct(in, j + 1, sizeof(struct product), s2))
             {
-                if (put_struct(in, j + 1, size, s1) || put_struct(in, j, size, s2))
-                    return READ_ERR;
+                printf("GET_ERR");
+                return READ_ERR;
             }
-            else if (s2->price == s1->price && s2->count > s1->count)
-                if (put_struct(in, j + 1, size, s1) || put_struct(in, j, size, s2))
+            if (s2->price > s1->price || (s2->price == s1->price && s2->count > s1->count))
+            {
+                if (put_struct(in, j, sizeof(struct product), s2)
+                    || put_struct(in, j + 1, sizeof(struct product), s1))
+                {
+                    printf("PUT-ERR");
                     return READ_ERR;
+                }
+            }
         }
     return EXIT_SUCCESS;
 }
@@ -243,51 +251,52 @@ int put_struct(FILE *in, size_t pos, size_t size, struct product *var)
         return READ_ERR;
     return EXIT_SUCCESS;
 }
-int file_copy(FILE *dst, FILE *drc)
+int file_copy(FILE *src, FILE *dst)
 {
     char tmp;
-    if (fread(&tmp, sizeof(char), 1, dst) == 1)
+    if (fread(&tmp, sizeof(char), 1, src) == 1)
     {
-        if (fwrite(&dst, sizeof(char), 1, drc) != 1)
+        if (fwrite(&tmp, sizeof(char), 1, dst) != 1)
             return WRITE_ERR;
-        while (fread(&tmp, sizeof(char), 1, dst) == 1)
-            if (fwrite(&dst, sizeof(char), 1, drc) != 1)
+        while (fread(&tmp, sizeof(char), 1, src) == 1)
+            if (fwrite(&tmp, sizeof(char), 1, dst) != 1)
                 return WRITE_ERR;
-        if (!feof(dst))
+        if (!feof(src))
             return READ_ERR;
         return EXIT_SUCCESS;
     }
     return READ_ERR;
 }
-int search_struct(FILE *in, const char *value, size_t size)
+int search_struct(FILE *in, const char *value)
 {
     struct product s1;
     char *ptr;
     char tmp[NAME + 1];
-    if (fread(&s1, size, 1, in) == 1)
+    size_t len = strlen(value);
+    if (fread(&s1, sizeof(struct product), 1, in) == 1)
+    {
+        ptr = strrchr(s1.name, value[0]);
+        if (ptr)
+        {
+            strncpy(tmp, s1.name + (ptr - s1.name), NAME + 1);
+            if (!strncmp(value, tmp, len))
+                printf("%s%s%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
+        }
+        while (fread(&s1, sizeof(struct product), 1, in) == 1)
         {
             ptr = strrchr(s1.name, value[0]);
             if (ptr)
             {
                 strcpy(tmp, s1.name + (ptr - s1.name));
-                if (!strcmp(value, tmp))
-                    printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
-                while (fread(&s1, size, 1, in) == 1)
-                {
-                    ptr = strrchr(s1.name, value[0]);
-                    if (ptr)
-                    {
-                    strcpy(tmp, s1.name + (ptr - s1.name));
-                    if (!strcmp(value, tmp))
-                        printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
-                    }
-                }
-                if (!feof(in))
-                    return READ_ERR;
-
-                return EXIT_SUCCESS;
+                if (!strncmp(value, tmp, len))
+                    printf("%s%s%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
             }
         }
+        if (!feof(in))
+            return READ_ERR;
+
+        return EXIT_SUCCESS;
+    }
     return READ_ERR;
 }
 
@@ -299,8 +308,8 @@ int insert(FILE *in, size_t size)
 
     if (!fgets(s1.manufacture, MAKER + 1, stdin) || !fgets(s1.name, NAME + 1, stdin))
     {
-            printf("ERROR NAME");
-            return READ_ERR;
+        printf("ERROR NAME");
+        return READ_ERR;
     }
     if (scanf("%u%u", &s1.price, &s1.count) != 2)
     {
@@ -314,26 +323,27 @@ int insert(FILE *in, size_t size)
         if (get_struct(in, i, sizeof(struct product), &s2))
             return READ_ERR;
         if (s1.price > s2.price || (s1.price == s2.price && s1.count > s2.count))
+        {
+            flag = 1;
+            if (struct_shift(in, i * sizeof(struct product), size * sizeof(struct product)))
             {
-                flag = 1;
-                if (struct_shift(in, size, i * sizeof(struct product), size * sizeof(struct product)))
-                {
-                    printf("SHIFT-ERR");
-                    return WRITE_ERR;
-                }
-                if (fseek(in, i * sizeof(struct product), SEEK_SET)|| (fwrite(&s1, sizeof(struct product), 1, in) != 1))
-                {
-                    printf("ERR INSERT BEFORE STRUCTS IN FILE\n");
-                    return WRITE_ERR;
-                }
-                return EXIT_SUCCESS;
+                printf("SHIFT-ERR");
+                return WRITE_ERR;
             }
+            if (fseek(in, i * sizeof(struct product), SEEK_SET)
+                || (fwrite(&s1, sizeof(struct product), 1, in) != 1))
+            {
+                printf("ERR INSERT BEFORE STRUCTS IN FILE\n");
+                return WRITE_ERR;
+            }
+            return EXIT_SUCCESS;
+        }
     }
     if (!flag)
     {
         if (fseek(in, 0, SEEK_END) < 0)
             return READ_ERR;
-        if (fwrite(&s1,sizeof(struct product), 1, in) != 1)
+        if (fwrite(&s1, sizeof(struct product), 1, in) != 1)
         {
             printf("FLAG-ERR");
             return WRITE_ERR;
@@ -341,31 +351,19 @@ int insert(FILE *in, size_t size)
     }
     return EXIT_SUCCESS;
 }
-int struct_shift(FILE *in, size_t cnt, size_t st, size_t end)
+int struct_shift(FILE *in, size_t st, size_t end)
 {
-    //struct product last;
     struct product s1;
     size_t size = sizeof(struct product);
-    printf("%zu\n", cnt);
-    
-    //if (fseek(in, (cnt - 1) * size, SEEK_SET))
-        //return WRITE_ERR;
-
-    //if (fread(&last, size, 1, in) != 1)
-        //return READ_ERR;
 
     while (st < end)
     {
-        printf("1\n");
         if (get_struct(in, end / size - 1, size, &s1))
             return READ_ERR;
         if (put_struct(in, (end / size), size, &s1))
             return WRITE_ERR;
         end -= size;
     }
-    //if (fseek(in, 0, SEEK_END) < 0 || (fwrite(&last, size, 1, in) != 1))
-        //return WRITE_ERR;
-
     return EXIT_SUCCESS;
 }
 int print(FILE *f, size_t size)
