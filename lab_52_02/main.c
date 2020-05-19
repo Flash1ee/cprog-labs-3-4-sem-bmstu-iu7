@@ -6,7 +6,7 @@
 
 #define NAME 30
 #define MAKER 15
-#define EXIT_FAILURE 53
+#define ARG_ERR 53
 #define ERROR_IN 1
 #define SEARCH_ERR 2
 #define OPEN_ERR 3
