@@ -3,3 +3,4 @@
 *.out
 *.gcov
 **/.idea/**
+*.vscode
