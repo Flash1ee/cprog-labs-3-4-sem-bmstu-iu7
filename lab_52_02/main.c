@@ -6,7 +6,7 @@
 
 #define NAME 30
 #define MAKER 15
-#define ARG_ERR 53
+#define EXIT_FAILURE 53
 #define ERROR_IN 1
 #define SEARCH_ERR 2
 #define OPEN_ERR 3
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 {
     setbuf(stdout, NULL);
     if (argc != 3 && argc != 4)
-        return ARG_ERR;
+        return EXIT_FAILURE;
 
     char mode[3];
     strncpy(mode, argv[1], 2);
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
             return EXIT_SUCCESS;
         }
         else
-            return ARG_ERR;
+            return EXIT_FAILURE;
     }
     else if (argc == 3)
     {
@@ -191,7 +191,7 @@ int main(int argc, char *argv[])
             }
         }
         else
-            return ARG_ERR;
+            return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;
