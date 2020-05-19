@@ -41,15 +41,13 @@ int main(int argc, char *argv[])
 {
     setbuf(stdout, NULL);
     if (argc != 3 && argc != 4)
-        return EXIT_FAILURE;
+        return ARG_ERR;
 
     char mode[3];
     strncpy(mode, argv[1], 2);
+    mode[2] = '\0';
     size_t size = 0;
     int rc = 0;
-    if (strcmp(mode, "d") && strcmp(mode, "sb") && strcmp(mode, "p") && strcmp(mode, "fb")
-        && strcmp(mode, "ab"))
-        return ARG_ERR;
     if (argc == 4)
     {
         if (mode[0] == 's' && mode[1] == 'b')
@@ -121,11 +119,11 @@ int main(int argc, char *argv[])
             return EXIT_SUCCESS;
         }
         else
-            return EXIT_FAILURE;
+            return ARG_ERR;
     }
     else if (argc == 3)
     {
-        if (mode[0] == 'd')
+        if (mode[0] == 'd' && mode[1] == 'o')
         {
             FILE *in;
             struct product s1;
@@ -152,7 +150,7 @@ int main(int argc, char *argv[])
             fclose(in);
             return EXIT_SUCCESS;
         }
-        else if (mode[0] == 'p')
+        else if (mode[0] == 'p' && mode[1] == 'r')
         {
             FILE *in;
             size_t size = 0;
@@ -191,7 +189,7 @@ int main(int argc, char *argv[])
             }
         }
         else
-            return EXIT_FAILURE;
+            return ARG_ERR;
     }
 
     return EXIT_SUCCESS;
