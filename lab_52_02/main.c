@@ -93,12 +93,12 @@ int main(int argc, char *argv[])
             in = fopen(argv[2], "ab+");
             if (!in)
                 return READ_ERR;
-            if (!fgets(s1.manufacture, MAKER + 1, stdin) || !fgets(s1.name, NAME + 1, stdin))
+            if (scanf("%s", s1.name) != 1 || scanf("%s", s1.manufacture) != 1)
             {
                 fclose(in);
                 return READ_ERR;
             }
-            if (scanf("%u%u", &s1.price, &s1.count) != 2)
+            if (scanf("%u", &s1.price) != 1 || scanf("%u", &s1.count) != 1)
             {
                 printf("ERROR-INPUT-STRUCT");
                 fclose(in);

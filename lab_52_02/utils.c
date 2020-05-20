@@ -77,15 +77,14 @@ int search_struct(FILE *in, const char *value)
     struct product s1;
     char *ptr;
     char tmp[NAME + 1];
-    const size_t new_line_symbol = 1;
     if (fread(&s1, sizeof(struct product), 1, in) == 1)
     {
         ptr = strrchr(s1.name, value[0]);
         if (ptr)
         {
             strncpy(tmp, s1.name + (ptr - s1.name), NAME + 1);
-            if (!strncmp(value, tmp, strlen(tmp) - new_line_symbol))
-                printf("%s%s%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
+            if (!strcmp(value, tmp) || (strstr(s1.name, value) == s1.name && strlen(value) == strlen(s1.name)))
+                printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
         }
         while (fread(&s1, sizeof(struct product), 1, in) == 1)
         {
@@ -93,8 +92,8 @@ int search_struct(FILE *in, const char *value)
             if (ptr)
             {
                 strncpy(tmp, s1.name + (ptr - s1.name), NAME + 1);
-                if (!strncmp(value, tmp, strlen(tmp) - new_line_symbol))
-                    printf("%s%s%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
+                if (!strcmp(value, tmp) || (strstr(s1.name, value) == s1.name && strlen(value) == strlen(s1.name)))
+                    printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
             }
         }
         if (!feof(in))
@@ -111,12 +110,12 @@ int insert(FILE *in, size_t size)
     struct product s2;
     int flag = 0;
 
-    if (!fgets(s1.manufacture, MAKER + 1, stdin) || !fgets(s1.name, NAME + 1, stdin))
+     if (scanf("%s", s1.name) != 1 || scanf("%s", s1.manufacture) != 1)
     {
         printf("ERROR NAME");
         return READ_ERR;
     }
-    if (scanf("%u%u", &s1.price, &s1.count) != 2)
+    if (scanf("%u", &s1.price) != 1 || scanf("%u", &s1.count) != 1)
     {
         printf("ERROR-INPUT-STRUCT");
         return READ_ERR;
@@ -181,7 +180,7 @@ int print(FILE *f, size_t size)
     {
         rc = fread(&s1, sizeof(struct product), 1, f);
         if (rc == 1)
-            printf("%s%s%u\n%u\n", s1.manufacture, s1.name, s1.price, s1.count);
+            printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
         else
             return READ_ERR;
     }
