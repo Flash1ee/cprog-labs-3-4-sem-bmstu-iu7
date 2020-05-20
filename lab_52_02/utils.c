@@ -77,6 +77,7 @@ int search_struct(FILE *in, const char *value)
     struct product s1;
     char *ptr;
     char tmp[NAME + 1];
+    int rc = OUT_ERR;
     if (fread(&s1, sizeof(struct product), 1, in) == 1)
     {
         ptr = strrchr(s1.name, value[0]);
@@ -84,7 +85,11 @@ int search_struct(FILE *in, const char *value)
         {
             strncpy(tmp, s1.name + (ptr - s1.name), NAME + 1);
             if (!strcmp(value, tmp) || (strstr(s1.name, value) == s1.name && strlen(value) == strlen(s1.name)))
-                printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
+                {
+                    if (rc)
+                        rc = 0;
+                    printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
+                }
         }
         while (fread(&s1, sizeof(struct product), 1, in) == 1)
         {
@@ -93,13 +98,17 @@ int search_struct(FILE *in, const char *value)
             {
                 strncpy(tmp, s1.name + (ptr - s1.name), NAME + 1);
                 if (!strcmp(value, tmp) || (strstr(s1.name, value) == s1.name && strlen(value) == strlen(s1.name)))
+                {
+                    if (rc)
+                        rc = 0;
                     printf("%s\n%s\n%u\n%u\n", s1.name, s1.manufacture, s1.price, s1.count);
+                }
             }
         }
         if (!feof(in))
             return READ_ERR;
 
-        return EXIT_SUCCESS;
+        return rc;
     }
     return READ_ERR;
 }
@@ -108,6 +117,8 @@ int insert(FILE *in, size_t size)
 {
     struct product s1;
     struct product s2;
+    memset(&s1, 0, sizeof(struct product));
+    memset(&s2, 0, sizeof(struct product));
     int flag = 0;
 
      if (scanf("%s", s1.name) != 1 || scanf("%s", s1.manufacture) != 1)
@@ -158,6 +169,7 @@ int insert(FILE *in, size_t size)
 int struct_shift(FILE *in, size_t st, size_t end)
 {
     struct product s1;
+    memset(&s1, 0, sizeof(struct product));
     size_t size = sizeof(struct product);
 
     while (st < end)

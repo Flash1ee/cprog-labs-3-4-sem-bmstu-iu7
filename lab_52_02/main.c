@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     strncpy(mode, argv[1], 2);
     mode[2] = '\0';
     size_t size = 0;
-    int rc = 0;
+    int rc = OUT_ERR;
     if (argc == 4)
     {
         if (!strcmp(mode, "sb"))
@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
             }
             size = size / sizeof(struct product);
             struct product s1, s2;
+            memset(&s1, 0, sizeof(struct product));
+            memset(&s1, 0, sizeof(struct product));
 
             rc = sort(out, size, &s1, &s2);
             if (rc)
@@ -90,6 +92,7 @@ int main(int argc, char *argv[])
         {
             FILE *in;
             struct product s1;
+            memset(&s1, 0, sizeof(struct product));
             in = fopen(argv[2], "ab+");
             if (!in)
                 return READ_ERR;

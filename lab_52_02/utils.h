@@ -19,6 +19,7 @@
 #define SIZE_ERR 8
 #define SORT_ERR 9
 #define BEATEN_FILE 10
+#define OUT_ERR 11
 
 
 struct product
