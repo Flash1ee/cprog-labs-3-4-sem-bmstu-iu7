@@ -263,5 +263,5 @@ int struct_sort(FILE *in, FILE *out, size_t *size)
     memset(&s1, 0, sizeof(struct product));
     memset(&s1, 0, sizeof(struct product));
     rc = sort(out, *size, &s1, &s2);
-        return rc;
+    return rc;
 }
