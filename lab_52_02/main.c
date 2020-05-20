@@ -22,39 +22,10 @@ int main(int argc, char *argv[])
             out = fopen(argv[3], "wb+");
             if (!in || !out)
                 return OPEN_ERR;
-            if (file_copy(in, out))
-            {
-                fclose(in);
-                fclose(out);
-                return COPY_ERR;
-            }
-            if (file_size(out, &size) || size < 1)
-            {
-                fclose(in);
-                fclose(out);
-                return SIZE_ERR;
-            }
-            if (size % sizeof(struct product))
-            {
-                fclose(in);
-                fclose(out);
-                return BEATEN_FILE;
-            }
-            size = size / sizeof(struct product);
-            struct product s1, s2;
-            memset(&s1, 0, sizeof(struct product));
-            memset(&s1, 0, sizeof(struct product));
-
-            rc = sort(out, size, &s1, &s2);
-            if (rc)
-            {
-                fclose(in);
-                fclose(out);
-                return rc;
-            }
+            rc = struct_sort(in, out, &size);
             fclose(in);
             fclose(out);
-            return EXIT_SUCCESS;
+            return rc;
         }
         else if (!strcmp(mode, "fb"))
         {
@@ -63,25 +34,9 @@ int main(int argc, char *argv[])
             in = fopen(argv[2], "rb");
             if (!in)
                 return OPEN_ERR;
-            if (file_size(in, &size) || size < 1)
-            {
-                fclose(in);
-                return SIZE_ERR;
-            }
-            if (size % sizeof(struct product))
-            {
-                fclose(in);
-                return BEATEN_FILE;
-            }
-            size = size / sizeof(struct product);
-            rc = search_struct(in, end);
-            if (rc)
-            {
-                fclose(in);
-                return rc;
-            }
+            rc = find_str(in, end, &size);
             fclose(in);
-            return EXIT_SUCCESS;
+            return rc;
         }
         else
             return ARG_ERR;
@@ -91,54 +46,22 @@ int main(int argc, char *argv[])
         if (!strcmp(mode, "do"))
         {
             FILE *in;
-            struct product s1;
-            memset(&s1, 0, sizeof(struct product));
             in = fopen(argv[2], "ab+");
             if (!in)
                 return READ_ERR;
-            if (scanf("%s", s1.name) != 1 || scanf("%s", s1.manufacture) != 1)
-            {
-                fclose(in);
-                return READ_ERR;
-            }
-            if (scanf("%u", &s1.price) != 1 || scanf("%u", &s1.count) != 1)
-            {
-                printf("ERROR-INPUT-STRUCT");
-                fclose(in);
-                return READ_ERR;
-            }
-            if (fwrite(&s1, sizeof(struct product), 1, in) != 1)
-            {
-                printf("ADD_STRUCT_ERROR");
-                fclose(in);
-                return WRITE_ERR;
-            }
+            rc = write_struct(in);
             fclose(in);
-            return EXIT_SUCCESS;
+            return rc;
         }
         else if (!strcmp(mode, "pr"))
         {
             FILE *in;
-            size_t size = 0;
             in = fopen(argv[2], "rb");
-            if (file_size(in, &size))
-            {
-                fclose(in);
-                return SIZE_ERR;
-            }
-            if (size % sizeof(struct product))
-            {
-                fclose(in);
-                return BEATEN_FILE;
-            }
-
-            if (print(in, size))
-            {
-                fclose(in);
+            if (!in)
                 return READ_ERR;
-            }
+            rc = print(in, &size);
             fclose(in);
-            return EXIT_SUCCESS;
+            return rc;
         }
         else if (!strcmp(mode, "ab"))
         {
@@ -146,25 +69,9 @@ int main(int argc, char *argv[])
             in = fopen(argv[2], "rb+");
             if (!in)
                 return READ_ERR;
-            if (file_size(in, &size) || size < 1)
-            {
-                fclose(in);
-                return SIZE_ERR;
-            }
-            
-            if (size % sizeof(struct product))
-            {
-                fclose(in);
-                return BEATEN_FILE;
-            }
-            size = size / sizeof(struct product);
-
-            if (insert(in, size))
-            {
-                fclose(in);
-                printf("INSERT-ERR");
-                return WRITE_ERR;
-            }
+            rc = add_struct(in, &size);
+            fclose(in);
+            return rc;
         }
         else
             return ARG_ERR;

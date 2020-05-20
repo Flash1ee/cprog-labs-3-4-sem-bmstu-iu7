@@ -38,8 +38,12 @@ int search_struct(FILE *in, const char *value);
 int file_copy(FILE *src, FILE *dst);
 int insert(FILE *in, size_t size);
 int struct_shift(FILE *in, size_t st, size_t end);
-int add_struct(FILE *in);
-int print(FILE *f, size_t size);
+int print(FILE *in, size_t *size);
+int add_struct(FILE *in, size_t *size);
+int write_struct(FILE *in);
+int find_str(FILE *in, const char *end, size_t *size);
+int struct_sort(FILE *in, FILE *out, size_t *size);
+
 
 
 #endif //_UTILS_H
