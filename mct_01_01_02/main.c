@@ -89,6 +89,8 @@ int sort(FILE *in)
 
     if (size % sizeof(struct student))
         return BEATEN_FILE;
+        
+    size = size / sizeof(struct student);
 
     struct student s1;
     struct student s2;
