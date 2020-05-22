@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     }
     else if (!strcmp("m", mode))
     {
-        in = fopen(argv[2], "ab+");
+        in = fopen(argv[2], "rb+");
         int rc = sort(in);
         fclose(in);
         return rc;
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 
 int sort(FILE *in)
 {
-    //Файл открыт в режиме ab+
+    //Файл открыт в режиме rb+
     if (in == NULL)
         return OPEN_ERR;
     size_t size;
