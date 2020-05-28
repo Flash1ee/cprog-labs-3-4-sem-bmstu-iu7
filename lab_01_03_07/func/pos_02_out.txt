@@ -1,0 +1,4 @@
+Input x, eps
+Sum of row with eps = 0.291486
+Absolute diff = 0.000029
+Relative diff = 0.000100

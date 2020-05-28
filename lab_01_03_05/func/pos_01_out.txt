@@ -1,0 +1,2 @@
+Input two numbers:
+NOD of two numbers is 15
