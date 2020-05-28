@@ -1,0 +1,2 @@
+Input coords x1 y1 x2 y2 of line and coords point for check xA yA:
+On line => 1
