@@ -1,9 +1,11 @@
 *.o
 *.exe
 *.out
-.gitkeep
 *.gcov
 **/.idea/**
-*.gcno
 *.gcda
-.vscode
+*.gcno
+*.h.gcov
+*.c.gcov
+*.gitkeep
+*.vscode
