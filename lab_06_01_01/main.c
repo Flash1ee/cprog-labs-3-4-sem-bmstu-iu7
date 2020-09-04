@@ -48,7 +48,6 @@ int main(int argc, char* argv[])
     else
     {
         rc = bin_search(list, key, argv[3], len);
-        printf("%ld\n", rc);
         if (rc < 0)
         {
             if (rc == NOT_FOUND)
@@ -60,7 +59,7 @@ int main(int argc, char* argv[])
         else
         {
             size_t ind = rc;
-            printf("%s\n%s\n%ld\n", list[ind].title, list[ind].name, list[ind].year);
+            printf("%s%s%ld\n", list[ind].title, list[ind].name, list[ind].year);
             rc = EXIT_SUCCESS;
         }
     }

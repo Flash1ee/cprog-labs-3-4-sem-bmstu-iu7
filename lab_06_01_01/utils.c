@@ -7,14 +7,27 @@
 int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
 {
     struct cinema tmp;
-    if (fscanf(f, "%s\n%s\n%ld\n", tmp.title, tmp.name, &tmp.year) == 3)
+    if (fgets(tmp.title, N + 1,f))
     {
-
+        if (tmp.title[strlen(tmp.title) - 1] != '\n')
+            return READ_STRUCT_ERR;
+        fgets(tmp.name, N + 1,f);
+        if (tmp.name[strlen(tmp.name) - 1] != '\n')
+            return READ_STRUCT_ERR;
+        if (fscanf(f, "%ld\n", &tmp.year) != 1)
+            return READ_STRUCT_ERR;
         list[*size] = tmp;
         *size += 1;
         size_t j;
-        while (fscanf(f, "%s\n%s\n%ld\n", tmp.title, tmp.name, &tmp.year) == 3)
+        while (fgets(tmp.title, N + 1,f))
         {
+            if (tmp.title[strlen(tmp.title) - 1] != '\n')
+                return READ_STRUCT_ERR;
+            fgets(tmp.name, N + 1,f);
+            if (tmp.name[strlen(tmp.name) - 1] != '\n')
+                return READ_STRUCT_ERR;
+            if (fscanf(f, "%ld\n", &tmp.year) != 1)
+                return READ_STRUCT_ERR;
             j = 0;
             for (size_t i = 0; i < *size; i++)
                 if ((key == TITLE && (strcmp(tmp.title, list[i].title) > 0)) || (key == NAME && (strcmp(tmp.name, list[i].name) > 0)) || (key == YEAR && ((tmp.year >list[i].year) > 0)))
@@ -97,7 +110,7 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
 void print(struct cinema list[], size_t len)
 {
     for (size_t i = 0; i < len; i++)
-        printf("%s\n%s\n%ld\n", list[i].title, list[i].name, list[i].year);
+        printf("%s%s%ld", list[i].title, list[i].name, list[i].year);
     printf("\n");
 
 }
