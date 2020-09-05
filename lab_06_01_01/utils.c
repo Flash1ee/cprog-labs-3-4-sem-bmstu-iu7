@@ -21,7 +21,7 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
         size_t j;
         while (fgets(tmp.title, N + 1,f))
         {
-            if (tmp.title[strlen(tmp.title) - 1] != '\n')
+            if (tmp.title[strlen(tmp.title) - 1] != '\n' || *size == MAX)
                 return READ_STRUCT_ERR;
             fgets(tmp.name, N + 1,f);
             if (tmp.name[strlen(tmp.name) - 1] != '\n')
@@ -49,7 +49,7 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
             *size += 1;
         }
     }
-    if (!feof(f))
+    if (!feof(f) || *size > MAX)
         return READ_STRUCT_ERR;
     return EXIT_SUCCESS;
 }
@@ -110,7 +110,7 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
 void print(struct cinema list[], size_t len)
 {
     for (size_t i = 0; i < len; i++)
-        printf("%s%s%ld", list[i].title, list[i].name, list[i].year);
+        printf("%s%s%ld\n", list[i].title, list[i].name, list[i].year);
     printf("\n");
 
 }
