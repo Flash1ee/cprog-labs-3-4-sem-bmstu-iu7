@@ -9,24 +9,24 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
     struct cinema tmp;
     if (fgets(tmp.title, N + 1, f))
     {
-        if (tmp.title[strlen(tmp.title) - 1] != '\n')
+        if (tmp.title[strlen(tmp.title) - 1] != '\n' || strlen(tmp.title) < 2)
             return READ_STRUCT_ERR;
         fgets(tmp.name, N + 1, f);
-        if (tmp.name[strlen(tmp.name) - 1] != '\n')
+        if (tmp.name[strlen(tmp.name) - 1] != '\n' || strlen(tmp.name) < 2)
             return READ_STRUCT_ERR;
-        if (fscanf(f, "%ld\n", &tmp.year) != 1)
+        if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year < FIRST_FILM || tmp.year > LAST_FILM)
             return READ_STRUCT_ERR;
         list[*size] = tmp;
         *size += 1;
         size_t j;
         while (fgets(tmp.title, N + 1, f))
         {
-            if (tmp.title[strlen(tmp.title) - 1] != '\n' || *size == MAX)
+            if (tmp.title[strlen(tmp.title) - 1] != '\n' || *size == MAX || strlen(tmp.title) < 2)
                 return READ_STRUCT_ERR;
             fgets(tmp.name, N + 1, f);
-            if (tmp.name[strlen(tmp.name) - 1] != '\n')
+            if (tmp.name[strlen(tmp.name) - 1] != '\n' || strlen(tmp.name) < 2)
                 return READ_STRUCT_ERR;
-            if (fscanf(f, "%ld\n", &tmp.year) != 1)
+            if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year < FIRST_FILM || tmp.year > LAST_FILM)
                 return READ_STRUCT_ERR;
             j = 0;
             for (size_t i = 0; i < *size; i++)

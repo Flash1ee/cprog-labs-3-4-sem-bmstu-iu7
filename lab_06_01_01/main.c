@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
 
     if (strcmp(argv[2], "title") && strcmp(argv[2], "name") && strcmp(argv[2], "year"))
         return ARG_ERR;
+    if (argc == 4 && strlen(argv[3]) > 25)
+        return ARG_ERR;
 
     size_t key = 0;
 
