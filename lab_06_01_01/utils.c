@@ -71,7 +71,7 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
     char elem[N + 1];
     if (field != YEAR)
     {
-        strcpy(elem, key);
+        strncpy(elem, key, N);
         strcat(elem, "\n");
     }
     switch (field)
