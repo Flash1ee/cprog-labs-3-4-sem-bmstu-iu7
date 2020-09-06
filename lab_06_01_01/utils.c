@@ -16,7 +16,6 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
             return READ_STRUCT_ERR;
         if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year < FIRST_FILM || tmp.year > LAST_FILM)
             return READ_STRUCT_ERR;
-        
         list[*size] = tmp;
         *size += 1;
         size_t j;
@@ -70,16 +69,20 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
     long r = size - 1;
     long mid;
     char elem[N + 1];
+    if (field != YEAR)
+    {
+        strcpy(elem, key);
+        strcat(elem, "\n");
+    }
     switch (field)
     {
         case TITLE:
             while (l <= r)
             {
                 mid = l + (r - l) / 2;
-                strncpy(elem, list[mid].title, strlen(list[mid].title) - 1);
-                if (!strcmp(elem, key))
+                if (!strcmp(list[mid].title, elem))
                     return mid;
-                else if (strcmp(elem, key) > 0)
+                else if (strcmp(list[mid].title, elem) > 0)
                     r = mid - 1;
                 else
                     l = mid + 1;
@@ -89,10 +92,9 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
             while (l <= r)
             {
                 mid = l + (r - l) / 2;
-                strncpy(elem, list[mid].name, strlen(list[mid].name) - 1);
-                if (!strcmp(elem, key))
+                if (!strcmp(list[mid].name, elem))
                     return mid;
-                else if (strcmp(elem, key) > 0)
+                else if (strcmp(list[mid].name, elem) > 0)
                     r = mid - 1;
                 else
                     l = mid + 1;
