@@ -30,8 +30,13 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
                 return READ_STRUCT_ERR;
             j = 0;
             for (size_t i = 0; i < *size; i++)
-                if ((key == TITLE && (strcmp(tmp.title, list[i].title) > 0)) || (key == NAME && (strcmp(tmp.name, list[i].name) > 0)) || (key == YEAR && ((tmp.year >list[i].year) > 0)))
+                if ((key == TITLE && (strcmp(tmp.title, list[i].title) > 0)) || (key == NAME && (strcmp(tmp.name, list[i].name) > 0)) || (key == YEAR && ((tmp.year >list[i].year))))
                     j = i + 1;
+                else if ((key == TITLE && (!strcmp(tmp.title, list[i].title))) || (key == NAME && (!strcmp(tmp.name, list[i].name))) || (key == YEAR && ((tmp.year == list[i].year))))
+                {
+                    j = i + 1;
+                    break;
+                }
             if (j == 0)
             {
                 for (size_t i = *size; i > 0; i--)
@@ -49,7 +54,7 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
             *size += 1;
         }
     }
-    if (!feof(f) || *size > MAX)
+    if (!feof(f))
         return READ_STRUCT_ERR;
     return EXIT_SUCCESS;
 }
@@ -111,6 +116,4 @@ void print(struct cinema list[], size_t len)
 {
     for (size_t i = 0; i < len; i++)
         printf("%s%s%ld\n", list[i].title, list[i].name, list[i].year);
-    printf("\n");
-
 }

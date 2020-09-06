@@ -20,9 +20,6 @@ int main(int argc, char* argv[])
         key = NAME;
     else if (!strcmp(argv[2], "year"))
         key = YEAR;
-    else
-        return ARG_ERR;
-
 
 
     FILE *in = NULL;
