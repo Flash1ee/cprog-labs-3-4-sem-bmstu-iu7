@@ -4,7 +4,7 @@
 
 #include "utils.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     if (argc != 3 && argc != 4)
         return ARG_ERR;
@@ -24,10 +24,12 @@ int main(int argc, char* argv[])
 
     FILE *in = NULL;
 
-    in = fopen(argv[1],"r");
+    in = fopen(argv[1], "r");
 
     if (!in)
         return READ_FILE_ERR;
+    if (!ftell(in))
+        return EMPTY;
 
     struct cinema list[MAX];
     size_t len = 0;
@@ -64,4 +66,3 @@ int main(int argc, char* argv[])
     fclose(in);
     return rc;
 }
-
