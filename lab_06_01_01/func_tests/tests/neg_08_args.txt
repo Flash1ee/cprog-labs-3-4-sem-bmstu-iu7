@@ -1,1 +1,0 @@
-./shared/neg_08.txt year 2000

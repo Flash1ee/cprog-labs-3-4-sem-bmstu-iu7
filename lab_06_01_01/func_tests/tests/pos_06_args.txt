@@ -1,1 +1,1 @@
-./shared/pos_06.txt title Harry
+./shared/pos_06.txt name Harry

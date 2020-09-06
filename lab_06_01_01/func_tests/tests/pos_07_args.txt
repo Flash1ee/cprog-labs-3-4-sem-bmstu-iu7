@@ -1,1 +1,0 @@
-./shared/pos_07.txt name Harry

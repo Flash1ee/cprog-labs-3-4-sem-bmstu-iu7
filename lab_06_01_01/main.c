@@ -28,8 +28,13 @@ int main(int argc, char *argv[])
 
     if (!in)
         return READ_FILE_ERR;
+
+    fseek(in, 0, SEEK_END);
+
     if (!ftell(in))
         return EMPTY;
+
+    fseek(in, 0, SEEK_SET);
 
     struct cinema list[MAX];
     size_t len = 0;
