@@ -68,15 +68,17 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
     long l = 0;
     long r = size - 1;
     long mid;
+    char elem[N + 1];
     switch (field)
     {
         case TITLE:
             while (l <= r)
             {
                 mid = l + (r - l) / 2;
-                if (!strcmp(list[mid].title, key))
+                strncpy(elem, list[mid].title, strlen(list[mid].title) - 1);
+                if (strlen(elem) == strlen(key) && !strcmp(elem, key))
                     return mid;
-                else if (strcmp(list[mid].title, key) > 0)
+                else if (strcmp(elem, key) > 0)
                     r = mid - 1;
                 else
                     l = mid + 1;
@@ -86,9 +88,10 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
             while (l <= r)
             {
                 mid = l + (r - l) / 2;
-                if (!strcmp(list[mid].name, key))
+                strncpy(elem, list[mid].name, strlen(list[mid].name) - 1);
+                if (!strcmp(elem, key))
                     return mid;
-                else if (strcmp(list[mid].name, key) > 0)
+                else if (strcmp(elem, key) > 0)
                     r = mid - 1;
                 else
                     l = mid + 1;

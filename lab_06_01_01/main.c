@@ -54,13 +54,10 @@ int main(int argc, char *argv[])
     else
     {
         rc = bin_search(list, key, argv[3], len);
-        if (rc < 0)
+        if (rc < 0 && rc == NOT_FOUND)
         {
-            if (rc == NOT_FOUND)
-            {
-                printf("Not found\n");
-                rc = EXIT_SUCCESS;
-            }
+            printf("Not found\n");
+            rc = EXIT_SUCCESS;
         }
         else
         {
