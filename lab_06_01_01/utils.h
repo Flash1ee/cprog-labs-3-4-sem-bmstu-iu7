@@ -5,9 +5,12 @@
 
 #define N 25
 #define MAX 15
+#define FIRST_FILM 1895
+#define LAST_FILM 2030
 #define TITLE 41
 #define NAME 42
 #define YEAR 43
+
 
 
 struct cinema
