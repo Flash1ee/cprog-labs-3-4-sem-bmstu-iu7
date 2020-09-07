@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
     if (argc == 4 && !strcmp(argv[2], "year") && is_year(argv[3]) == ARG_ERR)
         return ARG_ERR;
 
+    if (argc == 4 && !strcmp(argv[2], "year") && (atoi(argv[3]) < FIRST_FILM || atoi(argv[3]) > LAST_FILM))
+        return ARG_ERR;
+
     size_t key = 0;
 
     if (!strcmp(argv[2], "title"))

@@ -103,10 +103,7 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
             return (long)NOT_FOUND;
         case YEAR:
         {
-            char* check = NULL;
-            long date = strtol(key, &check, 10);
-            if (*check || date < FIRST_FILM || date > LAST_FILM)
-                return (long)KEY_ERR;
+            long date = strtol(key, NULL, 10);
             while (l <= r)
             {
                 mid = l + (r - l) / 2;
