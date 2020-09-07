@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
     if (argc == 4 && strlen(argv[3]) > N - 1)
         return ARG_ERR;
 
+    if (argc == 4 && !strcmp(argv[2], "year") && is_year(argv[3]) == ARG_ERR)
+        return ARG_ERR;
+
     size_t key = 0;
 
     if (!strcmp(argv[2], "title"))
@@ -59,14 +62,13 @@ int main(int argc, char *argv[])
             printf("Not found\n");
             rc = EXIT_SUCCESS;
         }
-        else
+        else if (rc != KEY_ERR && rc != NOT_FOUND)
         {
             size_t ind = rc;
             printf("%s%s%ld\n", list[ind].title, list[ind].name, list[ind].year);
             rc = EXIT_SUCCESS;
         }
     }
-
     fclose(in);
     return rc;
 }

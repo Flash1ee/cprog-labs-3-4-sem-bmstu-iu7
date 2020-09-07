@@ -33,5 +33,7 @@ struct cinema
 int fill(FILE *f, struct cinema list[], size_t *size, size_t key);
 void print(struct cinema list[], size_t len);
 long bin_search(struct cinema list[], long field, char key[], size_t size);
+int is_year(char str[]);
+
 
 #endif

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
 {
@@ -104,7 +105,7 @@ long bin_search(struct cinema list[], long field, char key[], size_t size)
         {
             char* check = NULL;
             long date = strtol(key, &check, 10);
-            if (*check)
+            if (*check || date < FIRST_FILM || date > LAST_FILM)
                 return (long)KEY_ERR;
             while (l <= r)
             {
@@ -126,4 +127,12 @@ void print(struct cinema list[], size_t len)
 {
     for (size_t i = 0; i < len; i++)
         printf("%s%s%ld\n", list[i].title, list[i].name, list[i].year);
+}
+
+int is_year(char str[])
+{
+    for (size_t i = 0; str[i] != '\0'; i++)
+        if (!isdigit(str[i]))
+            return ARG_ERR;
+    return EXIT_SUCCESS;
 }
