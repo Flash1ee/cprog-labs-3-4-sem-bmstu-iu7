@@ -15,7 +15,7 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
         fgets(tmp.name, N + 1, f);
         if (tmp.name[strlen(tmp.name) - 1] != '\n' || strlen(tmp.name) < 2)
             return READ_STRUCT_ERR;
-        if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year < FIRST_FILM || tmp.year > LAST_FILM)
+        if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year <= 0)
             return READ_STRUCT_ERR;
         list[*size] = tmp;
         *size += 1;
@@ -27,7 +27,7 @@ int fill(FILE *f, struct cinema list[], size_t *size, size_t key)
             fgets(tmp.name, N + 1, f);
             if (tmp.name[strlen(tmp.name) - 1] != '\n' || strlen(tmp.name) < 2)
                 return READ_STRUCT_ERR;
-            if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year < FIRST_FILM || tmp.year > LAST_FILM)
+            if (fscanf(f, "%ld\n", &tmp.year) != 1 || tmp.year <= 0)
                 return READ_STRUCT_ERR;
             j = 0;
             for (size_t i = 0; i < *size; i++)
