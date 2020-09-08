@@ -8,13 +8,12 @@ int main(int argc, char *argv[])
 {
     if (argc != 3 && argc != 4)
         return ARG_ERR;
-
     if (strcmp(argv[2], "title") && strcmp(argv[2], "name") && strcmp(argv[2], "year"))
         return ARG_ERR;
     if (argc == 4 && strlen(argv[3]) > N - 1)
         return ARG_ERR;
-
-    if (argc == 4 && !strcmp(argv[2], "year") && (is_year(argv[3]) == ARG_ERR || atoi(argv[3]) <= 0))
+    if (argc == 4 && !strcmp(argv[2], "year")
+        && (is_year(argv[3]) == ARG_ERR || atoi(argv[3]) <= 0))
         return ARG_ERR;
 
     size_t key = 0;
