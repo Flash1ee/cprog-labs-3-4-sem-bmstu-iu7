@@ -1,1 +1,0 @@
-./shared/neg_00011.txt year lenofstringmorethenN-1digits

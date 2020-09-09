@@ -1,1 +1,0 @@
-./shared/neg_001.txt

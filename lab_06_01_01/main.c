@@ -10,13 +10,13 @@ int main(int argc, char *argv[])
         return ARG_ERR;
     if (strcmp(argv[2], "title") && strcmp(argv[2], "name") && strcmp(argv[2], "year"))
         return ARG_ERR;
-    if (argc == 4 && strlen(argv[3]) > N - 1)
+    if (argc == 4 && strlen(argv[3]) > N)
         return ARG_ERR;
     if (argc == 4 && !strcmp(argv[2], "year")
         && (is_year(argv[3]) == ARG_ERR || atoi(argv[3]) <= 0))
         return ARG_ERR;
 
-    size_t key = 0;
+    Field key;
 
     if (!strcmp(argv[2], "title"))
         key = TITLE;
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
     fseek(in, 0, SEEK_SET);
 
-    struct cinema list[MAX];
+    cinema list[MAX];
     size_t len = 0;
     long rc = 0;
 
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     else
     {
         rc = bin_search(list, key, argv[3], len);
-        if (rc == NOT_FOUND)
+        if (rc == -1)
         {
             printf("Not found\n");
             rc = EXIT_SUCCESS;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
         else
         {
             size_t ind = rc;
-            printf("%s%s%ld\n", list[ind].title, list[ind].name, list[ind].year);
+            printf("%s\n%s\n%ld\n", list[ind].title, list[ind].name, list[ind].year);
             rc = EXIT_SUCCESS;
         }
     }

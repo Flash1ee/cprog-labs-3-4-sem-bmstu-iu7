@@ -1,1 +1,0 @@
-./shared/neg_007.txt year RUSSIA
