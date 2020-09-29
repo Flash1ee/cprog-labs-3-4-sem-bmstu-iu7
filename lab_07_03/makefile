@@ -31,7 +31,7 @@ $(OBJPATH)release.lastbuildstate:
 	rm -fv $(OBJPATH)debug.lastbuildstate
 	touch $(OBJPATH)release.lastbuildstate
 
-app.exe: $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
+app.exe: dirs $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o 
 	$(CC) $(LFLAGS) -o app.exe $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
 
 $(OBJPATH)filter.o: $(SRCPATH)filter.c
