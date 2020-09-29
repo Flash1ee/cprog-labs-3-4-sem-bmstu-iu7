@@ -1,70 +1,74 @@
-# Компилятор 
-CC := gcc
+CC=gcc
+INCPATH=./inc/
+OBJPATH=./obj/
+SRCPATH=./src/
+FUNCTESTSPATH=./func_tests/
+UNITTESTSPATH=./unit_tests/
+CFLAGS=-std=c99 --coverage -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+LFLAGS=--coverage
+.PHONY: clean
+.NOTPARALLEL: release debug
 
+release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
+release: LFLAGS=-o2
+release: $(OBJPATH)release.lastbuildstate app.exe
 
+debug:$(OBJPATH)debug.lastbuildstate app.exe
 
-# Пути к файлам / файлы
-OBJ := ./out/
-INC := ./inc/
-FUNCPATH := ./func_tests/
-UNITPATH := ./unit_tests/
-
-SRC_DEP := $(wildcard $(INC)*.c)
-OBJ_DEP := $(SRC_DEP:*.c = *.o)
-DEP := $(OBJ_DEP:*.o = *.d)
-
-
-# Флаги компиляции
-CFLAGS := -std=c99 -I$(INC) -Wall -Werror -Wpedantic -Wextra -g3 -c
-LFLAGS := --coverage
-
-.PHONY : clean func unit
-.NOTPARALLEL: debug release
-
-release: 
-    CFLAGS=-std=c99 -I$(INC) -o2 -c
-    LFLAGS = -o2
-
-debug: $(OBJ)debug.lastbuildstate app.exe
-
-$(OBJ)debug.lastbuildstate:
+$(OBJPATH)debug.lastbuildstate:
 	rm -fv *.exe
-	rm -fv $(OBJ)*.o
-	rm -fv $(OBJ)*.gcno
-	rm -fv $(OBJ)*.gcda
-	rm -fv $(OBJ)release.lastbuildstate
-	touch $(OBJ)debug.lastbuildstate
+	rm -fv $(OBJPATH)*.o
+	rm -fv $(OBJPATH)*.gcno
+	rm -fv $(OBJPATH)*.gcda
+	rm -fv $(OBJPATH)release.lastbuildstate
+	touch $(OBJPATH)debug.lastbuildstate
 
-$(OBJ)release.lastbuildstate:
+$(OBJPATH)release.lastbuildstate:
 	rm -fv *.exe
-	rm -fv $(OBJ)*.o
-	rm -fv $(OBJ)*.gcno
-	rm -fv $(OBJ)*.gcda
-	rm -fv $(OBJ)debug.lastbuildstate
-	touch $(OBJ)release.lastbuildstate
+	rm -fv $(OBJPATH)*.o
+	rm -fv $(OBJPATH)*.gcno
+	rm -fv $(OBJPATH)*.gcda
+	rm -fv $(OBJPATH)debug.lastbuildstate
+	touch $(OBJPATH)release.lastbuildstate
 
-app.exe: $(OBJ_DEP)
-    $(CC) $(LFLAGS) -o $@ $^
+app.exe: $(OBJPATH)main.o $(OBJPATH)unit1.o $(OBJPATH)unit2.o $(OBJPATH)unit3.o
+	$(CC) $(LFLAGS) -o app.exe $(OBJPATH)main.o $(OBJPATH)unit1.o $(OBJPATH)unit2.o $(OBJPATH)unit3.o
 
-#$(OBJ_DEP): $(SRC_DEP)
- #   $(CC) $(CFLAGS) -c $<
+$(OBJPATH)unit1.o: $(SRCPATH)unit1.c
+	$(CC) $(CFLAGS) -o$(OBJPATH)unit1.o $(SRCPATH)unit1.c
 
-$(DEP):$(SRC_DEP)
-	$(CC) -MMD $< > $@
+$(OBJPATH)unit2.o: $(SRCPATH)unit2.c
+	$(CC) $(CFLAGS) -o$(OBJPATH)unit2.o $(SRCPATH)unit2.c
 
-include $(SRC_DEP:.c=.d)
+$(OBJPATH)unit3.o: $(SRCPATH)unit3.c
+	$(CC) $(CFLAGS) -o$(OBJPATH)unit3.o $(SRCPATH)unit3.c
 
-func:
-	$(OBJ)debug.lastbuildstate app.exe
+$(OBJPATH)main.o: $(SRCPATH)main.c
+	$(CC) $(CFLAGS) -o$(OBJPATH)main.o $(SRCPATH)main.c
+
+func: $(OBJPATH)debug.lastbuildstate app.exe
 	@echo
-	cd $(FUNCPATH) && cmd //C all_test.cmd
+	cd $(FUNCTESTSPATH) && cmd //C all_test.cmd
 	@echo
-	gcov -n $(OBJ)*.o
+	gcov -n $(OBJPATH)main.o
+	gcov -n $(OBJPATH)unit1.o
+	gcov -n $(OBJPATH)unit2.o
+	gcov -n $(OBJPATH)unit3.o
 
+dirs: $(INCPATH) $(OBJPATH) $(SRCPATH)
+
+$(OBJPATH):
+	mkdir $(OBJPATH)
+
+$(INCPATH):
+	mkdir $(INCPATH)
+
+$(SRCPATH):
+	mkdir $(SRCPATH)
 
 clean:
 	rm -fv *.exe
-	rm -fv $(OBJ)*.o
-	rm -fv $(OBJ)*.gcno
-	rm -fv $(OBJ)*.gcda
-	rm -fv $(OBJ)*.lastbuildstate
+	rm -fv $(OBJPATH)*.o
+	rm -fv $(OBJPATH)*.gcno
+	rm -fv $(OBJPATH)*.gcda
+	rm -fv $(OBJPATH)*.lastbuildstate

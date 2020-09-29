@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <check.h>
-
 #include "../inc/filter.h"
 #include "../inc/err.h"
+#include "check_filter.h"
 
 // Test cases for cmp_i
 START_TEST(test_last_neg_only_pos)
@@ -152,27 +149,4 @@ Suite *key_suite(void)
 
     suite_add_tcase(s, tc_neg);
     return s;
-}
-int main(void)
-{
-    int no_failed = 0;
-    Suite *s1;
-    Suite *s2;
-    SRunner *runner_last_neg;
-    SRunner *runner_key;
-
-    s1 = last_neg_suite();
-    s2 = key_suite();
-    runner_last_neg = srunner_create(s1);
-    runner_key = srunner_create(s2);
-    srunner_run_all(runner_last_neg, CK_VERBOSE);
-    srunner_run_all(runner_key, CK_VERBOSE);
-
-    no_failed += srunner_ntests_failed(runner_last_neg);
-    no_failed += srunner_ntests_failed(runner_key);
-
-    srunner_free(runner_last_neg);
-    srunner_free(runner_key);
-
-    return (no_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

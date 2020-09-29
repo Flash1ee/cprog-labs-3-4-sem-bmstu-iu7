@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
 
     if (filter)
     {
-        n = last_neg((char *)beg, (char *)end, sizeof(int));
         int *dst_bg = NULL;
         int *dst_end = NULL;
         rc = key(arr, end, &dst_bg, &dst_end);

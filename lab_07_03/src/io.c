@@ -11,7 +11,6 @@
 #include "../inc/io.h"
 #include "../inc/err.h"
 
-
 int f_int_cnt(FILE *f, size_t *size)
 {
     size_t tmp = 0;
@@ -40,6 +39,6 @@ int fill(FILE *f, int *pa, int *pb)
 void print(FILE *f, int *arr, size_t n)
 {
     for (int *cur = arr; cur < arr + n; cur++)
-        fprintf(f,"%d ", *cur);
+        fprintf(f, "%d ", *cur);
     fprintf(f, "\n");
 }

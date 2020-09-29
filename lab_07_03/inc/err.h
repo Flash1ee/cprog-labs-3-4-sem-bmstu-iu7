@@ -30,5 +30,9 @@
  */
 #define PTR_ERR 5
 
+/*@brief 
+ */
+#define FILTER_ERR 6
+
 
 #endif // _ERR_H

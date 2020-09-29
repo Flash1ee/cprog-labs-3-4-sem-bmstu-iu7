@@ -139,26 +139,3 @@ Suite *cmp_i_suite(void)
 
     return s;
 }
-int main(void)
-{
-    int no_failed = 0;
-    Suite *s1;
-    Suite *s2;
-    SRunner *runner_mysort;
-    SRunner *runner_cmp_i;
-
-    s1 = cmp_i_suite();
-    s2 = mysort_suite();
-    runner_cmp_i = srunner_create(s1);
-    runner_mysort = srunner_create(s2);
-    srunner_run_all(runner_cmp_i, CK_VERBOSE);
-    srunner_run_all(runner_mysort, CK_VERBOSE);
-
-    no_failed += srunner_ntests_failed(runner_cmp_i);
-    no_failed += srunner_ntests_failed(runner_mysort);
-
-    srunner_free(runner_cmp_i);
-    srunner_free(runner_mysort);
-
-    return (no_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
-}

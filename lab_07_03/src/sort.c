@@ -11,7 +11,6 @@ int cmp_i(const void *a, const void *b)
 void mysort(void *first, size_t len, size_t size, int (*cmp)(const void *, const void *))
 {
     assert(size > 0);
-    assert(len > 0);
     char *last = (char *)first + len * size;
     char *prev;
     char *tmp = (char *)malloc(size);
