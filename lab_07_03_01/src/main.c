@@ -1,59 +1,97 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../inc/err.h"
 #include "../inc/io.h"
 #include "../inc/sort.h"
-
+#include "../inc/filter.h"
 
 int main(int argc, char *argv[])
 {
     if (argc != 3 && argc != 4)
         return ARG_ERR;
-    if (argc == 4 && !strcmp(argv[3], "f"))
+    if (argc == 4 && strcmp(argv[3], "f") != 0)
         return ARG_ERR;
-    int key;
+    int filter;
 
-    key = 1 ? argc == 4 : 0;
+    filter = 1 ? argc == 4 : 0;
     FILE *in, *out;
+    int rc = 0;
+    size_t n = 0;
 
     in = fopen(argv[1], "r");
+
     if (!in)
         return READ_ERR;
-    size_t n = 0;
-    printf("n = %zu\n", n);
-    if (f_long_cnt(in, &n))
+
+    if ((rc = f_int_cnt(in, &n)) != EXIT_SUCCESS)
     {
         fclose(in);
-        return EMPTY_FILE;
+        return rc;
     }
 
-    printf("n = %zu\n", n);
+    int *arr = (int *)malloc(n * sizeof(int));
 
-    long *arr = (long *)malloc(n * sizeof(long));
     if (!arr)
     {
         fclose(in);
         return ALLOCATION_ERR;
     }
 
-    long *beg = arr;
-    long *end = arr + n;
+    int *beg = arr;
+    int *end = arr + n;
     fseek(in, 0, SEEK_SET);
+
     if (fill(in, beg, end))
     {
         free(arr);
         fclose(in);
         return READ_ERR;
     }
-    mysort(arr, n, sizeof(long), cmp_l);
 
-    for (size_t i = 0; i < n; i++)
-    printf("%ld ", arr[i]);
+    if (filter)
+    {
+        n = last_neg((char *)beg, (char *)end, sizeof(int));
+        int *dst_bg = NULL;
+        int *dst_end = NULL;
+        rc = key(arr, end, &dst_bg, &dst_end);
+        if (rc)
+        {
+            free(arr);
+            fclose(in);
+            return rc;
+        }
+        n = dst_end - dst_bg;
+        mysort(dst_bg, n, sizeof(int), cmp_i);
 
-    free(arr);
+        out = fopen(argv[2], "w");
+        if (!out)
+        {
+            free(arr);
+            free(dst_bg);
+            fclose(in);
+            return READ_ERR;
+        }
+        print(out, dst_bg, n);
+        free(dst_bg);
+    }
+    else
+    {
+        mysort(arr, n, sizeof(int), cmp_i);
+
+        out = fopen(argv[2], "w");
+        if (!out)
+        {
+            free(arr);
+            fclose(in);
+            return READ_ERR;
+        }
+        print(out, beg, n);
+    }
     fclose(in);
+    fclose(out);
 
     return EXIT_SUCCESS;
 }
