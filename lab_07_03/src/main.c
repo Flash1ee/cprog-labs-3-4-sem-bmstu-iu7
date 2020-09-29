@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
         }
         print(out, beg, n);
     }
+    free(arr);
     fclose(in);
     fclose(out);
 
