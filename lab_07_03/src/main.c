@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include "../inc/err.h"
 #include "../inc/io.h"
 #include "../inc/sort.h"
 #include "../inc/filter.h"
+
 
 int main(int argc, char *argv[])
 {

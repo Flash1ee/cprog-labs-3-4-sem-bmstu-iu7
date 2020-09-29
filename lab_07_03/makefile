@@ -1,6 +1,6 @@
 CC=gcc
 INCPATH=./inc/
-OBJPATH=./obj/
+OBJPATH=./out/
 SRCPATH=./src/
 FUNCTESTSPATH=./func_tests/
 UNITTESTSPATH=./unit_tests/
@@ -31,29 +31,28 @@ $(OBJPATH)release.lastbuildstate:
 	rm -fv $(OBJPATH)debug.lastbuildstate
 	touch $(OBJPATH)release.lastbuildstate
 
-app.exe: $(OBJPATH)main.o $(OBJPATH)unit1.o $(OBJPATH)unit2.o $(OBJPATH)unit3.o
-	$(CC) $(LFLAGS) -o app.exe $(OBJPATH)main.o $(OBJPATH)unit1.o $(OBJPATH)unit2.o $(OBJPATH)unit3.o
+app.exe: $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
+	$(CC) $(LFLAGS) -o app.exe $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
 
-$(OBJPATH)unit1.o: $(SRCPATH)unit1.c
-	$(CC) $(CFLAGS) -o$(OBJPATH)unit1.o $(SRCPATH)unit1.c
+$(OBJPATH)filter.o: $(SRCPATH)filter.c
+	$(CC) $(CFLAGS) -o $@ $^
 
-$(OBJPATH)unit2.o: $(SRCPATH)unit2.c
-	$(CC) $(CFLAGS) -o$(OBJPATH)unit2.o $(SRCPATH)unit2.c
-
-$(OBJPATH)unit3.o: $(SRCPATH)unit3.c
-	$(CC) $(CFLAGS) -o$(OBJPATH)unit3.o $(SRCPATH)unit3.c
+$(OBJPATH)sort.o: $(SRCPATH)sort.c
+	$(CC) $(CFLAGS) -o $@ $^
+$(OBJPATH)io.o: $(SRCPATH)io.c
+	$(CC) $(CFLAGS) -o $@ $^
 
 $(OBJPATH)main.o: $(SRCPATH)main.c
-	$(CC) $(CFLAGS) -o$(OBJPATH)main.o $(SRCPATH)main.c
+	$(CC) $(CFLAGS) -o $@ $^
 
 func: $(OBJPATH)debug.lastbuildstate app.exe
 	@echo
 	cd $(FUNCTESTSPATH) && cmd //C all_test.cmd
 	@echo
 	gcov -n $(OBJPATH)main.o
-	gcov -n $(OBJPATH)unit1.o
-	gcov -n $(OBJPATH)unit2.o
-	gcov -n $(OBJPATH)unit3.o
+	gcov -n $(OBJPATH)filter.o
+	gcov -n $(OBJPATH)sort.o
+	gcov -n $(OBJPATH)io.o
 
 dirs: $(INCPATH) $(OBJPATH) $(SRCPATH)
 
