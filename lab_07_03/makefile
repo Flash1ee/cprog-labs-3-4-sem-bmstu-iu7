@@ -47,7 +47,7 @@ $(OBJPATH)main.o: $(SRCPATH)main.c
 
 func: $(OBJPATH)debug.lastbuildstate app.exe
 	@echo
-	cd $(FUNCTESTSPATH) && cmd //C all_test.cmd
+	cd $(FUNCTESTSPATH) && bash all_test.sh
 	@echo
 	gcov -n $(OBJPATH)main.o
 	gcov -n $(OBJPATH)filter.o

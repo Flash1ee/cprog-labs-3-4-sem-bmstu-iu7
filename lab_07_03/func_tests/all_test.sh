@@ -9,3 +9,4 @@ for var in 1 2 3 4 5 6
 do
     ./neg_test.sh 0$var
 done
+rm out.txt
