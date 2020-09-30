@@ -4,9 +4,12 @@ OBJPATH=./out/
 SRCPATH=./src/
 FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
-CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+CFLAGS=-std=c99 --coverage -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
 UFLAGS= -lcheck -lpthread -lrt
+
+OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
+UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
 .PHONY: clean unit
 .NOTPARALLEL: release debug
 
@@ -33,18 +36,10 @@ $(OBJPATH)release.lastbuildstate:
 	rm -fv $(OBJPATH)debug.lastbuildstate
 	touch $(OBJPATH)release.lastbuildstate
 
-app.exe: dirs $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o 
-	$(CC) $(LFLAGS) -o app.exe $(OBJPATH)main.o $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
+app.exe: dirs $(OBJPATH)main.o  $(OBJS) 
+	$(CC) $(LFLAGS) -o $@ $(OBJPATH)main.o $(OBJS)
 
-$(OBJPATH)filter.o: $(SRCPATH)filter.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-$(OBJPATH)sort.o: $(SRCPATH)sort.c
-	$(CC) $(CFLAGS) -o $@ $^
-$(OBJPATH)io.o: $(SRCPATH)io.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-$(OBJPATH)main.o: $(SRCPATH)main.c
+$(OBJPATH)%.o: $(SRCPATH)%.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 func: $(OBJPATH)debug.lastbuildstate app.exe
@@ -56,22 +51,15 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	gcov -n $(OBJPATH)sort.o
 	gcov -n $(OBJPATH)io.o
 
+unit: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 unit: unit_tests.exe app.exe
 	drmemory -brief -lib_blacklist "*" -- unit_tests.exe
 
-unit_tests.exe: $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
+unit_tests.exe: $(UNITS)
 	$(CC) -o $@  $^ $(UFLAGS)
 
-$(OBJPATH)check_main.o : $(UNITTESTSPATH)check_main.c 
-	$(CC) $(CFLAGS) $^ -o $@ 
-
-$(OBJPATH)check_filter.o : $(UNITTESTSPATH)check_filter.c $(SRCPATH)filter.c
+$(OBJPATH)check%.o : $(UNITTESTSPATH)check%.c 
 	$(CC) $(CFLAGS) $< -o $@ 
-
-$(OBJPATH)check_sort.o : $(UNITTESTSPATH)check_sort.c $(SRCPATH)sort.c
-	$(CC) $(CFLAGS) $< -o $@ 
-
-
 
 dirs: $(INCPATH) $(OBJPATH) $(SRCPATH)
 
@@ -83,6 +71,10 @@ $(INCPATH):
 
 $(SRCPATH):
 	mkdir $(SRCPATH)
+$(FUNCTESTSPATH):
+	mkdir $(FUNCTESTSPATH)
+$(UNITTESTSPATH):
+	mkdir $(UNITTESTSPATH)
 
 clean: 
 	rm -fv *.exe
