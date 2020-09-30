@@ -1,5 +1,5 @@
-#include "check_filter.c"
-#include "check_sort.c"
+#include "check_sort.h"
+#include "check_filter.h"
 
 
 int main()

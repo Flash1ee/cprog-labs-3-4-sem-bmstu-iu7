@@ -2,17 +2,19 @@ CC=gcc
 INCPATH=./inc/
 OBJPATH=./out/
 SRCPATH=./src/
-FUNCTESTSPATH=./func_tests/
-UNITTESTSPATH=./unit_tests/
-CFLAGS=-std=c99 --coverage -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+FUNCTESTSPATH:=./func_tests/
+UNITTESTSPATH:=./unit_tests/
+CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
-.PHONY: clean
+UFLAGS= -lcheck -lpthread -lrt
+.PHONY: clean unit
 .NOTPARALLEL: release debug
 
 release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
 release: LFLAGS=-o2
 release: $(OBJPATH)release.lastbuildstate app.exe
 
+debug: CFLAGS+=-ggdb
 debug:$(OBJPATH)debug.lastbuildstate app.exe
 
 $(OBJPATH)debug.lastbuildstate:
@@ -54,6 +56,23 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	gcov -n $(OBJPATH)sort.o
 	gcov -n $(OBJPATH)io.o
 
+unit: unit_tests.exe app.exe
+	drmemory -brief -lib_blacklist "*" -- ./unit_tests.exe
+
+unit_tests.exe: $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
+	$(CC) -o $@  $^ $(UFLAGS)
+
+$(OBJPATH)check_main.o : $(UNITTESTSPATH)check_main.c 
+	$(CC) $(CFLAGS) $^ -o $@ 
+
+$(OBJPATH)check_filter.o : $(UNITTESTSPATH)check_filter.c $(SRCPATH)filter.c
+	$(CC) $(CFLAGS) $< -o $@ 
+
+$(OBJPATH)check_sort.o : $(UNITTESTSPATH)check_sort.c $(SRCPATH)sort.c
+	$(CC) $(CFLAGS) $< -o $@ 
+
+
+
 dirs: $(INCPATH) $(OBJPATH) $(SRCPATH)
 
 $(OBJPATH):
@@ -65,7 +84,7 @@ $(INCPATH):
 $(SRCPATH):
 	mkdir $(SRCPATH)
 
-clean:
+clean: 
 	rm -fv *.exe
 	rm -fv $(OBJPATH)*.o
 	rm -fv $(OBJPATH)*.gcno

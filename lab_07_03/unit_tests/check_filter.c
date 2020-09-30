@@ -15,7 +15,7 @@ END_TEST
 
 START_TEST(test_last_neg_one_el)
 {
-    char arr[] = {};
+    char *arr = {'\0'};
     int rc = 0;
     int res = 0;
     rc = last_neg(arr, arr + res, sizeof(int));
