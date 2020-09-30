@@ -57,7 +57,7 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	gcov -n $(OBJPATH)io.o
 
 unit: unit_tests.exe app.exe
-	drmemory -brief -lib_blacklist "*" -- ./unit_tests.exe
+	drmemory -brief -lib_blacklist "*" -- unit_tests.exe
 
 unit_tests.exe: $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
 	$(CC) -o $@  $^ $(UFLAGS)
