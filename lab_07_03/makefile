@@ -4,7 +4,7 @@ OBJPATH=./out/
 SRCPATH=./src/
 FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
-CFLAGS=-std=c99 --coverage -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage 
 UFLAGS=-lcheck -lpthread -lrt
 
@@ -22,7 +22,8 @@ release: $(OBJPATH)release.lastbuildstate app.exe
 
 unit_tests.exe: $(UNITS) dirs
 	$(CC) -o $@  $(UNITS) $(UFLAGS) $(LFLAGS)
-	valgrind ./unit_tests.exe
+	#valgrind ./unit_tests.exe
+	drmemory -brief  -lib_blacklist "*" -- unit_tests.exe
 
 
 $(OBJPATH)check%.o : $(UNITTESTSPATH)check%.c 
