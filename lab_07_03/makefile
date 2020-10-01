@@ -7,7 +7,6 @@ UNITTESTSPATH:=./unit_tests/
 CFLAGS=-std=c99 --coverage -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
 UFLAGS= -lcheck -lpthread -lrt
-
 OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
 
@@ -18,8 +17,8 @@ release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
 release: LFLAGS=-o2
 release: $(OBJPATH)release.lastbuildstate app.exe
 
-debug: CFLAGS+=-ggdb
 debug:$(OBJPATH)debug.lastbuildstate app.exe
+
 
 $(OBJPATH)debug.lastbuildstate:
 	rm -fv *.exe
@@ -38,10 +37,11 @@ $(OBJPATH)release.lastbuildstate:
 	touch $(OBJPATH)release.lastbuildstate
 
 app.exe: dirs $(OBJPATH)main.o  $(OBJS) 
-	$(CC) $(LFLAGS) -o $@ $(OBJPATH)main.o $(OBJS)
+	$(CC) -o $@ $(OBJPATH)main.o $(OBJS) $(LFLAGS) 
 
 $(OBJPATH)%.o: $(SRCPATH)%.c
 	$(CC) $(CFLAGS) -o $@ $^
+
 
 func: $(OBJPATH)debug.lastbuildstate app.exe
 	@echo
@@ -52,11 +52,10 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	gcov -n $(OBJPATH)sort.o
 	gcov -n $(OBJPATH)io.o
 
-unit: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 unit: unit_tests.exe app.exe
-	# drmemory -brief -lib_blacklist "*" -- unit_tests.exe
 	valgrind --leak-check=full ./unit_tests.exe
 
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 unit_tests.exe: $(UNITS)
 	$(CC) -o $@  $^ $(UFLAGS)
 
