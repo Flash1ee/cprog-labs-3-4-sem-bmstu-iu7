@@ -20,7 +20,7 @@ release: LFLAGS=-o2
 debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
-unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -c
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g -ggdb -c
 unit_tests.exe: clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
 	#valgrind ./unit_tests.exe
