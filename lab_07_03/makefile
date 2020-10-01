@@ -23,7 +23,7 @@ release: $(OBJPATH)release.lastbuildstate app.exe
 unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g -ggdb -c
 unit_tests.exe: dirs clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
-	valgrind ./unit_tests.exe
+	./unit_tests.exe
 	#drmemory -brief  -lib_blacklist "*" -- unit_tests.exe
 
 
