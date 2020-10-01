@@ -11,7 +11,7 @@ UFLAGS=-lcheck -lpthread -lrt
 OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
 
-.PHONY: clean unit func release
+.PHONY: clean func
 .NOTPARALLEL: release debug
 
 release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
@@ -20,10 +20,7 @@ release: LFLAGS=-o2
 debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
-unit: $(OBJPATH)debug.lastbuildstate unit_tests.exe
-	valgrind --leak-check=full ./unit_tests.exe
-
-unit_tests.exe: $(UNITS)
+unit_tests.exe: $(UNITS) dirs
 	$(CC) -o $@  $(UNITS) $(UFLAGS) $(LFLAGS)
 	valgrind ./unit_tests.exe
 
