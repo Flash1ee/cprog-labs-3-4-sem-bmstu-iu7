@@ -23,9 +23,10 @@ release: $(OBJPATH)release.lastbuildstate app.exe
 unit: $(OBJPATH)debug.lastbuildstate unit_tests.exe
 	valgrind --leak-check=full ./unit_tests.exe
 
-unit_tests.exe: app.exe
 unit_tests.exe: $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS) $(LFLAGS)
+	valgrind ./unit_tests.exe
+
 
 $(OBJPATH)check%.o : $(UNITTESTSPATH)check%.c 
 	$(CC) $(CFLAGS) $< -o $@ 
