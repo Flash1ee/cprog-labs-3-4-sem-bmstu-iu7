@@ -5,7 +5,7 @@ SRCPATH=./src/
 FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
 CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
-LFLAGS=--coverage -lgcov
+LFLAGS=--coverage
 UFLAGS=-lcheck -lpthread -lrt
 
 OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
@@ -20,8 +20,9 @@ release: LFLAGS=-o2
 debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
-unit_tests.exe: $(UNITS) dirs
-	$(CC) -o $@  $(UNITS) $(UFLAGS) $(LFLAGS)
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -c
+unit_tests.exe: clean $(UNITS)
+	$(CC) -o $@  $(UNITS) $(UFLAGS)
 	#valgrind ./unit_tests.exe
 	drmemory -brief  -lib_blacklist "*" -- unit_tests.exe
 
