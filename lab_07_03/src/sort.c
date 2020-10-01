@@ -14,17 +14,21 @@ void mysort(void *first, size_t len, size_t size, int (*cmp)(const void *, const
     char *last = (char *)first + len * size;
     char *prev;
     char *tmp = (char *)malloc(size);
-    assert(tmp);
-    for (char *i = (char *)first + size; i < last; i += size)
+    if (!tmp)
+        free(tmp);
+    else
     {
-        prev = (char *)(i - size);
-        memcpy(tmp, i, size);
-        while (prev >= (char *)first && cmp(prev, tmp) > 0)
+        for (char *i = (char *)first + size; i < last; i += size)
         {
-            memcpy(prev + size, prev, size);
-            prev -= size;
+            prev = (char *)(i - size);
+            memcpy(tmp, i, size);
+            while (prev >= (char *)first && cmp(prev, tmp) > 0)
+            {
+                memcpy(prev + size, prev, size);
+                prev -= size;
+            }
+            memcpy(prev + size, tmp, size);
         }
-        memcpy(prev + size, tmp, size);
+        free(tmp);
     }
-    free(tmp);
 }

@@ -66,6 +66,7 @@ START_TEST(test_key_all_pos)
 
     rc = key(arr, arr + res_len, &dst_a, &dst_b);
     ck_assert_int_eq(rc, 0);
+    free(dst_a);
 
     ck_assert_mem_eq(arr, res, sizeof(int) * res_len);
 }
@@ -87,6 +88,7 @@ START_TEST(test_key_with_neg)
     ck_assert_int_eq(rc, 0);
 
     ck_assert_mem_eq(arr, res, sizeof(int) * res_len);
+    free(dst_a);
 }
 END_TEST
 
@@ -104,6 +106,7 @@ START_TEST(test_key_with_neg_on_last_pos)
 
     rc = key(arr, arr + arr_len, &dst_a, &dst_b);
     ck_assert_int_eq(rc, 0);
+    free(dst_a);
 
     ck_assert_mem_eq(arr, res, sizeof(int) * res_len);
 }
