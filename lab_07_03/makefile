@@ -55,7 +55,7 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 unit: unit_tests.exe app.exe
 	valgrind --leak-check=full ./unit_tests.exe
 
-unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c -lcheck -lpthread -lrt -ggdb
 unit_tests.exe: $(UNITS)
 	$(CC) -o $@  $^ $(UFLAGS)
 

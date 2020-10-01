@@ -31,7 +31,7 @@ int destroy(void *arr, size_t n, size_t size)
     if (n < 1 || !size)
         return EXIT_FAILURE;
     
-    for (char *cur = (char*) arr; cur < (char*)arr + size * n; cur+=size)
+    for (char *cur = (char*) arr; cur < (char*)arr + size * n; cur += size)
         *cur = 0;
     free(arr);
     return EXIT_SUCCESS;
