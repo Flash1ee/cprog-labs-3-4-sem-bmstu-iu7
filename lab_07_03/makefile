@@ -5,7 +5,7 @@ SRCPATH=./src/
 FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
 CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
-LFLAGS=--coverage 
+LFLAGS=--coverage -lgcov
 UFLAGS=-lcheck -lpthread -lrt
 
 OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
