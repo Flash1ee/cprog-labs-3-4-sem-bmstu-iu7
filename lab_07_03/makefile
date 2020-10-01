@@ -8,9 +8,10 @@ CFLAGS=-std=c99 --coverage -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
 UFLAGS= -lcheck -lpthread -lrt
 
-OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o
+OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
-.PHONY: clean unit
+
+.PHONY: clean unit func
 .NOTPARALLEL: release debug
 
 release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
@@ -53,7 +54,8 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 
 unit: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 unit: unit_tests.exe app.exe
-	drmemory -brief -lib_blacklist "*" -- unit_tests.exe
+	# drmemory -brief -lib_blacklist "*" -- unit_tests.exe
+	valgrind --leak-check=full ./unit_tests.exe
 
 unit_tests.exe: $(UNITS)
 	$(CC) -o $@  $^ $(UFLAGS)
