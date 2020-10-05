@@ -1,5 +1,5 @@
 #include "sort.h"
-#include "err.h"
+#include "bug.h"
 
 int cmp_i(const void *a, const void *b)
 {

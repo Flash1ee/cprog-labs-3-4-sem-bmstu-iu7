@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "err.h"
+#include "bug.h"
 #include "io.h"
 #include "sort.h"
 #include "key.h"

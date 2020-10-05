@@ -9,7 +9,7 @@
 *
  */
 #include "io.h"
-#include "err.h"
+#include "bug.h"
 
 int f_int_cnt(FILE *f, size_t *size)
 {
