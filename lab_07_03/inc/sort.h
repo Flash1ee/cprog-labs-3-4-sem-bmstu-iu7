@@ -6,8 +6,8 @@
 *@date 2020-09-25
 *
  */
-#ifndef _SORT_H
-#define _SORT_H
+#ifndef SORT_H_
+#define SORT_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,4 +34,4 @@ void mysort(void *first, size_t len, size_t size, int (*cmp)(const void *, const
  */
 int cmp_i(const void *a, const void *b);
 
-#endif // _SORT_H
+#endif // SORT_H_

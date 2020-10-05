@@ -1,5 +1,5 @@
-#ifndef _CHECK_SORT_H
-#define _CHECK_SORT_H
+#ifndef CHECK_SORT_H_
+#define CHECK_SORT_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,4 +8,4 @@
 Suite *cmp_i_suite(void);
 Suite *mysort_suite(void);
 
-#endif //_CHECK_SORT_H
+#endif //CHECK_SORT_H_

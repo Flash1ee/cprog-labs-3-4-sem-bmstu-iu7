@@ -5,10 +5,8 @@
 #include "err.h"
 #include "io.h"
 #include "sort.h"
-#include "filter.h"
+#include "key.h"
 #include "arr.h"
-
-
 
 int main(int argc, char *argv[])
 {
@@ -36,8 +34,8 @@ int main(int argc, char *argv[])
     }
 
     int *arr = NULL;
-    rc = create((void*) &arr, n, sizeof(int));
-    arr = (int*) arr;
+    rc = create((void *)&arr, n, sizeof(int));
+    arr = (int *)arr;
     if (rc)
     {
         fclose(in);
@@ -59,7 +57,7 @@ int main(int argc, char *argv[])
     out = fopen(argv[2], "w");
     if (!out)
         return READ_ERR;
-    
+
     if (filter)
     {
         int *dst_bg = NULL;

@@ -1,5 +1,5 @@
-#ifndef _ARR_H_
-#define _ARR_H_
+#ifndef ARR_H_
+#define ARR_H_
 #include <stdlib.h>
 
 int create(void **arr, size_t n, size_t size);

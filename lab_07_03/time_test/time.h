@@ -1,5 +1,5 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef TIME_H_
+#define TIME_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,4 +12,4 @@ void measure_time_sort();
 
 
 
-#endif //TIME_H
+#endif //TIME_H_

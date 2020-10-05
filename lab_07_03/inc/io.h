@@ -7,8 +7,8 @@
 *
 *
  */
-#ifndef _IO_H
-#define _IO_H
+#ifndef IO_H_
+#define IO_H_
 
 #include <stdio.h>
 #include <stdlib.h>

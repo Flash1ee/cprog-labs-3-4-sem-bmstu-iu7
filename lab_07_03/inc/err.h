@@ -5,8 +5,8 @@
 *@version 0.1
 *@date 2020-09-25
  */
-#ifndef _ERR_H
-#define _ERR_H
+#ifndef ERR_H_
+#define ERR_H_
 
 /**
 *@brief Неверное количество аргументов
@@ -34,4 +34,4 @@
 #define FILTER_ERR 6
 
 
-#endif // _ERR_H
+#endif // ERR_H_

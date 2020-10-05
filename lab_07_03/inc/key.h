@@ -1,13 +1,13 @@
 /**
-*@file filter.h
+*@file key.h
 *@author Dmitry Varin (you@domain.com)
 *@brief Файл описывающий функции фильтрации массива
 *@version 0.1
 *@date 2020-09-25
 *
  */
-#ifndef FILTER_H
-#define FILTER_H
+#ifndef KEY_H_
+#define KEY_H_
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,4 +36,4 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst);
  */
 int last_neg(char *beg, char *end, size_t size);
 
-#endif // FILTER_H
+#endif // KEY_H_

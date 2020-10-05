@@ -1,7 +1,6 @@
 #include "sort.h"
 #include "time.h"
 
-
 const int low_size = 10000;
 const int big_size = 20000;
 const int step = 100;

@@ -8,8 +8,8 @@ CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
 UFLAGS=-lcheck
 DIR_CR=mkdir -p
-OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
-UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
+OBJS= $(OBJPATH)key.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
+UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_key.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)key.o
 inc = $(wildcard $(INCPATH)*.h)
 
 src = $(wildcard $(SRCPATH)*.c)
@@ -41,7 +41,7 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	cd $(FUNCTESTSPATH) && bash all_test.sh
 	@echo
 	gcov -n $(OBJPATH)main.o
-	gcov -n $(OBJPATH)filter.o
+	gcov -n $(OBJPATH)key.o
 	gcov -n $(OBJPATH)sort.o
 	gcov -n $(OBJPATH)io.o
 
