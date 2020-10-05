@@ -5,13 +5,13 @@
 *@version 0.1
 *@date 2020-09-25
  */
+
 #ifndef ERR_H_
 #define ERR_H_
 
 /**
 *@brief Неверное количество аргументов
  */
-#define ARG_ERR 1
 /**
 *@brief Ошибка чтения файла
  */
