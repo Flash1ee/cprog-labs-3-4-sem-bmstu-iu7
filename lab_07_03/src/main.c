@@ -8,8 +8,6 @@
 #include "key.h"
 #include "arr.h"
 
-#define ARG_ERR 1
-
 int main(int argc, char *argv[])
 {
     if (argc != 3 && argc != 4)
