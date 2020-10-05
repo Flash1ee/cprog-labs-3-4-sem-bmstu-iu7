@@ -1,13 +1,13 @@
 /**
-*@file bug.h
+*@file retcodes.h
 *@author Dmitry Varin
 *@brief Заголовочный файл, описывающий код ошибок
 *@version 0.1
 *@date 2020-09-25
  */
 
-#ifndef BUG_H_
-#define BUG_H_
+#ifndef RETCODES_H_
+#define RETCODES_H_
 
 /**
 *@brief Неверное количество аргументов
@@ -29,10 +29,9 @@
 *@brief Некорректные указатели(NULL)
  */
 #define PTR_ERR 5
-
-/*@brief 
- */
+/**
+*@brief Ошибка при фильтрации массива 
+*/
 #define FILTER_ERR 6
 
-
-#endif // BUG_H_
+#endif // RETCODES_H_

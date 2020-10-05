@@ -1,5 +1,5 @@
 #include "key.h"
-#include "bug.h"
+#include "retcodes.h"
 #include "check_key.h"
 
 // Test cases for cmp_i

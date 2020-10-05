@@ -10,24 +10,27 @@ UFLAGS=-lcheck
 DIR_CR=mkdir -p
 OBJS= $(OBJPATH)key.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_key.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)key.o
-inc = $(wildcard $(INCPATH)*.h)
 
+inc = $(wildcard $(INCPATH)*.h)
 src = $(wildcard $(SRCPATH)*.c)
 obj = $(src:$(SRCPATH)%.c=$(OBJPATH)%.o)
 dep = $(obj:.o=.d) 
+OUT := $(shell find -type f -name out)
 
 
-.PHONY: clean func dirs
+.PHONY: clean func dirs out
 .NOTPARALLEL: release debug
 
 release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
 release: LFLAGS=-o2
 
+
 debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
+
 unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g3 -c
-unit_tests.exe: dirs clean $(UNITS)
+unit_tests.exe: clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
 	valgrind --leak-check=full ./unit_tests.exe
 
@@ -45,7 +48,7 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	gcov -n $(OBJPATH)sort.o
 	gcov -n $(OBJPATH)io.o
 
-$(OBJPATH)debug.lastbuildstate:
+$(OBJPATH)debug.lastbuildstate: | out
 	rm -fv *.exe
 	rm -fv $(OBJPATH)*.o
 	rm -fv $(OBJPATH)*.gcno
@@ -53,7 +56,7 @@ $(OBJPATH)debug.lastbuildstate:
 	rm -fv $(OBJPATH)release.lastbuildstate
 	touch $(OBJPATH)debug.lastbuildstate
 
-$(OBJPATH)release.lastbuildstate:
+$(OBJPATH)release.lastbuildstate: | out
 	rm -fv *.exe
 	rm -fv $(OBJPATH)*.o
 	rm -fv $(OBJPATH)*.gcno
@@ -62,24 +65,24 @@ $(OBJPATH)release.lastbuildstate:
 	touch $(OBJPATH)release.lastbuildstate
 
 
-app.exe: $(obj) | dirs
+app.exe: $(obj) | out
 	$(CC) -o $@ $(obj) $(LFLAGS) 
 
-$(OBJPATH)%.o: $(SRCPATH)%.c
+$(OBJPATH)%.o: $(SRCPATH)%.c | out
 	$(CC) $(CFLAGS) -o $@ $<
 
-$(OBJPATH)%.d : $(SRCPATH)%.c
-	mkdir -p ./out/
-	$(CC) -I$(INCPATH) -MM $< > $@
+$(OBJPATH)%.d : $(SRCPATH)%.c | out
+	$(CC) -I$(INCPATH) -MM -MT $(patsubst %.d,%.o,$@) $< > $@
 
-
+ifneq ($(MAKECMDGOALS), clean)
 include $(dep)
+endif
 
-
-#check:
-#ifeq (,$(wildcard $(OBJPATH)))
-#	$(DIR_CR) $(OBJPATH)
-#endif
+out:
+ifneq ($(OUT),)
+	rm -rf ./out
+endif
+	$(DIR_CR) $(OBJPATH)
 
 dirs: $(OBJPATH) $(INCPATH) $(SRCPATH) $(UNITTESTSPATH) $(FUNCTESTSPATH)
 $(OBJPATH):

@@ -9,7 +9,7 @@
 *
  */
 #include "io.h"
-#include "bug.h"
+#include "retcodes.h"
 
 int f_int_cnt(FILE *f, size_t *size)
 {
