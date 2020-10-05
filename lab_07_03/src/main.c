@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../inc/err.h"
-#include "../inc/io.h"
-#include "../inc/sort.h"
-#include "../inc/filter.h"
-#include "../inc/arr.h"
+#include "err.h"
+#include "io.h"
+#include "sort.h"
+#include "filter.h"
+#include "arr.h"
 
 
 

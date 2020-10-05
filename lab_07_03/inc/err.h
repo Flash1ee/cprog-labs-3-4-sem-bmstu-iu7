@@ -4,7 +4,6 @@
 *@brief Заголовочный файл, описывающий код ошибок
 *@version 0.1
 *@date 2020-09-25
-*
  */
 #ifndef _ERR_H
 #define _ERR_H

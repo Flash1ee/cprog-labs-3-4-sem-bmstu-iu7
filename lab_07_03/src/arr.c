@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../inc/arr.h"
+#include "arr.h"
 
 /**
 *@brief Универсальная функция для выделения памяти под массив

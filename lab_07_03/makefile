@@ -7,11 +7,17 @@ UNITTESTSPATH:=./unit_tests/
 CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
 UFLAGS=-lcheck
-
+DIR_CR=mkdir -p
 OBJS= $(OBJPATH)filter.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_filter.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)filter.o
+inc = $(wildcard $(INCPATH)*.h)
 
-.PHONY: clean func
+src = $(wildcard $(SRCPATH)*.c)
+obj = $(src:$(SRCPATH)%.c=$(OBJPATH)%.o)
+dep = $(obj:.o=.d) 
+
+
+.PHONY: clean func dirs
 .NOTPARALLEL: release debug
 
 release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
@@ -24,7 +30,6 @@ unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g3 -c
 unit_tests.exe: dirs clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
 	valgrind --leak-check=full ./unit_tests.exe
-	#drmemory -brief  -lib_blacklist "*" -- unit_tests.exe
 
 
 $(OBJPATH)check%.o : $(UNITTESTSPATH)check%.c 
@@ -56,30 +61,41 @@ $(OBJPATH)release.lastbuildstate:
 	rm -fv $(OBJPATH)debug.lastbuildstate
 	touch $(OBJPATH)release.lastbuildstate
 
-app.exe: dirs $(OBJPATH)main.o  $(OBJS) 
-	$(CC) -o $@ $(OBJPATH)main.o $(OBJS) $(LFLAGS) 
+
+app.exe: $(obj) | dirs
+	$(CC) -o $@ $(obj) $(LFLAGS) 
 
 $(OBJPATH)%.o: $(SRCPATH)%.c
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $<
 
-dirs: $(INCPATH) $(OBJPATH) $(SRCPATH)
+$(OBJPATH)%.d : $(SRCPATH)%.c
+	mkdir -p ./out/
+	$(CC) -I$(INCPATH) -MM $< > $@
 
+
+include $(dep)
+
+
+#check:
+#ifeq (,$(wildcard $(OBJPATH)))
+#	$(DIR_CR) $(OBJPATH)
+#endif
+
+dirs: $(OBJPATH) $(INCPATH) $(SRCPATH) $(UNITTESTSPATH) $(FUNCTESTSPATH)
 $(OBJPATH):
-	mkdir $(OBJPATH)
-
+	$(DIR_CR) $@
 $(INCPATH):
-	mkdir $(INCPATH)
-
+	$(DIR_CR) $@
 $(SRCPATH):
-	mkdir $(SRCPATH)
+	$(DIR_CR) $@
 $(FUNCTESTSPATH):
-	mkdir $(FUNCTESTSPATH)
+	$(DIR_CR) $@
 $(UNITTESTSPATH):
-	mkdir $(UNITTESTSPATH)
-
+	$(DIR_CR) $@
 clean: 
 	rm -fv *.exe
 	rm -fv $(OBJPATH)*.o
+	rm -fv $(OBJPATH)*.d
 	rm -fv $(OBJPATH)*.gcno
 	rm -fv $(OBJPATH)*.gcda
 	rm -fv $(OBJPATH)*.lastbuildstate

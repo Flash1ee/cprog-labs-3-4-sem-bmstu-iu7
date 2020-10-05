@@ -8,8 +8,8 @@
 *@copyright 
 *
  */
-#include "../inc/io.h"
-#include "../inc/err.h"
+#include "io.h"
+#include "err.h"
 
 int f_int_cnt(FILE *f, size_t *size)
 {

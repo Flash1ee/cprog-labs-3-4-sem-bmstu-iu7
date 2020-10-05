@@ -1,4 +1,4 @@
-#include "../inc/sort.h"
+#include "sort.h"
 #include "time.h"
 
 

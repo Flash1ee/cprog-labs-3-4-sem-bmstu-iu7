@@ -1,5 +1,5 @@
-#include "../inc/filter.h"
-#include "../inc/err.h"
+#include "filter.h"
+#include "err.h"
 #include "check_filter.h"
 
 // Test cases for cmp_i

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <check.h>
 
-#include "../inc/sort.h"
+#include "sort.h"
 // Test cases for cmp_i
 START_TEST(test_cmp_i_equal_values)
 {
