@@ -1,1 +1,1 @@
-./shared/neg_01_in ./shared/neg_01_out f in
+./shared/neg_01_in.txt ./shared/neg_01_out.txt f in

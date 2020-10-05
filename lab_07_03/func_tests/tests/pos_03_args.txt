@@ -1,1 +1,1 @@
-./shared/pos_03_in ./shared/pos_03_out
+./shared/pos_03_in.txt ./shared/pos_03_out.txt
