@@ -1,0 +1,2 @@
+Input up_side, down_side, h:
+Perimetr of figure = 9.08276

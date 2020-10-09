@@ -1,0 +1,6 @@
+@ECHO OFF
+..\app.exe > out.txt 2>err.txt
+IF %ERRORLEVEL% EQU -2 ECHO NEG TEST - ARGS FROM COMMAND STRING NOT LIMIT LEVEL ::PASSED::
+..\app.exe neg_05_in.txt > out.txt 2>err.txt
+IF %ERRORLEVEL% EQU -3 ECHO NEG TEST - FILE NOT EXIST ::PASSED:: & GOTO :END
+:END
