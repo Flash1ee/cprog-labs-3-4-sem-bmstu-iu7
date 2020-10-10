@@ -4,5 +4,6 @@
 #define INPUT_ERR 1
 #define ARG_ERR 2
 #define ALLOCATION_ERR 3
+#define SEARCH_ERR 4
 
 #endif // __RETCODES_H__
