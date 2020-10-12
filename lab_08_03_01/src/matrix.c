@@ -1,35 +1,33 @@
 #include "matrix.h"
 
-matrix_t **allocate_matrix(size_t rows, size_t columns)
+matrix_t **allocate_matrix(int rows, int columns)
 {
     if (!rows || !columns)
     {
         return NULL;
     }
     matrix_t **data = NULL;
-    data = (matrix_t **)malloc(sizeof(matrix_t *) * rows +
-                               sizeof(matrix_t) * rows * columns);
+    data = (matrix_t **)malloc(sizeof(matrix_t *) * rows + sizeof(matrix_t) * rows * columns);
     if (!data)
     {
         return NULL;
     }
-    for (size_t i = 0; i < rows; i++)
+    for (int i = 0; i < rows; i++)
     {
-        data[i] = (matrix_t *)((char *)data + sizeof(matrix_t *) * rows +
-                               i * columns * sizeof(matrix_t));
+        data[i] = (matrix_t *)((char *)data + sizeof(matrix_t *) * rows + i * columns * sizeof(matrix_t));
     }
     return data;
 }
-void matrix_free(matrix_t **data)
+void free_matrix(matrix_t **data)
 {
     free(data);
 }
 
-int input(matrix_t *src[], size_t rows, size_t cols)
+int input(matrix_t *src[], int rows, int cols)
 {
-    for (size_t i = 0; i < rows; i++)
+    for (int i = 0; i < rows; i++)
     {
-        for (size_t j = 0; j < cols; j++)
+        for (int j = 0; j < cols; j++)
         {
             if (scanf("%ld", &src[i][j]) != 1)
             {
@@ -39,29 +37,29 @@ int input(matrix_t *src[], size_t rows, size_t cols)
     }
     return EXIT_SUCCESS;
 }
-void output(matrix_t *src[], size_t rows, size_t cols)
+void output(matrix_t *src[], int rows, int cols)
 {
-    for (size_t i = 0; i < rows; i++)
+    for (int i = 0; i < rows; i++)
     {
-        for (size_t j = 0; j < cols; j++)
+        for (int j = 0; j < cols; j++)
         {
             printf("%ld ", src[i][j]);
         }
         printf("\n");
     }
 }
-int form_sq_matrix(matrix_t *src[], size_t *row, size_t *col, size_t size_sq, size_t flag)
+int form_sq_matrix(matrix_t *src[], int *row, int *col, int size_sq, int flag)
 {
     if (!src || !row || !col || !size_sq || (flag != ROW && flag != COL))
     {
         return ARG_ERR;
     }
     char *begin = (char *)src + *row * sizeof(matrix_t *);
-    size_t index = -1;
-    size_t iter = abs((int)*col - (int)*row);
+    int index = -1;
+    int iter = abs((int)*col - (int)*row);
     if (flag == ROW)
     {
-        for (size_t i = 0; i < iter; i++)
+        for (int i = 0; i < iter; i++)
         {
             index = get_row(src, *row, *col);
             //printf("ind del row = %zu\n", index);
@@ -71,7 +69,7 @@ int form_sq_matrix(matrix_t *src[], size_t *row, size_t *col, size_t size_sq, si
     }
     else if (flag == COL)
     {
-        for (size_t i = 0; i < iter; i++)
+        for (int i = 0; i < iter; i++)
         {
             index = get_col(src, *row, *col);
             del_col(begin, *row, *col, index);
@@ -80,14 +78,14 @@ int form_sq_matrix(matrix_t *src[], size_t *row, size_t *col, size_t size_sq, si
     }
     return EXIT_SUCCESS;
 }
-size_t get_col(matrix_t *src[], size_t rows, size_t cols)
+int get_col(matrix_t *src[], int rows, int cols)
 {
-    size_t ind_col = 0;
+    int ind_col = 0;
     matrix_t max = **src;
 
-    for (size_t i = 0; i < cols; i++)
+    for (int i = 0; i < cols; i++)
     {
-        for (size_t j = 0; j < rows; j++)
+        for (int j = 0; j < rows; j++)
         {
             if (src[j][i] > max)
             {
@@ -98,26 +96,27 @@ size_t get_col(matrix_t *src[], size_t rows, size_t cols)
     }
     return ind_col;
 }
-void del_col(char *beg, size_t rows, size_t cols, size_t col_ind)
+void del_col(char* beg, int rows, int cols, int col_ind)
 {
-    for (size_t i = 0; i < rows; i++)
+    for (int i = 0; i < rows; i++)
     {
         //     memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
         //             beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
         //             sizeof(matrix_t) * ((rows - i - 1) * cols + cols - col_ind - 1));
         //
-        memmove(beg + sizeof(matrix_t) * (i * cols + col_ind), beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
-                sizeof(matrix_t) * (cols - col_ind - 1));
+        memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
+            beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
+            sizeof(matrix_t) * (cols - col_ind - 1));
     }
 }
-size_t get_row(matrix_t *src[], size_t rows, size_t cols)
+int get_row(matrix_t *src[], int rows, int cols)
 {
     size_t ind_row = 0;
     matrix_t max = **src;
 
-    for (size_t i = 0; i < cols; i++)
+    for (int i = 0; i < cols; i++)
     {
-        for (size_t j = 0; j < rows; j++)
+        for (int j = 0; j < rows; j++)
         {
             if (src[j][i] > max)
             {
@@ -128,12 +127,12 @@ size_t get_row(matrix_t *src[], size_t rows, size_t cols)
     }
     return ind_row;
 }
-void del_row(size_t rows, size_t cols, char *beg, size_t row_ind)
+void del_row(int rows, int cols, char* beg, int row_ind)
 {
     // output(src, rows - 1, cols);
     // printf("\n");
 
-    // for (size_t i = row_ind; i < rows - 1; i++)
+    // for (int i = row_ind; i < rows - 1; i++)
     // {
     //     src[i] = src[i + 1];
     // }
@@ -142,8 +141,9 @@ void del_row(size_t rows, size_t cols, char *beg, size_t row_ind)
     // printf("\n");
     if (row_ind != rows - 1)
     {
-        memmove(beg + sizeof(matrix_t) * cols * row_ind, beg + sizeof(matrix_t) * cols * (row_ind + 1),
-                sizeof(matrix_t) * cols * (rows - row_ind - 1));
+        memmove(beg + sizeof(matrix_t) * cols * row_ind,
+            beg + sizeof(matrix_t) * cols * (row_ind + 1),
+            sizeof(matrix_t) * cols * (rows - row_ind - 1));
         // memmove(beg - 1, beg, sizeof(matrix_t) * (rows - 1) * cols);
     }
     // output(src, rows - 1, cols);
@@ -151,14 +151,14 @@ void del_row(size_t rows, size_t cols, char *beg, size_t row_ind)
 }
 
 // Поиск строки с максимальным элементом, который встретился первым в строке, обходам по столбцам
-size_t search_row(matrix_t *src[], size_t rows, size_t cols)
+int search_row(matrix_t *src[], int rows, int cols)
 {
     matrix_t max = **src;
-    size_t n_string = -1;
+    int n_string = -1;
 
-    for (size_t i = 0; i < cols; i++)
+    for (int i = 0; i < cols; i++)
     {
-        for (size_t j = 0; j < rows; j++)
+        for (int j = 0; j < rows; j++)
         {
             if (*src[rows + j * cols + i] > max)
             {
@@ -169,7 +169,7 @@ size_t search_row(matrix_t *src[], size_t rows, size_t cols)
     }
     return n_string;
 }
-void new_size_by_min(size_t *size_new, size_t row_src, size_t col_src, int *flag)
+void new_size_by_min(int *size_new, int row_src, int col_src, int *flag)
 {
     /*
     flag - переменная которая является сигналом для формирования матрицы
@@ -185,24 +185,24 @@ void new_size_by_min(size_t *size_new, size_t row_src, size_t col_src, int *flag
         *flag = ROW;
     }
 }
-void new_arr_by_max(matrix_t *src[], size_t *size_src, size_t size_new)
+void new_arr_by_max(matrix_t *src[], int *size_src, int size_new)
 {
-    size_t add_count = size_new - *size_src;
+    int add_count = size_new - *size_src;
 
     add_rows(src, *size_src, add_count);
     add_cols(src, *size_src, add_count);
     *size_src = size_new;
 }
 
-void add_rows(matrix_t *src[], size_t size_src, size_t count)
+void add_rows(matrix_t *src[], int size_src, int count)
 {
-    double average = 0.0;
-    size_t tmp_size = size_src;
-    for (size_t i = 0; i < count; i++)
+    matrix_t average = 0;
+    int tmp_size = size_src;
+    for (int i = 0; i < count; i++)
     {
-        for (size_t c = 0; c < size_src; c++)
+        for (int c = 0; c < size_src; c++)
         {
-            for (size_t r = 0; r < tmp_size; r++)
+            for (int r = 0; r < tmp_size; r++)
             {
                 average += src[r][c];
             }
@@ -213,16 +213,16 @@ void add_rows(matrix_t *src[], size_t size_src, size_t count)
         tmp_size += 1;
     }
 }
-void add_cols(matrix_t *src[], size_t size_src, size_t count)
+void add_cols(matrix_t *src[], int size_src, int count)
 {
     double max;
-    size_t tmp_size = size_src;
-    for (size_t i = 0; i < count; i++)
+    int tmp_size = size_src;
+    for (int i = 0; i < count; i++)
     {
-        for (size_t r = 0; r < count + size_src; r++)
+        for (int r = 0; r < count + size_src; r++)
         {
             max = src[r][0];
-            for (size_t c = 0; c < tmp_size; c++)
+            for (int c = 0; c < tmp_size; c++)
             {
                 if (src[r][c] > max)
                 {
@@ -234,23 +234,23 @@ void add_cols(matrix_t *src[], size_t size_src, size_t count)
         tmp_size += 1;
     }
 }
-matrix_t **copy_elem(matrix_t *src[], size_t rows_src, size_t cols_src, size_t rows_dst, size_t cols_dst)
+matrix_t **copy_elem(matrix_t *src[], int rows_src, int cols_src, int rows_dst, int cols_dst)
 {
     matrix_t **tmp = allocate_matrix(rows_dst, cols_dst);
     if (!tmp)
     {
         return NULL;
     }
-    for (size_t r = 0; r < rows_src; r++)
+    for (int r = 0; r < rows_src; r++)
     {
-        for (size_t c = 0; c < cols_src; c++)
+        for (int c = 0; c < cols_src; c++)
         {
             tmp[r][c] = src[r][c];
         }
     }
     return tmp;
 }
-int calculate(matrix_t **src_frst, matrix_t **src_sec, size_t size_sq_frst, size_t size_sq_sec, size_t power_one, size_t power_two)
+int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int size_sq_sec, int power_one, int power_two)
 {
     if (!src_frst || !src_sec || size_sq_sec != size_sq_frst)
     {
@@ -259,51 +259,51 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, size_t size_sq_frst, size
     if (power_one != 0)
     {
         matrix_t **first = allocate_matrix(size_sq_frst, size_sq_frst);
-        for (size_t i = 0; i < size_sq_sec; i++)
+        for (int i = 0; i < size_sq_sec; i++)
         {
-            for (size_t j = 0; j < size_sq_frst; j++)
+            for (int j = 0; j < size_sq_frst; j++)
             {
                 first[i][j] = src_frst[i][j];
             }
         }
-        for (size_t i = 0; i < power_one - 1; i++)
+        for (int i = 0; i < power_one - 1; i++)
         {
             multiply(src_frst, first, size_sq_frst);
             //printf("POWER i frst = %zu:\n", i);
             // output(src_frst, size_sq_frst, size_sq_frst);
         }
-        free(first);
+        free_matrix(first);
     }
     if (power_two != 0)
     {
         matrix_t **sec = allocate_matrix(size_sq_sec, size_sq_sec);
-        for (size_t i = 0; i < size_sq_sec; i++)
+        for (int i = 0; i < size_sq_sec; i++)
         {
-            for (size_t j = 0; j < size_sq_sec; j++)
+            for (int j = 0; j < size_sq_sec; j++)
             {
                 sec[i][j] = src_sec[i][j];
             }
         }
-        for (size_t i = 0; i < power_two - 1; i++)
+        for (int i = 0; i < power_two - 1; i++)
         {
             multiply(src_sec, sec, size_sq_sec);
             // printf("POWER i sec = %zu:\n", i);
             // output(src_sec, size_sq_sec, size_sq_sec);
         }
-        free(sec);
+        free_matrix(sec);
     }
     multiply(src_frst, src_sec, size_sq_frst);
     return EXIT_SUCCESS;
 }
-int multiply(matrix_t **frst, matrix_t **sec, size_t size)
+int multiply(matrix_t **frst, matrix_t **sec, int size)
 {
     matrix_t res[size][size];
     matrix_t tmp = 0;
-    for (size_t r_frst = 0; r_frst < size; r_frst++)
+    for (int r_frst = 0; r_frst < size; r_frst++)
     {
-        for (size_t c_sec = 0; c_sec < size; c_sec++)
+        for (int c_sec = 0; c_sec < size; c_sec++)
         {
-            for (size_t c_frst = 0; c_frst < size; c_frst++)
+            for (int c_frst = 0; c_frst < size; c_frst++)
             {
                 tmp += frst[r_frst][c_frst] * sec[c_frst][c_sec];
             }
@@ -311,9 +311,9 @@ int multiply(matrix_t **frst, matrix_t **sec, size_t size)
             tmp = 0;
         }
     }
-    for (size_t r = 0; r < size; r++)
+    for (int r = 0; r < size; r++)
     {
-        for (size_t c = 0; c < size; c++)
+        for (int c = 0; c < size; c++)
         {
             frst[r][c] = res[r][c];
         }

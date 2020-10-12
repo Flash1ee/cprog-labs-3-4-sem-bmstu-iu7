@@ -7,8 +7,8 @@
 
 int main(void)
 {
-    size_t row_a, col_a;
-    if (scanf("%zu %zu", &row_a, &col_a) != 2 || row_a < 1 || col_a < 1)
+    int row_a, col_a;
+    if (scanf("%d %d", &row_a, &col_a) != 2 || row_a < 1 || col_a < 1)
     {
         return INPUT_ERR;
     }
@@ -23,8 +23,8 @@ int main(void)
         return READ_ERR;
     }
 
-    size_t row_b, col_b;
-    if (scanf("%zu %zu", &row_b, &col_b) != 2 || row_b < 1 || col_b < 1)
+    int row_b, col_b;
+    if (scanf("%d %d", &row_b, &col_b) != 2 || row_b < 1 || col_b < 1)
     {
         return INPUT_ERR;
     }
@@ -43,8 +43,8 @@ int main(void)
     // printf("\nSEC:\n");
     // output(src_sec, row_b, col_b);
 
-    size_t size_sq_frst = 0;
-    size_t size_sq_sec = 0;
+    int size_sq_frst = 0;
+    int size_sq_sec = 0;
 
     int flag_frst = 0;
     int flag_sec = 0;
@@ -61,7 +61,7 @@ int main(void)
     // printf("SEC RES:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
 
-    size_t size_new = 0;
+    int size_new = 0;
     if (size_sq_frst > size_sq_sec)
     {
         size_new = size_sq_frst;
@@ -76,14 +76,14 @@ int main(void)
         matrix_t **src_frst_new = copy_elem(src_frst, size_sq_frst, size_sq_frst, size_new, size_new);
         if (src_frst_new)
         {
-            free(src_frst);
+            free_matrix(src_frst);
             src_frst = src_frst_new;
             new_arr_by_max(src_frst, &size_sq_frst, size_new);
         }
         else
         {
-            free(src_frst);
-            free(src_sec);
+            free_matrix(src_frst);
+            free_matrix(src_sec);
             return ALLOCATION_ERR;
         }
     }
@@ -93,14 +93,14 @@ int main(void)
         matrix_t **src_sec_new = copy_elem(src_sec, size_sq_sec, size_sq_sec, size_new, size_new);
         if (src_sec_new)
         {
-            free(src_sec);
+            free_matrix(src_sec);
             src_sec = src_sec_new;
             new_arr_by_max(src_sec, &size_sq_sec, size_new);
         }
         else
         {
-            free(src_frst);
-            free(src_sec);
+            free_matrix(src_frst);
+            free_matrix(src_sec);
             return ALLOCATION_ERR;
         }
     }
@@ -110,11 +110,11 @@ int main(void)
     // printf("SEC AFTER ADD:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
 
-    size_t power_one, power_two;
-    if (scanf("%zu%zu", &power_one, &power_two) != 2)
+    int power_one, power_two;
+    if (scanf("%d %d", &power_one, &power_two) != 2)
     {
-        free(src_frst);
-        free(src_sec);
+        free_matrix(src_frst);
+        free_matrix(src_sec);
         return INPUT_ERR;
     }
     // printf("\n\n%zu %zu \n\n", power_one, power_two);
@@ -127,8 +127,8 @@ int main(void)
     // printf("SEC AFTER ADD:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
 
-    free(src_frst);
-    free(src_sec);
+    free_matrix(src_frst);
+    free_matrix(src_sec);
 
     return EXIT_SUCCESS;
 }
