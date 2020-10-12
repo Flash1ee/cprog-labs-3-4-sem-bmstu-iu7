@@ -15,6 +15,7 @@ matrix_t **allocate_matrix(int rows, int columns);
 void free_matrix(matrix_t **data);
 
 void new_size_by_min(int *size_new, int row_src, int col_src, int *flag);
+void new_size_by_max(int *size_new, int size_frst, int size_sec);
 
 int input(matrix_t *src[], int rows, int cols);
 void output(matrix_t *src[], int rows, int cols);

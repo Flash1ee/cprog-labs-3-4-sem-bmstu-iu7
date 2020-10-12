@@ -67,16 +67,7 @@ int main(void)
     // output(src_sec, size_sq_sec, size_sq_sec);
 
     int size_new = 0;
-
-    if (size_sq_frst > size_sq_sec)
-    {
-        size_new = size_sq_frst;
-    }
-    else
-    {
-        size_new = size_sq_sec;
-    }
-
+    new_size_by_max(&size_new, size_sq_frst, size_sq_sec);
     if (size_sq_frst != size_new)
     {
         matrix_t **src_frst_new = copy_elem(src_frst, size_sq_frst, size_sq_frst, size_new, size_new);
@@ -136,7 +127,7 @@ int main(void)
     // output(src_frst, size_sq_frst, size_sq_frst);
     // printf("\n\n");
     // printf("SEC AFTER ADD:\n");
-    output(src_sec, size_sq_sec, size_sq_sec);
+    output(src_frst, size_sq_frst, size_sq_frst);
 
     free_matrix(src_frst);
     free_matrix(src_sec);

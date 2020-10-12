@@ -185,6 +185,17 @@ void new_size_by_min(int *size_new, int row_src, int col_src, int *flag)
         *flag = ROW;
     }
 }
+void new_size_by_max(int *size_new, int size_frst, int size_sec)
+{
+    if (size_frst > size_sec)
+    {
+        *size_new = size_frst;
+    }
+    else
+    {
+        *size_new = size_sec;
+    }
+}
 void new_arr_by_max(matrix_t *src[], int *size_src, int size_new)
 {
     int add_count = size_new - *size_src;
@@ -215,7 +226,7 @@ void add_rows(matrix_t *src[], int size_src, int count)
 }
 void add_cols(matrix_t *src[], int size_src, int count)
 {
-    double max;
+    int max;
     int tmp_size = size_src;
     for (int i = 0; i < count; i++)
     {
@@ -312,6 +323,8 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
         make_identity(src_sec, size_sq_sec);
     }
     multiply(src_frst, src_sec, size_sq_frst);
+    // printf("\n");
+    // output(src_frst, size_sq_frst, size_sq_frst);
     return EXIT_SUCCESS;
 }
 int multiply(matrix_t **frst, matrix_t **sec, int size)
