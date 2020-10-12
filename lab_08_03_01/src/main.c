@@ -27,11 +27,13 @@ int main(void)
     int row_b, col_b;
     if (scanf("%d %d", &row_b, &col_b) != 2 || row_b < 1 || col_b < 1)
     {
+        free_matrix(src_frst);
         return INPUT_ERR;
     }
     matrix_t **src_sec = allocate_matrix(row_b, col_b);
     if (!src_sec)
     {
+        free_matrix(src_frst);
         return ALLOCATION_ERR;
     }
 
@@ -123,13 +125,18 @@ int main(void)
     }
     // printf("\n\n%zu %zu \n\n", power_one, power_two);
 
-    calculate(src_frst, src_sec, size_sq_frst, size_sq_sec, power_one, power_two);
+    if (calculate(src_frst, src_sec, size_sq_frst, size_sq_sec, power_one, power_two))
+    {
+        free_matrix(src_frst);
+        free_matrix(src_sec);
+        return INPUT_ERR;
+    }
 
     // printf("FRST AFTER ADD:\n");
     // output(src_frst, size_sq_frst, size_sq_frst);
     // printf("\n\n");
     // printf("SEC AFTER ADD:\n");
-    // output(src_sec, size_sq_sec, size_sq_sec);
+    output(src_sec, size_sq_sec, size_sq_sec);
 
     free_matrix(src_frst);
     free_matrix(src_sec);

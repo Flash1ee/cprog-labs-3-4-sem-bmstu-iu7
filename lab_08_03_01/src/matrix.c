@@ -283,7 +283,7 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
     {
         make_identity(src_frst, size_sq_frst);
     }
-    
+
     if (power_two != 0)
     {
         matrix_t **sec = allocate_matrix(size_sq_sec, size_sq_sec);
@@ -304,7 +304,6 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
             // printf("POWER i sec = %zu:\n", i);
             // output(src_sec, size_sq_sec, size_sq_sec);
             // printf("\n");
-
         }
         free_matrix(sec);
     }
@@ -354,7 +353,6 @@ void make_identity(matrix_t *src[], int size)
             {
                 src[i][j] = 0;
             }
-            
         }
     }
 }
