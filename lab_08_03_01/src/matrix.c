@@ -96,7 +96,7 @@ int get_col(matrix_t *src[], int rows, int cols)
     }
     return ind_col;
 }
-void del_col(char* beg, int rows, int cols, int col_ind)
+void del_col(char *beg, int rows, int cols, int col_ind)
 {
     for (int i = 0; i < rows; i++)
     {
@@ -127,7 +127,7 @@ int get_row(matrix_t *src[], int rows, int cols)
     }
     return ind_row;
 }
-void del_row(int rows, int cols, char* beg, int row_ind)
+void del_row(int rows, int cols, char *beg, int row_ind)
 {
     // output(src, rows - 1, cols);
     // printf("\n");
