@@ -20,6 +20,7 @@ int main(void)
 
     if (input(src_frst, row_a, col_a))
     {
+        free_matrix(src_frst);
         return READ_ERR;
     }
 
@@ -36,6 +37,8 @@ int main(void)
 
     if (input(src_sec, row_b, col_b))
     {
+        free_matrix(src_sec);
+        free_matrix(src_frst);
         return READ_ERR;
     }
     // printf("FRST:\n");
@@ -62,7 +65,7 @@ int main(void)
     // output(src_sec, size_sq_sec, size_sq_sec);
 
     int size_new = 0;
-    
+
     if (size_sq_frst > size_sq_sec)
     {
         size_new = size_sq_frst;
@@ -123,7 +126,7 @@ int main(void)
     calculate(src_frst, src_sec, size_sq_frst, size_sq_sec, power_one, power_two);
 
     // printf("FRST AFTER ADD:\n");
-    output(src_frst, size_sq_frst, size_sq_frst);
+    // output(src_frst, size_sq_frst, size_sq_frst);
     // printf("\n\n");
     // printf("SEC AFTER ADD:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);

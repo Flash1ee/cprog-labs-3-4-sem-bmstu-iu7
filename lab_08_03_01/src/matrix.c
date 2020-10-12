@@ -259,6 +259,10 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
     if (power_one != 0)
     {
         matrix_t **first = allocate_matrix(size_sq_frst, size_sq_frst);
+        if (!first)
+        {
+            return ALLOCATION_ERR;
+        }
         for (int i = 0; i < size_sq_sec; i++)
         {
             for (int j = 0; j < size_sq_frst; j++)
@@ -269,8 +273,9 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
         for (int i = 0; i < power_one - 1; i++)
         {
             multiply(src_frst, first, size_sq_frst);
-            //printf("POWER i frst = %zu:\n", i);
+            // printf("POWER i frst = %zu:\n", i);
             // output(src_frst, size_sq_frst, size_sq_frst);
+            // printf("\n");
         }
         free_matrix(first);
     }
@@ -282,6 +287,10 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
     if (power_two != 0)
     {
         matrix_t **sec = allocate_matrix(size_sq_sec, size_sq_sec);
+        if (!sec)
+        {
+            return ALLOCATION_ERR;
+        }
         for (int i = 0; i < size_sq_sec; i++)
         {
             for (int j = 0; j < size_sq_sec; j++)
@@ -294,6 +303,8 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
             multiply(src_sec, sec, size_sq_sec);
             // printf("POWER i sec = %zu:\n", i);
             // output(src_sec, size_sq_sec, size_sq_sec);
+            // printf("\n");
+
         }
         free_matrix(sec);
     }
