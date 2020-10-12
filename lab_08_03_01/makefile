@@ -8,13 +8,12 @@ CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
 UFLAGS=-lcheck
 DIR_CR=mkdir -p
-OBJS= $(OBJPATH)key.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
+INC:=$(wildcard $(INCPATH)*.h)
+SRCS := $(wildcard $(SRCPATH)*.c)
+OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_key.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)key.o
 
-inc = $(wildcard $(INCPATH)*.h)
-src = $(wildcard $(SRCPATH)*.c)
-obj = $(src:$(SRCPATH)%.c=$(OBJPATH)%.o)
-dep = $(obj:.o=.d) 
+dep = $(OBJS:.o=.d) 
 OUT := $(shell find -type f -name out)
 
 
@@ -65,8 +64,8 @@ $(OBJPATH)release.lastbuildstate: | out
 	touch $(OBJPATH)release.lastbuildstate
 
 
-app.exe: $(obj) | out
-	$(CC) -o $@ $(obj) $(LFLAGS) 
+app.exe: $(OBJS) | out
+	$(CC) -o $@ $(OBJS) $(LFLAGS) 
 
 $(OBJPATH)%.o: $(SRCPATH)%.c | out
 	$(CC) $(CFLAGS) -o $@ $<
@@ -75,7 +74,7 @@ $(OBJPATH)%.d : $(SRCPATH)%.c | out
 	$(CC) -I$(INCPATH) -MM -MT $(patsubst %.d,%.o,$@) $< > $@
 
 ifneq ($(MAKECMDGOALS), clean)
-include $(dep)
+-include $(dep)
 endif
 
 out:

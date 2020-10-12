@@ -4,12 +4,23 @@
 #include "retcodes.h"
 #include "matrix.h"
 #include "utils.h"
-int main(int argc, char *argv[])
+
+int main(void)
 {
     size_t row_a, col_a;
     if (scanf("%zu %zu", &row_a, &col_a) != 2 || row_a < 1 || col_a < 1)
     {
         return INPUT_ERR;
+    }
+    matrix_t **src_frst = allocate_matrix(row_a, col_a);
+    if (!src_frst)
+    {
+        return ALLOCATION_ERR;
+    }
+
+    if (input(src_frst, row_a, col_a))
+    {
+        return READ_ERR;
     }
 
     size_t row_b, col_b;
@@ -17,14 +28,21 @@ int main(int argc, char *argv[])
     {
         return INPUT_ERR;
     }
-
-    matrix_t **src_frst = allocate_matrix(row_a, col_a);
     matrix_t **src_sec = allocate_matrix(row_b, col_b);
-
-    if (!src_frst || !src_sec)
+    if (!src_sec)
     {
         return ALLOCATION_ERR;
     }
+
+    if (input(src_sec, row_b, col_b))
+    {
+        return READ_ERR;
+    }
+    printf("FRST:\n");
+    output(src_frst, row_a, col_a);
+    printf("\nSEC:\n");
+    output(src_sec, row_b, col_b);
+
 
     size_t size_sq_frst = 0;
     size_t size_sq_sec = 0;
@@ -35,9 +53,20 @@ int main(int argc, char *argv[])
     new_size(&size_sq_frst, row_a, col_a, &flag_frst);
     new_size(&size_sq_sec, row_b, col_b, &flag_sec);
 
-    form_sq_matrix(src_frst, row_a, col_a, size_sq_frst, flag_frst);
-    form_sq_matrix(src_sec, row_b, col_b, size_sq_sec, flag_sec);
+    form_sq_matrix(src_frst, &row_a, &col_a, size_sq_frst, flag_frst);
+    form_sq_matrix(src_sec, &row_b, &col_b, size_sq_sec, flag_sec);
 
+    printf("FRST RES:\n");
+    output(src_frst, size_sq_frst, size_sq_frst);
+    printf("\n\n");
+    printf("SEC RES:\n");
+    output(src_sec, size_sq_sec, size_sq_sec);
+
+    
+
+
+    free(src_frst);
+    free(src_sec);
 
     
     return EXIT_SUCCESS;
