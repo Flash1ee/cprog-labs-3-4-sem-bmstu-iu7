@@ -274,6 +274,11 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
         }
         free_matrix(first);
     }
+    else
+    {
+        make_identity(src_frst, size_sq_frst);
+    }
+    
     if (power_two != 0)
     {
         matrix_t **sec = allocate_matrix(size_sq_sec, size_sq_sec);
@@ -291,6 +296,10 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
             // output(src_sec, size_sq_sec, size_sq_sec);
         }
         free_matrix(sec);
+    }
+    else
+    {
+        make_identity(src_sec, size_sq_sec);
     }
     multiply(src_frst, src_sec, size_sq_frst);
     return EXIT_SUCCESS;
@@ -319,4 +328,22 @@ int multiply(matrix_t **frst, matrix_t **sec, int size)
         }
     }
     return EXIT_SUCCESS;
+}
+void make_identity(matrix_t *src[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if (i == j)
+            {
+                src[i][j] = 1;
+            }
+            else
+            {
+                src[i][j] = 0;
+            }
+            
+        }
+    }
 }

@@ -62,6 +62,7 @@ int main(void)
     // output(src_sec, size_sq_sec, size_sq_sec);
 
     int size_new = 0;
+    
     if (size_sq_frst > size_sq_sec)
     {
         size_new = size_sq_frst;

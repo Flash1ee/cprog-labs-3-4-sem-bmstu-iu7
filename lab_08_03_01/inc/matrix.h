@@ -41,6 +41,7 @@ void add_rows(matrix_t *src[], int size_src, int size_new);
 void add_cols(matrix_t *src[], int size_src, int size_new);
 matrix_t **copy_elem(matrix_t *src[], int rows_src, int cols_src, int rows_dst, int cols_dst);
 int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int size_sq_sec, int power_one, int power_two);
+void make_identity(matrix_t *src[], int size);
 int multiply(matrix_t **frst, matrix_t **sec, int size);
 
 #endif // __MATRIX_H__
