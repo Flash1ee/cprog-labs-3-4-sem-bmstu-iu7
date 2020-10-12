@@ -64,8 +64,8 @@ int form_sq_matrix(matrix_t *src[], size_t *row, size_t *col, size_t size_sq, si
         for (size_t i = 0; i < iter; i++)
         {
             index = get_row(src, *row, *col);
-            printf("ind del row = %zu\n", index);
-            del_row(src, *row, *col, begin, index);
+            //printf("ind del row = %zu\n", index);
+            del_row(*row, *col, begin, index);
             *row -= 1;
         }
     }
@@ -74,7 +74,7 @@ int form_sq_matrix(matrix_t *src[], size_t *row, size_t *col, size_t size_sq, si
         for (size_t i = 0; i < iter; i++)
         {
             index = get_col(src, *row, *col);
-            del_col(begin,*row, *col, index);
+            del_col(begin, *row, *col, index);
             *col -= 1;
         }
     }
@@ -102,10 +102,10 @@ void del_col(char *beg, size_t rows, size_t cols, size_t col_ind)
 {
     for (size_t i = 0; i < rows; i++)
     {
-    //     memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
-    //             beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
-    //             sizeof(matrix_t) * ((rows - i - 1) * cols + cols - col_ind - 1));
-    //
+        //     memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
+        //             beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
+        //             sizeof(matrix_t) * ((rows - i - 1) * cols + cols - col_ind - 1));
+        //
         memmove(beg + sizeof(matrix_t) * (i * cols + col_ind), beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
                 sizeof(matrix_t) * (cols - col_ind - 1));
     }
@@ -128,10 +128,10 @@ size_t get_row(matrix_t *src[], size_t rows, size_t cols)
     }
     return ind_row;
 }
-void del_row(matrix_t *src[], size_t rows, size_t cols, char *beg, size_t row_ind)
+void del_row(size_t rows, size_t cols, char *beg, size_t row_ind)
 {
-    output(src, rows - 1, cols);
-    printf("\n");
+    // output(src, rows - 1, cols);
+    // printf("\n");
 
     // for (size_t i = row_ind; i < rows - 1; i++)
     // {
@@ -146,8 +146,8 @@ void del_row(matrix_t *src[], size_t rows, size_t cols, char *beg, size_t row_in
                 sizeof(matrix_t) * cols * (rows - row_ind - 1));
         // memmove(beg - 1, beg, sizeof(matrix_t) * (rows - 1) * cols);
     }
-    output(src, rows - 1, cols);
-    printf("\n");
+    // output(src, rows - 1, cols);
+    // printf("\n");
 }
 
 // Поиск строки с максимальным элементом, который встретился первым в строке, обходам по столбцам
@@ -169,7 +169,7 @@ size_t search_row(matrix_t *src[], size_t rows, size_t cols)
     }
     return n_string;
 }
-void new_size(size_t *size_new, size_t row_src, size_t col_src, int *flag)
+void new_size_by_min(size_t *size_new, size_t row_src, size_t col_src, int *flag)
 {
     /*
     flag - переменная которая является сигналом для формирования матрицы
@@ -184,4 +184,139 @@ void new_size(size_t *size_new, size_t row_src, size_t col_src, int *flag)
         *size_new = col_src;
         *flag = ROW;
     }
+}
+void new_arr_by_max(matrix_t *src[], size_t *size_src, size_t size_new)
+{
+    size_t add_count = size_new - *size_src;
+
+    add_rows(src, *size_src, add_count);
+    add_cols(src, *size_src, add_count);
+    *size_src = size_new;
+}
+
+void add_rows(matrix_t *src[], size_t size_src, size_t count)
+{
+    double average = 0.0;
+    size_t tmp_size = size_src;
+    for (size_t i = 0; i < count; i++)
+    {
+        for (size_t c = 0; c < size_src; c++)
+        {
+            for (size_t r = 0; r < tmp_size; r++)
+            {
+                average += src[r][c];
+            }
+            average = average / tmp_size;
+            src[tmp_size][c] = average;
+            average = 0;
+        }
+        tmp_size += 1;
+    }
+}
+void add_cols(matrix_t *src[], size_t size_src, size_t count)
+{
+    double max;
+    size_t tmp_size = size_src;
+    for (size_t i = 0; i < count; i++)
+    {
+        for (size_t r = 0; r < count + size_src; r++)
+        {
+            max = src[r][0];
+            for (size_t c = 0; c < tmp_size; c++)
+            {
+                if (src[r][c] > max)
+                {
+                    max = src[r][c];
+                }
+            }
+            src[r][tmp_size] = max;
+        }
+        tmp_size += 1;
+    }
+}
+matrix_t **copy_elem(matrix_t *src[], size_t rows_src, size_t cols_src, size_t rows_dst, size_t cols_dst)
+{
+    matrix_t **tmp = allocate_matrix(rows_dst, cols_dst);
+    if (!tmp)
+    {
+        return NULL;
+    }
+    for (size_t r = 0; r < rows_src; r++)
+    {
+        for (size_t c = 0; c < cols_src; c++)
+        {
+            tmp[r][c] = src[r][c];
+        }
+    }
+    return tmp;
+}
+int calculate(matrix_t **src_frst, matrix_t **src_sec, size_t size_sq_frst, size_t size_sq_sec, size_t power_one, size_t power_two)
+{
+    if (!src_frst || !src_sec || size_sq_sec != size_sq_frst)
+    {
+        return ARG_ERR;
+    }
+    if (power_one != 0)
+    {
+        matrix_t **first = allocate_matrix(size_sq_frst, size_sq_frst);
+        for (size_t i = 0; i < size_sq_sec; i++)
+        {
+            for (size_t j = 0; j < size_sq_frst; j++)
+            {
+                first[i][j] = src_frst[i][j];
+            }
+        }
+        for (size_t i = 0; i < power_one - 1; i++)
+        {
+            multiply(src_frst, first, size_sq_frst);
+            //printf("POWER i frst = %zu:\n", i);
+            // output(src_frst, size_sq_frst, size_sq_frst);
+        }
+        free(first);
+    }
+    if (power_two != 0)
+    {
+        matrix_t **sec = allocate_matrix(size_sq_sec, size_sq_sec);
+        for (size_t i = 0; i < size_sq_sec; i++)
+        {
+            for (size_t j = 0; j < size_sq_sec; j++)
+            {
+                sec[i][j] = src_sec[i][j];
+            }
+        }
+        for (size_t i = 0; i < power_two - 1; i++)
+        {
+            multiply(src_sec, sec, size_sq_sec);
+            // printf("POWER i sec = %zu:\n", i);
+            // output(src_sec, size_sq_sec, size_sq_sec);
+        }
+        free(sec);
+    }
+    multiply(src_frst, src_sec, size_sq_frst);
+    return EXIT_SUCCESS;
+}
+int multiply(matrix_t **frst, matrix_t **sec, size_t size)
+{
+    matrix_t res[size][size];
+    matrix_t tmp = 0;
+    for (size_t r_frst = 0; r_frst < size; r_frst++)
+    {
+        for (size_t c_sec = 0; c_sec < size; c_sec++)
+        {
+            for (size_t c_frst = 0; c_frst < size; c_frst++)
+            {
+                tmp += frst[r_frst][c_frst] * sec[c_frst][c_sec];
+            }
+            res[r_frst][c_sec] = tmp;
+            tmp = 0;
+        }
+    }
+    for (size_t r = 0; r < size; r++)
+    {
+        for (size_t c = 0; c < size; c++)
+        {
+            frst[r][c] = res[r][c];
+        }
+    }
+    return EXIT_SUCCESS;
 }
