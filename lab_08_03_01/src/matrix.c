@@ -227,7 +227,7 @@ void add_rows(matrix_t *src[], int size_src, int count)
 }
 int rounding_down(matrix_t average, int tmp_size)
 {
-    if (average < 0 && average % 2)
+    if (average < 0 && average % tmp_size)
     {
         return (average / tmp_size) - 1;
     }
