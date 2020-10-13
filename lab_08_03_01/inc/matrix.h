@@ -19,6 +19,8 @@ void new_size_by_max(int *size_new, int size_frst, int size_sec);
 
 int input(matrix_t *src[], int rows, int cols);
 void output(matrix_t *src[], int rows, int cols);
+int rounding_down(matrix_t average, int tmp_size);
+
 
 int form_sq_matrix(matrix_t *src[], int *row, int *col, int size_sq, int flag);
 /**

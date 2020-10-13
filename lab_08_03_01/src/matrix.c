@@ -217,11 +217,23 @@ void add_rows(matrix_t *src[], int size_src, int count)
             {
                 average += src[r][c];
             }
-            average = average / tmp_size;
+            // average = average / tmp_size;
+            average = rounding_down(average, tmp_size);
             src[tmp_size][c] = average;
             average = 0;
         }
         tmp_size += 1;
+    }
+}
+int rounding_down(matrix_t average, int tmp_size)
+{
+    if (average < 0 && average % 2)
+    {
+        return (average / tmp_size) - 1;
+    }
+    else
+    {
+        return average / tmp_size;
     }
 }
 void add_cols(matrix_t *src[], int size_src, int count)
