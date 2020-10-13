@@ -101,10 +101,10 @@ int main(void)
             return ALLOCATION_ERR;
         }
     }
-    // printf("FRST AFTER ADD:\n");
+    // printf("FRST BEFORE MULTIPLY:\n");
     // output(src_frst, size_sq_frst, size_sq_frst);
     // printf("\n\n");
-    // printf("SEC AFTER ADD:\n");
+    // printf("SEC BEFORE MULTIPLY:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
 
     int power_one, power_two;
@@ -114,7 +114,7 @@ int main(void)
         free_matrix(src_sec);
         return INPUT_ERR;
     }
-    // printf("\n\n%zu %zu \n\n", power_one, power_two);
+    // printf("\n\npower_one = %d power_two = %d \n\n", power_one, power_two);
 
     if (calculate(src_frst, src_sec, size_sq_frst, size_sq_sec, power_one, power_two))
     {
@@ -123,11 +123,11 @@ int main(void)
         return INPUT_ERR;
     }
 
-    // printf("FRST AFTER ADD:\n");
-    // output(src_frst, size_sq_frst, size_sq_frst);
-    // printf("\n\n");
-    // printf("SEC AFTER ADD:\n");
+    printf("RES AFTER MULTIPLY:\n");
     output(src_frst, size_sq_frst, size_sq_frst);
+    printf("\n\n");
+    // printf("SEC AFTER ADD:\n");
+    // output(src_frst, size_sq_frst, size_sq_frst);
 
     free_matrix(src_frst);
     free_matrix(src_sec);
