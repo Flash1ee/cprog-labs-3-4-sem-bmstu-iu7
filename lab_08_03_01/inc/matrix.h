@@ -36,7 +36,7 @@ int get_row(matrix_t *src[], int rows, int cols);
 int get_col(matrix_t *src[], int rows, int cols);
 
 void del_row(int rows, int cols, char *beg, int row_ind);
-void del_col(char *beg, int rows, int cols, int col_ind);
+void del_col(matrix_t *src[], char *beg, int rows, int cols, int col_ind);
 
 void new_arr_by_max(matrix_t *src[], int *size_src, int size_new);
 

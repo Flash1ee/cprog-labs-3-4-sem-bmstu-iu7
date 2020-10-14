@@ -101,11 +101,11 @@ int main(void)
             return ALLOCATION_ERR;
         }
     }
-    // printf("FRST BEFORE MULTIPLY:\n");
-    // output(src_frst, size_sq_frst, size_sq_frst);
-    // printf("\n\n");
-    // printf("SEC BEFORE MULTIPLY:\n");
-    // output(src_sec, size_sq_sec, size_sq_sec);
+    printf("FRST BEFORE MULTIPLY:\n");
+    output(src_frst, size_sq_frst, size_sq_frst);
+    printf("\n\n");
+    printf("SEC BEFORE MULTIPLY:\n");
+    output(src_sec, size_sq_sec, size_sq_sec);
 
     int power_one, power_two;
     if (scanf("%d %d", &power_one, &power_two) != 2 || power_one < 0 || power_two < 0)
