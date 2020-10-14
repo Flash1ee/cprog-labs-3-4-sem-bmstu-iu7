@@ -153,9 +153,8 @@ void del_row(int rows, int cols, char *beg, int row_ind)
     if (row_ind != rows - 1)
     {
         memmove(beg + sizeof(matrix_t) * cols * row_ind,
-                beg + sizeof(matrix_t) * cols * (row_ind + 1),
-                sizeof(matrix_t) * cols * (rows - row_ind - 1));
-        // memmove(beg - 1, beg, sizeof(matrix_t) * (rows - 1) * cols);
+            beg + sizeof(matrix_t) * cols * (row_ind + 1),
+            sizeof(matrix_t) * cols * (rows - row_ind - 1));
     }
     // output(src, rows - 1, cols);
     // printf("\n");
@@ -228,7 +227,6 @@ void add_rows(matrix_t *src[], int size_src, int count)
             {
                 average += src[r][c];
             }
-            // average = average / tmp_size;
             average = rounding_down(average, tmp_size);
             src[tmp_size][c] = average;
             average = 0;
