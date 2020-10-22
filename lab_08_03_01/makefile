@@ -11,7 +11,7 @@ DIR_CR=mkdir -p
 INC:=$(wildcard $(INCPATH)*.h)
 SRCS := $(wildcard $(SRCPATH)*.c)
 OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
-UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_key.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)key.o
+UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_get_row_col.o $(OBJPATH)utils.o $(OBJPATH)matrix.o
 
 dep = $(OBJS:.o=.d) 
 OUT := $(shell find -type f -name out)

@@ -68,6 +68,10 @@ void del_col(matrix_t *src[], char *beg, int rows, int cols, int col_ind)
 }
 int get_row(matrix_t *src[], int rows, int cols)
 {
+    if (rows < 0 || cols < 0 || !src)
+    {
+        return -1;
+    }
     size_t ind_row = 0;
     matrix_t max = **src;
 
@@ -100,8 +104,8 @@ void del_row(int rows, int cols, char *beg, int row_ind)
     if (row_ind != rows - 1)
     {
         memmove(beg + sizeof(matrix_t) * cols * row_ind,
-                beg + sizeof(matrix_t) * cols * (row_ind + 1),
-                sizeof(matrix_t) * cols * (rows - row_ind - 1));
+            beg + sizeof(matrix_t) * cols * (row_ind + 1),
+            sizeof(matrix_t) * cols * (rows - row_ind - 1));
     }
     // output(src, rows - 1, cols);
     // printf("\n");
