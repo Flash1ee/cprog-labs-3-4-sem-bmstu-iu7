@@ -30,6 +30,7 @@ int main(void)
         free_matrix(src_frst);
         return INPUT_ERR;
     }
+
     matrix_t **src_sec = allocate_matrix(row_b, col_b);
     if (!src_sec)
     {
@@ -68,45 +69,18 @@ int main(void)
 
     int size_new = 0;
     new_size_by_max(&size_new, size_sq_frst, size_sq_sec);
-    if (size_sq_frst != size_new)
+    if (!form_matrix_by_sq_max(&src_frst, &size_sq_frst, size_sq_frst, size_new, size_new))
     {
-        matrix_t **src_frst_new = copy_elem(src_frst, size_sq_frst, size_sq_frst, size_new, size_new);
-        if (src_frst_new)
-        {
-            free_matrix(src_frst);
-            src_frst = src_frst_new;
-            new_arr_by_max(src_frst, &size_sq_frst, size_new);
-        }
-        else
-        {
-            free_matrix(src_frst);
-            free_matrix(src_sec);
-            return ALLOCATION_ERR;
-        }
+        free_matrix(src_frst);
+        free_matrix(src_sec);
+        return ALLOCATION_ERR;
     }
-
-    if (size_sq_sec != size_new)
+    if ((!form_matrix_by_sq_max(&src_sec, &size_sq_sec, size_sq_sec, size_new, size_new)))
     {
-        matrix_t **src_sec_new = copy_elem(src_sec, size_sq_sec, size_sq_sec, size_new, size_new);
-        if (src_sec_new)
-        {
-            free_matrix(src_sec);
-            src_sec = src_sec_new;
-            new_arr_by_max(src_sec, &size_sq_sec, size_new);
-        }
-        else
-        {
-            free_matrix(src_frst);
-            free_matrix(src_sec);
-            return ALLOCATION_ERR;
-        }
+        free_matrix(src_frst);
+        free_matrix(src_sec);
+        return ALLOCATION_ERR;
     }
-    // printf("FRST BEFORE MULTIPLY:\n");
-    // output(src_frst, size_sq_frst, size_sq_frst);
-    // printf("\n\n");
-    
-    // printf("SEC BEFORE MULTIPLY:\n");
-    // output(src_sec, size_sq_sec, size_sq_sec);
 
     int power_one, power_two;
     if (scanf("%d %d", &power_one, &power_two) != 2 || power_one < 0 || power_two < 0)
