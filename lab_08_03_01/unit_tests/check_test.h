@@ -5,5 +5,7 @@
 #include <stdlib.h>
 
 Suite *get_row_suite(void);
+Suite *get_col_suite(void);
+
 
 #endif  // _CHECK_TEST_H_

@@ -32,6 +32,10 @@ int form_sq_matrix(matrix_t *src[], int *row, int *col, int size_sq, int flag)
 }
 int get_col(matrix_t *src[], int rows, int cols)
 {
+    if (!src || rows < 0 || cols < 0)
+    {
+        return -1;
+    }
     int ind_col = 0;
     matrix_t max = **src;
 
