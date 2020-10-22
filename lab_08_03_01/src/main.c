@@ -61,7 +61,7 @@ int main(void)
     form_sq_matrix(src_sec, &row_b, &col_b, size_sq_sec, flag_sec);
 
     // printf("FRST RES:\n");
-    // output(src_frst, size_sq_frst, size_sq_frst);
+    // output(src_frst, 3, 5);
     // printf("\n\n");
     // printf("SEC RES:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
@@ -104,6 +104,7 @@ int main(void)
     // printf("FRST BEFORE MULTIPLY:\n");
     // output(src_frst, size_sq_frst, size_sq_frst);
     // printf("\n\n");
+    
     // printf("SEC BEFORE MULTIPLY:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
 
@@ -125,7 +126,7 @@ int main(void)
 
     // printf("RES AFTER MULTIPLY:\n");
     output(src_frst, size_sq_frst, size_sq_frst);
-    printf("\n\n");
+    // printf("\n\n");
     // printf("SEC AFTER ADD:\n");
     // output(src_frst, size_sq_frst, size_sq_frst);
 

@@ -102,21 +102,16 @@ void del_col(matrix_t *src[], char *beg, int rows, int cols, int col_ind)
     beg++;
     for (int i = 0; i < rows; i++)
     {
-        //     memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
-        //             beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
-        //             sizeof(matrix_t) * ((rows - i - 1) * cols + cols - col_ind - 1));
-        //
         for (int j = col_ind; j < cols - 1; j++)
         {
             src[i][j] = src[i][j + 1];
         }
-        // }
-        //     memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
-        //         beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
-        //         sizeof(matrix_t) * (cols - col_ind - 1));
-        //     cur_cols -= 1;
-
-        // }
+        // printf("MAMA\n");
+        // memmove(beg + sizeof(matrix_t) * (i * cols + col_ind),
+        //     beg + sizeof(matrix_t) * (i * cols + col_ind + 1),
+        //     sizeof(matrix_t) * (cols - col_ind - 1));
+        // output(src, rows, cols);
+        // printf("\n\n");
     }
 }
 int get_row(matrix_t *src[], int rows, int cols)
@@ -153,8 +148,8 @@ void del_row(int rows, int cols, char *beg, int row_ind)
     if (row_ind != rows - 1)
     {
         memmove(beg + sizeof(matrix_t) * cols * row_ind,
-            beg + sizeof(matrix_t) * cols * (row_ind + 1),
-            sizeof(matrix_t) * cols * (rows - row_ind - 1));
+                beg + sizeof(matrix_t) * cols * (row_ind + 1),
+                sizeof(matrix_t) * cols * (rows - row_ind - 1));
     }
     // output(src, rows - 1, cols);
     // printf("\n");

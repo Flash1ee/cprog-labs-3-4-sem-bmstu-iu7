@@ -4,7 +4,7 @@ OBJPATH=./out/
 SRCPATH=./src/
 FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
-CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g -c
 LFLAGS=--coverage
 UFLAGS=-lcheck
 DIR_CR=mkdir -p
@@ -43,9 +43,8 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	cd $(FUNCTESTSPATH) && bash all_test.sh
 	@echo
 	gcov -n $(OBJPATH)main.o
-	gcov -n $(OBJPATH)key.o
-	gcov -n $(OBJPATH)sort.o
-	gcov -n $(OBJPATH)io.o
+	gcov -n $(OBJPATH)matrix.o
+	gcov -n $(OBJPATH)utils.o
 
 $(OBJPATH)debug.lastbuildstate: | out
 	rm -fv *.exe
