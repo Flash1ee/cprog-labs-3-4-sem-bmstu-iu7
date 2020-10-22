@@ -58,8 +58,8 @@ int main(void)
     new_size_by_min(&size_sq_frst, row_a, col_a, &flag_frst);
     new_size_by_min(&size_sq_sec, row_b, col_b, &flag_sec);
 
-    form_sq_matrix(src_frst, &row_a, &col_a, size_sq_frst, flag_frst);
-    form_sq_matrix(src_sec, &row_b, &col_b, size_sq_sec, flag_sec);
+    form_sq_matrix(src_frst, &row_a, &col_a, flag_frst);
+    form_sq_matrix(src_sec, &row_b, &col_b, flag_sec);
 
     // printf("FRST RES:\n");
     // output(src_frst, 3, 5);

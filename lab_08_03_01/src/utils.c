@@ -1,8 +1,8 @@
 #include "utils.h"
 
-int form_sq_matrix(matrix_t *src[], int *row, int *col, int size_sq, int flag)
+int form_sq_matrix(matrix_t *src[], int *row, int *col, int flag)
 {
-    if (!src || !row || !col || !size_sq || (flag != ROW && flag != COL))
+    if (!src || !row || !col || (flag != ROW && flag != COL))
     {
         return ARG_ERR;
     }
