@@ -238,13 +238,15 @@ int add_sort(char *title, char *name, long year, cinema **list, Field key, size_
 {
     size_t j = 0;
     for (size_t i = 0; i < *size; i++)
-        if ((key == TITLE && (strcmp(title, list[i]->title) > 0)) || (key == NAME && (strcmp(title, list[i]->name) > 0)) || (key == YEAR && ((year > list[i]->year))))
+    {
+        if ((key == TITLE && (strcmp(title, list[i]->title) > 0)) || (key == NAME && (strcmp(name, list[i]->name) > 0)) || (key == YEAR && ((year > list[i]->year))))
             j = i + 1;
         else if ((key == TITLE && (!strcmp(title, list[i]->title))) || (key == NAME && (!strcmp(name, list[i]->name))) || (key == YEAR && ((year == list[i]->year))))
         {
             j = i + 1;
             break;
         }
+    }
     if (j == 0)
     {
         for (size_t i = *size; i > 0; i--)
