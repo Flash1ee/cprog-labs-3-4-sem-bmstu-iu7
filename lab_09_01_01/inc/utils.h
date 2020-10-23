@@ -6,12 +6,8 @@
 #include <ctype.h>
 
 
-#define ARG_ERR 1
-#define READ_FILE_ERR 2
-#define EMPTY 4
-#define BIN_ERR 4
-#define KEY_ERR -2
-#define NOT_FOUND -1
+#include "retcodes.h"
+
 
 
 int is_year(char str[]);

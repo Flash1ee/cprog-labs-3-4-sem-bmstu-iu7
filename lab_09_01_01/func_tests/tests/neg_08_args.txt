@@ -1,1 +1,1 @@
-./shared/neg_08.txt year 2000
+./shared/neg_08.txt year lenofstringmorethenN-1digits

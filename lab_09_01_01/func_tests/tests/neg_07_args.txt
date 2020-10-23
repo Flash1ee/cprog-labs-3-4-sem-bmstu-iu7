@@ -1,1 +1,1 @@
-./shared/neg_07.txt year RUSSIA
+./shared/neg_07.txt name films
