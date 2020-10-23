@@ -43,7 +43,7 @@ typedef enum {
 
 
 // int fill(FILE *f, cinema list[], size_t *size, Field key);
-int fill(FILE *f, cinema **list, size_t *count, Field key);
+int fill(FILE *f, cinema **list, size_t file_len, Field key);
 
 // void add_sort(cinema *tmp, cinema list[], Field key, size_t *size);
 int add_sort(char *title, char *name, long year, cinema **list, Field key, size_t *size);
@@ -55,8 +55,8 @@ void print(cinema **list, size_t len);
 long bin_search(cinema **list, Field field, char key[], size_t size);
 
 cinema **create_cinema_list(size_t n);
-int size_file(FILE *in, size_t *count);
 void free_list(cinema **list, size_t n);
+int size_file(FILE *in, size_t *count);
 int swap_cinema(cinema *dst, cinema *src);
 
 /**

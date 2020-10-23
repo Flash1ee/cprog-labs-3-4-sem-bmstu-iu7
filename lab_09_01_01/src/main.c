@@ -38,39 +38,82 @@ int main(int argc, char *argv[])
     fseek(in, 0, SEEK_END);
 
     if (!ftell(in))
+    {
+        fclose(in);
         return EMPTY;
+    }
 
     fseek(in, 0, SEEK_SET);
 
-    cinema list[MAX];
-    // cinema **list = malloc(MAX * sizeof(cinema *));
-    size_t len = 0;
-    long rc = 0;
+    size_t file_len = 0;
 
-    rc = fill(in, list, &len, key);
-    if (rc)
+    if (size_file(in, &file_len))
     {
         fclose(in);
-        return rc;
+        return READ_FILE_ERR;
+    }
+
+    cinema **list = create_cinema_list(file_len);
+    if (!list)
+    {
+        fclose(in);
+        return ALLOCATION_ERR;
+    }
+
+    if (fill(in, list, file_len, key))
+    {
+        free_list(list, file_len);
+        fclose(in);
+        return READ_FILE_ERR;
     }
 
     if (argc == 3)
-        print(list, len);
+    {
+        print(list, file_len);
+    }
     else
     {
-        rc = bin_search(list, key, argv[3], len);
+        int rc = bin_search(list, key, argv[3], file_len);
         if (rc == -1)
         {
             printf("Not found\n");
-            rc = EXIT_SUCCESS;
         }
         else
         {
-            size_t ind = rc;
-            printf("%s\n%s\n%ld\n", list[ind].title, list[ind].name, list[ind].year);
-            rc = EXIT_SUCCESS;
+            int ind = rc;
+            printf("%s\n%s\n%ld\n", list[ind]->title, list[ind]->name, list[ind]->year);
         }
     }
+    // cinema list[MAX];
+    // // cinema **list = malloc(MAX * sizeof(cinema *));
+    // size_t len = 0;
+    // long rc = 0;
+
+    // rc = fill(in, list, &len, key);
+    // if (rc)
+    // {
+    //     fclose(in);
+    //     return rc;
+    // }
+
+    // if (argc == 3)
+    //     print(list, len);
+    // else
+    // {
+    //     rc = bin_search(list, key, argv[3], len);
+    //     if (rc == -1)
+    //     {
+    //         printf("Not found\n");
+    //         rc = EXIT_SUCCESS;
+    //     }
+    //     else
+    //     {
+    //         size_t ind = rc;
+    //         printf("%s\n%s\n%ld\n", list[ind].title, list[ind].name, list[ind].year);
+    //         rc = EXIT_SUCCESS;
+    //     }
+    // }
+    free_list(list, file_len);
     fclose(in);
-    return rc;
+    return EXIT_SUCCESS;
 }
