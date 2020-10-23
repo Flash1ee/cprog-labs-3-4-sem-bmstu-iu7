@@ -42,8 +42,8 @@ int main(int argc, char *argv[])
 
     fseek(in, 0, SEEK_SET);
 
-    // cinema list[MAX];
-    cinema **list = malloc(MAX * sizeof(cinema *));
+    cinema list[MAX];
+    // cinema **list = malloc(MAX * sizeof(cinema *));
     size_t len = 0;
     long rc = 0;
 

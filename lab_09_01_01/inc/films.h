@@ -13,19 +13,19 @@
 #define READ_STRUCT_ERR 3
 
 
-// typedef struct
-// {
-//     char title[N + 1];
-//     char name[N + 1];
-//     long year;
-// } cinema;
-
-typedef struct 
+typedef struct
 {
-    char **name;
-    char **title;
+    char title[N + 1];
+    char name[N + 1];
     long year;
 } cinema;
+
+// typedef struct 
+// {
+//     char **name;
+//     char **title;
+//     long year;
+// } cinema;
 
 
 
@@ -42,6 +42,6 @@ void add_sort(cinema *tmp, cinema list[], Field key, size_t *size);
 void print(cinema list[], size_t len);
 long bin_search(cinema list[], Field field, char key[], size_t size);
 
-cinema **create_cinema_list(size_t n);
+// cinema **create_cinema_list(size_t n);
 
 #endif //FILMS_H
