@@ -57,7 +57,7 @@ long bin_search(cinema **list, Field field, char key[], size_t size);
 cinema **create_cinema_list(size_t n);
 void free_list(cinema **list, size_t n);
 int size_file(FILE *in, size_t *count);
-int swap_cinema(cinema *dst, cinema *src);
+int shift_cinema(cinema *dst, cinema *src);
 
 /**
 *@brief Инициализация структуры

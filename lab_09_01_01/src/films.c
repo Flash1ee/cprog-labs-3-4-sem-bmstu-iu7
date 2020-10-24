@@ -96,8 +96,9 @@ int size_file(FILE *in, size_t *count)
     }
     size_t file_len = 0;
     size_t len = 0;
+
     char *title = NULL;
-    char *name = 0;
+    char *name = NULL;
     long year = 0;
 
     while (getline(&title, &len, in) != -1)
@@ -106,6 +107,7 @@ int size_file(FILE *in, size_t *count)
         if (getline(&name, &len, in) == -1)
         {
             free(title);
+            free(name);
             return READ_FILE_ERR;
         }
         if (fscanf(in, "%ld\n", &year) != 1)
@@ -114,41 +116,47 @@ int size_file(FILE *in, size_t *count)
             free(name);
             return READ_FILE_ERR;
         }
+
+        free(title);
+        free(name);
+
         title = NULL;
         name = NULL;
+
         len = 0;
         file_len++;
     }
+    free(title);
     *count = file_len;
     fseek(in, 0, SEEK_SET);
     return EXIT_SUCCESS;
 }
-int swap_cinema(cinema *dst, cinema *src)
+int shift_cinema(cinema *dst, cinema *src)
 {
-    if (!dst || !src)
+    if (!dst || !src || !src->title || !src->name)
     {
         return ARG_ERR;
     }
-    char *title_tmp = NULL;
-    char *name_tmp = NULL;
+    // char *title_tmp = NULL;
+    // char *name_tmp = NULL;
 
-    title_tmp = strdup(src->title);
-    if (!title_tmp)
-    {
-        return ALLOCATION_ERR;
-    }
-    name_tmp = strdup(src->name);
-    if (!name_tmp)
-    {
-        free(title_tmp);
-        return ALLOCATION_ERR;
-    }
+    // title_tmp = strdup(src->title);
+    // if (!title_tmp)
+    // {
+    //     return ALLOCATION_ERR;
+    // }
+    // name_tmp = strdup(src->name);
+    // if (!name_tmp)
+    // {
+    //     free(title_tmp);
+    //     return ALLOCATION_ERR;
+    // }
 
-    free(dst->title);
-    free(dst->name);
+    // free(dst->title);
+    // free(dst->name);
 
-    dst->title = title_tmp;
-    dst->name = name_tmp;
+    dst->title = src->title;
+    dst->name = src->name;
     dst->year = src->year;
 
     return EXIT_SUCCESS;
@@ -161,6 +169,7 @@ int initialize_cinema(cinema *dst, char *title, char *name, long year)
     }
     char *title_tmp = NULL;
     char *name_tmp = NULL;
+    
     title_tmp = strdup(title);
     if (!title_tmp)
     {
@@ -207,12 +216,14 @@ int fill(FILE *f, cinema **list, size_t file_len, Field key)
     {
         if (getline(&title_tmp, &len, f) == -1)
         {
+            free(title_tmp);
             return ALLOCATION_ERR;
         }
         len = 0;
         if (getline(&name_tmp, &len, f) == -1)
         {
             free(title_tmp);
+            free(name_tmp);
             return ALLOCATION_ERR;
         }
         if (fscanf(f, "%ld\n", &year_tmp) != 1 || year_tmp < 0)
@@ -251,7 +262,7 @@ int add_sort(char *title, char *name, long year, cinema **list, Field key, size_
     {
         for (size_t i = *size; i > 0; i--)
         {
-            if (swap_cinema(list[i], list[i - 1]))
+            if (shift_cinema(list[i], list[i - 1]))
             {
                 free(title);
                 free(name);
@@ -274,7 +285,7 @@ int add_sort(char *title, char *name, long year, cinema **list, Field key, size_
     {
         for (size_t i = *size; i >= j; i--)
         {
-            if (swap_cinema(list[i], list[i - 1]))
+            if (shift_cinema(list[i], list[i - 1]))
             {
                 free(title);
                 free(name);
