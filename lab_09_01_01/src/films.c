@@ -214,19 +214,19 @@ int fill(FILE *f, cinema **list, size_t file_len, Field key)
 
     for (size_t i = 0; i < file_len; i++)
     {
-        if (getline(&title_tmp, &len, f) == -1)
+        if (getline(&title_tmp, &len, f) == -1 || strlen(title_tmp) < 2)
         {
             free(title_tmp);
             return ALLOCATION_ERR;
         }
         len = 0;
-        if (getline(&name_tmp, &len, f) == -1)
+        if (getline(&name_tmp, &len, f) == -1 || strlen(name_tmp) < 2)
         {
             free(title_tmp);
             free(name_tmp);
             return ALLOCATION_ERR;
         }
-        if (fscanf(f, "%ld\n", &year_tmp) != 1 || year_tmp < 0)
+        if (fscanf(f, "%ld\n", &year_tmp) != 1 || year_tmp <= 0)
         {
             free(title_tmp);
             free(name_tmp);

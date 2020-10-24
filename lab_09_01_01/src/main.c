@@ -33,7 +33,9 @@ int main(int argc, char *argv[])
     in = fopen(argv[1], "r");
 
     if (!in)
+    {
         return READ_FILE_ERR;
+    }
 
     fseek(in, 0, SEEK_END);
 
