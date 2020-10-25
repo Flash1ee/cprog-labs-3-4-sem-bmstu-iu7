@@ -217,6 +217,10 @@ int calculate(matrix_t **src_frst, matrix_t **src_sec, int size_sq_frst, int siz
     {
         return ARG_ERR;
     }
+    if (size_sq_frst < 0 || power_one < 0 || power_two < 0)
+    {
+        return ARG_ERR;
+    }
     if (power_one != 0)
     {
         matrix_t **first = allocate_matrix(size_sq_frst, size_sq_frst);

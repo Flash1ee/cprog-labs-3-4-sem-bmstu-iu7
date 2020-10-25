@@ -17,6 +17,8 @@ Suite *new_size_by_min_suite(void);
 Suite *new_arr_by_max_suite(void);
 Suite *make_identity_suite(void);
 Suite *make_copy_suite(void);
+Suite *calculate_suite(void);
+
 
 
 
