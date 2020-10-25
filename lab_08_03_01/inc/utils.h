@@ -2,6 +2,7 @@
 #define __UTILS_H__
 
 #include <stdlib.h>
+#include <math.h>
 #include "retcodes.h"
 #include "matrix.h"
 
@@ -13,7 +14,6 @@ void add_cols(matrix_t *src[], int size_src, int size_new);
 matrix_t **copy_elem(matrix_t *src[], int rows_src, int cols_src, int rows_dst, int cols_dst);
 void new_size_by_min(int *size_new, int row_src, int col_src, int *flag);
 void new_size_by_max(int *size_new, int size_frst, int size_sec);
-int rounding_down(matrix_t average, int tmp_size);
 int get_row(matrix_t *src[], int rows, int cols);
 int get_col(matrix_t *src[], int rows, int cols);
 void del_row(int rows, int cols, char *beg, int row_ind);

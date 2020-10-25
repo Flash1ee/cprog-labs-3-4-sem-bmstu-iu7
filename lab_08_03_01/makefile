@@ -4,8 +4,8 @@ OBJPATH=./out/
 SRCPATH=./src/
 FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
-CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g -c
-LFLAGS=--coverage
+CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g -c 
+LFLAGS=--coverage -lm
 UFLAGS=-lcheck
 DIR_CR=mkdir -p
 INC:=$(wildcard $(INCPATH)*.h)
@@ -31,7 +31,7 @@ release: $(OBJPATH)release.lastbuildstate app.exe
 
 unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g3 -c
 unit_tests.exe: clean $(UNITS)
-	$(CC) -o $@  $(UNITS) $(UFLAGS)
+	$(CC) -o $@  $(UNITS) $(UFLAGS) $(LFLAGS)
 	# valgrind --leak-check=full ./unit_tests.exe
 	valgrind ./unit_tests.exe
 

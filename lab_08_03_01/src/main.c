@@ -62,7 +62,7 @@ int main(void)
     form_sq_matrix(src_sec, &row_b, &col_b, flag_sec);
 
     // printf("FRST RES:\n");
-    // output(src_frst, 3, 5);
+    // output(src_frst, size_sq_frst, size_sq_frst);
     // printf("\n\n");
     // printf("SEC RES:\n");
     // output(src_sec, size_sq_sec, size_sq_sec);
@@ -81,6 +81,10 @@ int main(void)
         free_matrix(src_sec);
         return ALLOCATION_ERR;
     }
+
+    // output(src_frst, size_sq_frst, size_sq_frst);
+    // printf("\n\n");
+    // output(src_sec, size_sq_sec, size_sq_sec);
 
     int power_one, power_two;
     if (scanf("%d %d", &power_one, &power_two) != 2 || power_one < 0 || power_two < 0)
