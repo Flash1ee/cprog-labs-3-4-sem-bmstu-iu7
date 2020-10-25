@@ -193,6 +193,10 @@ void add_cols(matrix_t *src[], int size_src, int count)
 }
 matrix_t **copy_elem(matrix_t *src[], int rows_src, int cols_src, int rows_dst, int cols_dst)
 {
+    if (!src || !rows_src || !cols_src || !rows_dst || !cols_dst)
+    {
+        return NULL;
+    }
     matrix_t **tmp = allocate_matrix(rows_dst, cols_dst);
     if (!tmp)
     {
