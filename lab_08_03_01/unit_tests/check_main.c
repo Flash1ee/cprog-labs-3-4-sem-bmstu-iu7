@@ -12,6 +12,8 @@ int main(void)
     Suite *s_make_identity;
     Suite *s_make_copy;
     Suite *s_calculate;
+    Suite *s_form_matrix_by_sq_max;
+
 
 
 
@@ -25,6 +27,8 @@ int main(void)
     SRunner *runner_make_identity;
     SRunner *runner_make_copy;
     SRunner *runner_calculate;
+    SRunner *runner_form_matrix_by_sq_max;
+
 
 
 
@@ -38,6 +42,7 @@ int main(void)
     s_make_identity = make_identity_suite();
     s_make_copy = make_copy_suite();
     s_calculate = calculate_suite();
+    s_form_matrix_by_sq_max = form_matrix_by_sq_max_suite();
     
 
 
@@ -50,6 +55,7 @@ int main(void)
     runner_make_identity = srunner_create(s_make_identity);
     runner_make_copy = srunner_create(s_make_copy);
     runner_calculate = srunner_create(s_calculate);
+    runner_form_matrix_by_sq_max = srunner_create(s_form_matrix_by_sq_max);
 
 
     srunner_run_all(runner_get_row, CK_VERBOSE);
@@ -61,6 +67,7 @@ int main(void)
     srunner_run_all(runner_make_identity, CK_VERBOSE);
     srunner_run_all(runner_make_copy, CK_VERBOSE);
     srunner_run_all(runner_calculate, CK_VERBOSE);
+    srunner_run_all(runner_form_matrix_by_sq_max, CK_VERBOSE);
 
 
 
@@ -74,6 +81,8 @@ int main(void)
     no_failed += srunner_ntests_failed(runner_make_identity);
     no_failed += srunner_ntests_failed(runner_make_copy);
     no_failed += srunner_ntests_failed(runner_calculate);
+    no_failed += srunner_ntests_failed(runner_form_matrix_by_sq_max);
+
 
 
 
@@ -88,6 +97,7 @@ int main(void)
     srunner_free(runner_make_identity);
     srunner_free(runner_make_copy);
     srunner_free(runner_calculate);
+    srunner_free(runner_form_matrix_by_sq_max);
 
 
 
