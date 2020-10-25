@@ -115,25 +115,6 @@ void del_row(int rows, int cols, char *beg, int row_ind)
     // printf("\n");
 }
 
-// Поиск строки с максимальным элементом, который встретился первым в строке, обходам по столбцам
-int search_row(matrix_t *src[], int rows, int cols)
-{
-    matrix_t max = **src;
-    int n_string = -1;
-
-    for (int i = 0; i < cols; i++)
-    {
-        for (int j = 0; j < rows; j++)
-        {
-            if (*src[rows + j * cols + i] > max)
-            {
-                max = *src[rows + j * cols + i];
-                n_string = j;
-            }
-        }
-    }
-    return n_string;
-}
 void new_size_by_min(int *size_new, int row_src, int col_src, int *flag)
 {
     /*
