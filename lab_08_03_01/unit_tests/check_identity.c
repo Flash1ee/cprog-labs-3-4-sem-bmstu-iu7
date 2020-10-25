@@ -20,7 +20,7 @@ START_TEST(make_identity_sq)
             ck_assert_int_eq(test[i][j], expect[i][j]);
         }
     }
-    free(test);
+    free_matrix(test);
 }
 END_TEST
 

@@ -16,8 +16,8 @@ START_TEST(copy_elem_sq)
             ck_assert_int_eq(res[i][j], expect[i][j]);
         }
     }
-    free(res);
-    free(expect);
+    free_matrix(expect);
+    free_matrix(res);
 }
 END_TEST
 START_TEST(copy_elem_not_sq)
@@ -36,8 +36,8 @@ START_TEST(copy_elem_not_sq)
             ck_assert_int_eq(res[i][j], expect[i][j]);
         }
     }
-    free(res);
-    free(expect);
+    free_matrix(expect);
+    free_matrix(res);
 }
 END_TEST
 START_TEST(copy_elem_not_sq_neg_elems)
@@ -56,8 +56,8 @@ START_TEST(copy_elem_not_sq_neg_elems)
             ck_assert_int_eq(res[i][j], expect[i][j]);
         }
     }
-    free(res);
-    free(expect);
+    free_matrix(expect);
+    free_matrix(res);
 }
 END_TEST
 START_TEST(copy_elem_null_ptr)
@@ -66,26 +66,25 @@ START_TEST(copy_elem_null_ptr)
     int cols = 5;
     matrix_t **res = copy_elem(NULL, rows, cols, rows, cols);
     ck_assert_ptr_null(res);
+    free(res);
 }
 END_TEST
 START_TEST(copy_elem_neg_arg_one)
 {
     int rows = -7;
     int cols = 5;
-    matrix_t **expect = allocate_matrix(rows, cols);
-    ck_assert_ptr_null(expect);
     matrix_t **res = copy_elem(NULL, rows, cols, rows, cols);
     ck_assert_ptr_null(res);
+    free_matrix(res);
 }
 END_TEST
 START_TEST(copy_elem_neg_arg_two)
 {
     int rows = 7;
     int cols = -5;
-    matrix_t **expect = allocate_matrix(rows, cols);
-    ck_assert_ptr_null(expect);
     matrix_t **res = copy_elem(NULL, rows, cols, rows, cols);
     ck_assert_ptr_null(res);
+    free(res);
 }
 END_TEST
 
