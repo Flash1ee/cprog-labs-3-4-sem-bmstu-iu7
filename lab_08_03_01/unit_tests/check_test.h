@@ -14,6 +14,7 @@ Suite *get_col_suite(void);
 Suite *form_sq_matrix_suite(void);
 Suite *new_size_by_max_suite(void);
 Suite *new_size_by_min_suite(void);
+Suite *new_arr_by_max_suite(void);
 
 
 
