@@ -48,11 +48,6 @@
 
 long bin_search(cinema **list, Field field, char key[], size_t size)
 {
-    /*
-    Бинарный поиск по полю field ключа key
-    Если key не найден, функция возвращает -1,
-    позицию элемента в массиве cinema list[]
-    */
     long l = 0;
     long r = size - 1;
     long mid;
