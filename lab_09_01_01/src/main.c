@@ -86,35 +86,6 @@ int main(int argc, char *argv[])
             printf("%s\n%s\n%ld\n", list[ind]->title, list[ind]->name, list[ind]->year);
         }
     }
-    // cinema list[MAX];
-    // // cinema **list = malloc(MAX * sizeof(cinema *));
-    // size_t len = 0;
-    // long rc = 0;
-
-    // rc = fill(in, list, &len, key);
-    // if (rc)
-    // {
-    //     fclose(in);
-    //     return rc;
-    // }
-
-    // if (argc == 3)
-    //     print(list, len);
-    // else
-    // {
-    //     rc = bin_search(list, key, argv[3], len);
-    //     if (rc == -1)
-    //     {
-    //         printf("Not found\n");
-    //         rc = EXIT_SUCCESS;
-    //     }
-    //     else
-    //     {
-    //         size_t ind = rc;
-    //         printf("%s\n%s\n%ld\n", list[ind].title, list[ind].name, list[ind].year);
-    //         rc = EXIT_SUCCESS;
-    //     }
-    // }
     free_list(list, file_len);
     fclose(in);
     return EXIT_SUCCESS;
