@@ -36,6 +36,7 @@ START_TEST(shift_cinema_pos_swap)
     ck_assert_ptr_eq(list_src[1]->name, list_src[2]->name);
     ck_assert_int_eq(list_src[1]->year, list_src[2]->year);
 
+    free(list_src[2]);
     free_list(list_src, n - 1);
 
 }
