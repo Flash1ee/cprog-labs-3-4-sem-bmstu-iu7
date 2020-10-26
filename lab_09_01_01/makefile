@@ -13,7 +13,7 @@ SRCS := $(wildcard $(SRCPATH)*.c)
 OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
 UNITS:=$(patsubst $(UNITTESTSPATH)check%.c, $(OBJPATH)check%.o, $(wildcard $(UNITTESTSPATH)*.c))
 # UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_get_row_col.o $(OBJPATH)utils.o $(OBJPATH)matrix.o $(OBJPATH)check_del_row_col.o
-UNITS+=$(OBJPATH)utils.o $(OBJPATH)matrix.o
+UNITS+=$(OBJPATH)utils.o $(OBJPATH)films.o
 dep = $(OBJS:.o=.d) 
 OUT := $(shell find -type f -name out)
 
@@ -32,8 +32,8 @@ release: $(OBJPATH)release.lastbuildstate app.exe
 unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g3 -c
 unit_tests.exe: clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
-	# valgrind --leak-check=full ./unit_tests.exe
-	valgrind ./unit_tests.exe
+	valgrind --leak-check=full --show-leak-kinds=all ./unit_tests.exe
+	# valgrind ./unit_tests.exe
 
 
 $(OBJPATH)check%.o : $(UNITTESTSPATH)check%.c 
