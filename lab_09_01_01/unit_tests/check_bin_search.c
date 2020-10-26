@@ -6,8 +6,8 @@ START_TEST(bin_search_pos_title)
 {
     Field bin_key = TITLE;
     size_t n = 3;
-    long res_expect = 2;
-    char key[] = "Kolambus";
+    long res_expect = 1;
+    char key[] = "Kameron";
 
     cinema **list_src = create_cinema_list(n);
     ck_assert_ptr_nonnull(list_src);
@@ -76,8 +76,8 @@ START_TEST(bin_search_pos_year)
 {
     Field bin_key = YEAR;
     size_t n = 3;
-    long res_expect = 2;
-    char key[] = "2009";
+    long res_expect = 0;
+    char key[] = "1997";
 
     cinema **list_src = create_cinema_list(n);
     ck_assert_ptr_nonnull(list_src);
