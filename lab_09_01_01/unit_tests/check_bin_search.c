@@ -6,8 +6,8 @@ START_TEST(bin_search_pos_title)
 {
     Field bin_key = TITLE;
     size_t n = 3;
-    long res_expect = 1;
-    char key[] = "Kameron";
+    long res_expect = 2;
+    char key[] = "Kolambus";
 
     cinema **list_src = create_cinema_list(n);
     ck_assert_ptr_nonnull(list_src);
@@ -76,8 +76,8 @@ START_TEST(bin_search_pos_year)
 {
     Field bin_key = YEAR;
     size_t n = 3;
-    long res_expect = 0;
-    char key[] = "1997";
+    long res_expect = 2;
+    char key[] = "2009";
 
     cinema **list_src = create_cinema_list(n);
     ck_assert_ptr_nonnull(list_src);
@@ -140,7 +140,40 @@ START_TEST(bin_search_pos_not_found)
     free_list(list_src, n);
 }
 END_TEST
+START_TEST(bin_search_pos_year_mid)
+{
+    Field bin_key = YEAR;
+    size_t n = 3;
+    long res_expect = 1;
+    char key[] = "2001";
 
+    cinema **list_src = create_cinema_list(n);
+    ck_assert_ptr_nonnull(list_src);
+
+    list_src[0]->name = strdup("Titanic");
+    list_src[0]->title = strdup("Kameron");
+    list_src[0]->year = 1997;
+    ck_assert_ptr_nonnull(list_src[0]->name);
+    ck_assert_ptr_nonnull(list_src[0]->title);
+
+    list_src[1]->name = strdup("Harry Potter and the PS");
+    list_src[1]->title = strdup("Kolambus");
+    list_src[1]->year = 2001;
+    ck_assert_ptr_nonnull(list_src[0]->name);
+    ck_assert_ptr_nonnull(list_src[0]->title);
+
+    list_src[2]->name = strdup("Avatar");
+    list_src[2]->title = strdup("Kameron");
+    list_src[2]->year = 2009;
+    ck_assert_ptr_nonnull(list_src[2]->name);
+    ck_assert_ptr_nonnull(list_src[2]->title);
+
+    long res = bin_search(list_src, bin_key, key, n);
+
+    ck_assert_int_eq(res_expect, res);
+    free_list(list_src, n);
+}
+END_TEST
 Suite *bin_search_suite(void)
 {
     Suite *t;
@@ -153,6 +186,8 @@ Suite *bin_search_suite(void)
     tcase_add_test(pos_test, bin_search_pos_year);
     tcase_add_test(pos_test, bin_search_pos_name);
     tcase_add_test(pos_test, bin_search_pos_title);
+    tcase_add_test(pos_test, bin_search_pos_year_mid);
+
     suite_add_tcase(t, pos_test);
     return t;
 }
