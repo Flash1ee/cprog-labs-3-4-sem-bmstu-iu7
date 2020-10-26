@@ -5,5 +5,6 @@
 #include <stdlib.h>
 
 Suite *is_year_suite(void);
+Suite *bin_search_suite(void);
 
 #endif  // _CHECK_TEST_H_
