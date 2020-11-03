@@ -19,6 +19,7 @@ matrix_t *allocate_matrix(size_t rows, size_t cols)
         if (!data[i])
         {
             free_matrix(temp);
+            free(data);
             return NULL;
         }
     }
@@ -33,6 +34,7 @@ void free_matrix(matrix_t *arr)
     {
         free(arr->data[i]);
     }
+    free(arr->data);
     free(arr);
 }
 int input(matrix_t *arr)
@@ -75,7 +77,7 @@ void del_max_col(matrix_t *arr)
 size_t get_max_col(matrix_t *arr)
 {
     size_t i_max = 0;
-    size_t max_sum = 0;
+    int max_sum = 0;
     int cur_sum = 0;
 
     for (size_t i = 0; i < arr->cols; i++)

@@ -3,6 +3,7 @@
 
 int main()
 {
+    // Считаем, что ввод - беззнаковый...
     size_t rows, cols;
     if (scanf("%zu", &rows) != 1 || scanf("%zu", &cols) != 1)
     {
