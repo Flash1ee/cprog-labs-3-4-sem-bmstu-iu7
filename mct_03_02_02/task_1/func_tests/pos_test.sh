@@ -8,4 +8,4 @@ if [ $? -eq 0 ]
 then echo POS TEST $1 ::SUCCESS::
 else echo POS TEST $1 ::FAIL:: RETURN CODE IS NOT ZERO...
 fi 
-diff -Zu ./tests/pos_$1_out.txt out.txt
+diff -Zqu ./tests/pos_$1_out.txt out.txt
