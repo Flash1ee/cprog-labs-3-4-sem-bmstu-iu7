@@ -13,13 +13,13 @@ dep = $(OBJS:.o=.d)
 OUT := $(shell find -type f -name out)
 
 
-func: app.exe
+func: cppcheck run
 	@echo
 	cd $(FUNCTESTSPATH) && bash all_test.sh
 	@echo
 	gcov -n $(OBJPATH)main.o
-	gcov -n $(OBJPATH)utils.o
 	gcov -n $(OBJPATH)array.o
+	gcov -n $(OBJPATH)utils.o
 
 
 cppcheck: $(SRCS)

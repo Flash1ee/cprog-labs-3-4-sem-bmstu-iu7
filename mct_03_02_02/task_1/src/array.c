@@ -25,16 +25,17 @@ void free_vector(inttype *arr)
 }
 int input(inttype *arr, size_t len)
 {
-    if (len >= arr->capacity)
-    {
-        num_t *tmp = realloc(arr->data, arr->capacity + len * SIZE_K);
-        if (!tmp)
-        {
-            return ALLOCATION_ERR;
-        }
-        arr->data = tmp;
-        arr->capacity += len * SIZE_K;
-    }
+    // Не используется, т.к функция вводит элементы, а не добавляет => данная часть кода необходима в функции добавления.
+    // if (arr->len >= arr->capacity)
+    // {
+    //     num_t *tmp = realloc(arr->data, arr->capacity + len * SIZE_K * sizeof(num_t));
+    //     if (!tmp)
+    //     {
+    //         return ALLOCATION_ERR;
+    //     }
+    //     arr->data = tmp;
+    //     arr->capacity += len * SIZE_K;
+    // }
     for (size_t i = 0; i < len; i++)
     {
         if (scanf(ScNum, &(arr->data[i])) != 1)
@@ -66,6 +67,7 @@ size_t set_len(inttype **arr, size_t len, size_t newlen)
     {
         return 0;
     }
+    
     (*arr)->data = tmp;
     (*arr)->capacity = newlen;
     return newlen;
@@ -86,7 +88,7 @@ int delete_prime_ind(inttype *arr)
 
     for (size_t i = 0; i < arr->len; i++)
     {
-        if (isprime(i+k) == PRIME)
+        if (isprime(i + k) == PRIME)
         {
             shift(arr->data, arr->len, i + 1);
             arr->len -= 1;
