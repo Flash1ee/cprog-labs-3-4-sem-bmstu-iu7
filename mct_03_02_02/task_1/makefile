@@ -22,7 +22,8 @@ func: app.exe
 	gcov -n $(OBJPATH)array.o
 
 
-
+cppcheck: $(SRCS)
+	cppcheck --std=c99 -q --enable=all -I./inc --inconclusive --suppress=missingIncludeSystem .
 run: $(OBJS) | out
 	$(CC) -o app.exe $(OBJS) $(LFLAGS) 
 

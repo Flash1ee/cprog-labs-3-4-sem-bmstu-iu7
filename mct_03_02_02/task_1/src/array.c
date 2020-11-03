@@ -10,6 +10,7 @@ inttype *allocate_vector(size_t len)
     num_t *values = malloc(sizeof(num_t) * len);
     if (!values)
     {
+        free(arr);
         return NULL;
     }
     arr->capacity = len;
