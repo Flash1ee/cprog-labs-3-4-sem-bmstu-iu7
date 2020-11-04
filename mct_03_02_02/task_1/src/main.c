@@ -1,20 +1,34 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include "array.h"
+#include "validate.h"
 
 
 int main()
 {
     size_t count = 0;
-    if (scanf("%zu", &count) != 1 || !count)
+    size_t n = 0;
+    char *buf = NULL;
+
+    if (getline(&buf, &n, stdin) == -1)
     {
+        free(buf);
         return READ_ERR;
     }
+    if (valid_u_num(buf, &count) || !count)
+    {
+        free(buf);
+        return READ_ERR;
+    }
+    free(buf);
+
     inttype *arr = allocate_vector(count);
     if (!arr)
     {
         free_vector(arr);
         return ALLOCATION_ERR;
     }
+
     if (input(arr, count))
     {
         free_vector(arr);
@@ -30,5 +44,7 @@ int main()
 
     output(arr);
     free_vector(arr);
+
+    
     return EXIT_SUCCESS;
 }
