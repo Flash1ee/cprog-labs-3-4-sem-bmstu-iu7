@@ -12,19 +12,26 @@ OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
 dep = $(OBJS:.o=.d) 
 OUT := $(shell find -type f -name out)
 
+.PHONY: run build func dirs out
 
-func: cppcheck run
+build: app.exe | out
+	@echo BUILD SUCCESS
+
+run: app.exe | out
+	./app.exe
+
+func: cppcheck build
 	@echo
 	cd $(FUNCTESTSPATH) && bash all_test.sh
 	@echo
 	gcov -n $(OBJPATH)main.o
-	gcov -n $(OBJPATH)array.o
-	gcov -n $(OBJPATH)utils.o
+	gcov -n $(OBJPATH)matrix.o
 
 
 cppcheck: $(SRCS)
 	cppcheck --std=c99 -q --enable=all -I./inc --inconclusive --suppress=missingIncludeSystem .
-run: $(OBJS) | out
+
+app.exe : $(OBJS)
 	$(CC) -o app.exe $(OBJS) $(LFLAGS) 
 
 $(OBJPATH)%.o: $(SRCPATH)%.c | out
