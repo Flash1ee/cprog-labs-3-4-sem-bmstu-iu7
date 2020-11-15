@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
                 return F_READ_ERR;
             }
             node_t *node_to_add = create_node(&(database->arr[database->len - 1]));
-            insert(&head, node_to_add, NULL);
+            insert(&head, node_to_add, head);
         }
         sort_head = sort(head, comparator);
         if (!sort_head)

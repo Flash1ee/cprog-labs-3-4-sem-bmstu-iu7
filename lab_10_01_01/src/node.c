@@ -53,19 +53,19 @@ void free_list(node_t *head)
 
 void insert(node_t **head, node_t *elem, node_t *before)
 {
-    if (!head || !elem)
+    if (!head || !elem || !before)
     {
         return;
     }
-    if (!(*head))
-    {
-        if (before)
-        {
-            return;
-        }
-        *head = elem;
-        return;
-    }
+    // if (!(*head))
+    // {
+    //     if (before)
+    //     {
+    //         return;
+    //     }
+    //     *head = elem;
+    //     return;
+    // }
     node_t *cur, *prev = NULL;
     for (cur = *head; cur; cur = cur->next)
     {
