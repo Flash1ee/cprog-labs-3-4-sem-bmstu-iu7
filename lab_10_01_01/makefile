@@ -12,7 +12,7 @@ INC:=$(wildcard $(INCPATH)*.h)
 SRCS := $(wildcard $(SRCPATH)*.c)
 OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
 UNITS:=$(patsubst $(UNITTESTSPATH)check%.c, $(OBJPATH)check%.o, $(wildcard $(UNITTESTSPATH)*.c))
-UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_insert.o $(OBJPATH)node.o
+UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_insert.o $(OBJPATH)check_sort.o $(OBJPATH)node.o
 dep = $(OBJS:.o=.d) 
 OUT := $(shell find -type f -name out)
 
