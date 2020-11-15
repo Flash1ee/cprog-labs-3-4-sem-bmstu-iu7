@@ -57,15 +57,6 @@ void insert(node_t **head, node_t *elem, node_t *before)
     {
         return;
     }
-    // if (!(*head))
-    // {
-    //     if (before)
-    //     {
-    //         return;
-    //     }
-    //     *head = elem;
-    //     return;
-    // }
     node_t *cur, *prev = NULL;
     for (cur = *head; cur; cur = cur->next)
     {
@@ -85,10 +76,6 @@ void insert(node_t **head, node_t *elem, node_t *before)
             }
         }
         prev = cur;
-    }
-    if (!cur && cur == *head)
-    {
-        *head = elem;
     }
 }
 
