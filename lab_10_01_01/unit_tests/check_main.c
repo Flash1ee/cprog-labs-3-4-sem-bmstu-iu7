@@ -6,11 +6,7 @@ int main(void)
     int no_failed = 0;
     Suite *s_insert;
 
-
-
     SRunner *runner_insert;
-
-
 
     s_insert = insert_suite();
 
@@ -19,6 +15,8 @@ int main(void)
     srunner_run_all(runner_insert, CK_VERBOSE);
 
     no_failed += srunner_ntests_failed(runner_insert);
+
+    srunner_free(runner_insert);
     
     return no_failed ? EXIT_FAILURE : EXIT_SUCCESS;
 }
