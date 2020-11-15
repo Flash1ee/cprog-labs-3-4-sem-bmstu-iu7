@@ -86,9 +86,9 @@ void insert(node_t **head, node_t *elem, node_t *before)
         }
         prev = cur;
     }
-    if (cur == NULL)
+    if (!cur && cur == *head)
     {
-        prev->next = elem;
+        *head = elem;
     }
 }
 
