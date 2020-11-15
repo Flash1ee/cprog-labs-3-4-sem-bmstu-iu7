@@ -1,6 +1,8 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
+#include <stdio.h>
+
 #include "data.h"
 #include "types.h"
 #include "retcodes.h"
