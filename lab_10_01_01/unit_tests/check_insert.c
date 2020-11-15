@@ -4,23 +4,13 @@
 
 START_TEST(insert_neg_elem_null)
 {
-    node_t c =
-    {
-        "third",
-        NULL
-    };
-    node_t b =
-    {
-        "second",
-        &c
-    };
-    node_t a =
-    {
-        "first", 
-        &b
-    };
+    node_t c = {"third", NULL};
+    node_t b = {"second", &c};
+    node_t a = {"first", &b};
+
     node_t *head = &a;
     node_t *before = &b;
+
     insert(&head, NULL, before);
     ck_assert_ptr_eq(head, &a);
     ck_assert_ptr_eq(head->next, &b);
@@ -30,46 +20,26 @@ START_TEST(insert_neg_elem_null)
 END_TEST
 START_TEST(insert_neg_head_null)
 {
-    node_t a =
-    {
-        "first", 
-        NULL
-    };
-    node_t new = 
-    {
-        "new",
-        NULL
-    };
+    node_t a = {"first", NULL};
+    node_t new = {"new", NULL};
+
     node_t *head = NULL;
     node_t *before = &a;
+
     insert(&head, &new, before);
     ck_assert_ptr_eq(head, NULL);
 }
 END_TEST
 START_TEST(insert_neg_before_null)
 {
-    node_t c =
-    {
-        "third",
-        NULL
-    };
-    node_t b =
-    {
-        "second",
-        &c
-    };
-    node_t a =
-    {
-        "first", 
-        &b
-    };
-    node_t new = 
-    {
-        "new",
-        NULL
-    };
+    node_t c = {"third", NULL};
+    node_t b = {"second", &c};
+    node_t a = {"first", &b};
+    node_t new = {"new", NULL};
+
     node_t *head = &a;
     node_t *before = NULL;
+
     insert(&head, &new, before);
     ck_assert_ptr_eq(head, &a);
     ck_assert_ptr_eq(head->next, &b);
@@ -79,28 +49,14 @@ START_TEST(insert_neg_before_null)
 END_TEST
 START_TEST(insert_elem_typical)
 {
-    node_t c =
-    {
-        "third",
-        NULL
-    };
-    node_t b =
-    {
-        "second",
-        &c
-    };
-    node_t a =
-    {
-        "first", 
-        &b
-    };
-    node_t new = 
-    {
-        "new",
-        NULL
-    };
+    node_t c = {"third", NULL};
+    node_t b = {"second", &c};
+    node_t a = {"first", &b};
+    node_t new = {"new", NULL};
+
     node_t *head = &a;
     node_t *before = &b;
+
     insert(&head, &new, before);
     ck_assert_ptr_eq(head, &a);
     ck_assert_ptr_eq(head->next, &new);
@@ -112,28 +68,14 @@ START_TEST(insert_elem_typical)
 END_TEST
 START_TEST(insert_head_eq_before_no_null)
 {
-    node_t c =
-    {
-        "third",
-        NULL
-    };
-    node_t b =
-    {
-        "second",
-        &c
-    };
-    node_t a =
-    {
-        "first", 
-        &b
-    };
-    node_t new = 
-    {
-        "new",
-        NULL
-    };
+    node_t c = {"third", NULL};
+    node_t b = {"second", &c};
+    node_t a = {"first", &b};
+    node_t new = {"new", NULL};
+
     node_t *head = &a;
     node_t *before = &a;
+
     insert(&head, &new, before);
     ck_assert_ptr_eq(head, &new);
     ck_assert_ptr_eq(head->next, &a);
@@ -145,28 +87,14 @@ START_TEST(insert_head_eq_before_no_null)
 END_TEST
 START_TEST(insert_before_no_null_pre_last)
 {
-    node_t c =
-    {
-        "third",
-        NULL
-    };
-    node_t b =
-    {
-        "second",
-        &c
-    };
-    node_t a =
-    {
-        "first", 
-        &b
-    };
-    node_t new = 
-    {
-        "new",
-        NULL
-    };
+    node_t c = {"third", NULL};
+    node_t b = {"second", &c};
+    node_t a = {"first", &b};
+    node_t new = {"new", NULL};
+
     node_t *head = &a;
     node_t *before = &b;
+    
     insert(&head, &new, before);
     ck_assert_ptr_eq(head, &a);
     ck_assert_ptr_eq(head->next, &new);
