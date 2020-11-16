@@ -7,6 +7,7 @@
 #include "types.h"
 #include "work.h"
 
+
 int main(void)
 {
     mode option;
@@ -17,26 +18,18 @@ int main(void)
     }
     switch (option)
     {
-    case OUT:
-    {
-        rc = output();
-        return rc;
-    }
-    case CAT:
-    {
-        rc = cat();
-        return rc;
-    }
-    case RM_SPS:
-    {
-        rc = one_sps_str();
-        return rc;
-    }
-    case SEARCH_PSTR:
-    {
-        rc = search_substr();
-        return rc;
-    }
+        case OUT:
+            rc = output();
+            return rc;
+        case CAT:
+            rc = cat();
+            return rc;
+        case RM_SPS:
+            rc = one_sps_str();
+            return rc;
+        case SEARCH_PSTR:
+            rc = search_substr();
+            return rc;
     }
 
     return EXIT_SUCCESS;

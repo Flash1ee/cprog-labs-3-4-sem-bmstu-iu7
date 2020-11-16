@@ -3,10 +3,6 @@
 
 #define BUF_SIZE 4
 
-// #define OUT "out"
-// #define CAT "cat"
-// #define RM_SPS "sps"
-// #define SEARCH_PSTR "pos"
 
 typedef enum
 {

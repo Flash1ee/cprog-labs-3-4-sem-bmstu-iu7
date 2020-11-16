@@ -61,7 +61,7 @@ void free_node(node_t *node)
 void print_list(node_t *head)
 {
     node_t *cur = NULL;
-    char buf[BUF_SIZE + 1] = {0};
+    char buf[BUF_SIZE + 1] = { 0 };
     for (cur = head; cur; cur = cur->next)
     {
         size_t i;
@@ -71,7 +71,8 @@ void print_list(node_t *head)
         }
 
         buf[i] = '\0';
-        printf("%s\n", buf);
+        printf("%s", buf);
         memset(buf, 0, BUF_SIZE + 1);
     }
+    printf("\n");
 }
