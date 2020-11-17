@@ -26,9 +26,8 @@ int input_str(char **str)
 }
 int convert_to_list(char *str, node_t **head)
 {
-    if (!str || !head)
+    if (!str)
     {
-        free(str);
         free(*head);
         return ARG_ERR;
     }
@@ -37,7 +36,7 @@ int convert_to_list(char *str, node_t **head)
     int flag = 1;
     while (flag)
     {
-        if (!ptr || !strncpy(buf, ptr, BUF_SIZE))
+        if (!ptr || !memmove(buf, ptr, BUF_SIZE))
         {
             free(str);
             free(*head);
