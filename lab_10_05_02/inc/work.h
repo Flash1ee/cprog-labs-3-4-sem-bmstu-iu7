@@ -6,7 +6,6 @@
 
 #include "types.h"
 
-void clean_buf();
 int input_str(char **str);
 int convert_to_list(char *str, node_t **head);
 int output();

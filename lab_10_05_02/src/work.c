@@ -9,13 +9,6 @@
 #include "retcodes.h"
 #include "utils.h"
 
-void clean_buf()
-{
-    int c;
-    while ((c = getchar()) != EOF && c != '\n')
-    {
-    };
-}
 //Строка динамическая, после использования удалить..
 int input_str(char **str)
 {
@@ -39,7 +32,7 @@ int convert_to_list(char *str, node_t **head)
         free(*head);
         return ARG_ERR;
     }
-    char buf[BUF_SIZE];
+    char buf[BUF_SIZE] = { 0 };
     char *ptr = str;
     int flag = 1;
     while (flag)
