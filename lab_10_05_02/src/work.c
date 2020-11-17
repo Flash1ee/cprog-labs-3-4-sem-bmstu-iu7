@@ -309,7 +309,7 @@ int search_substr()
         return rc;
     }
     rc = substr_in_str(head, substr);
-    if (rc != NOT_FOUND)
+    if (rc == NOT_FOUND || rc >= 0)
     {
         printf("%d\n", rc);
         rc = EXIT_SUCCESS;

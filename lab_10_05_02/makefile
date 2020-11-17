@@ -45,10 +45,7 @@ func: $(OBJPATH)debug.lastbuildstate app.exe
 	@echo
 	cd $(FUNCTESTSPATH) && bash all_test.sh
 	@echo
-	gcov -n $(OBJPATH)main.o
-	gcov -n $(OBJPATH)utils.o
-	gcov -n $(OBJPATH)films.o
-
+	gcov -n $(OBJPATH)*.o
 
 $(OBJPATH)debug.lastbuildstate: | out
 	rm -fv *.exe
