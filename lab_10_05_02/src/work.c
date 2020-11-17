@@ -37,7 +37,7 @@ int convert_to_list(char *str, node_t **head)
     int flag = 1;
     while (flag)
     {
-        if (!strncpy(buf, ptr, BUF_SIZE))
+        if (!ptr || !strncpy(buf, ptr, BUF_SIZE))
         {
             free(str);
             free(*head);
