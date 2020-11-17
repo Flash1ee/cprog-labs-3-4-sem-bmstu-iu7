@@ -32,10 +32,11 @@ int convert_to_list(char *str, node_t **head)
         return ARG_ERR;
     }
     char buf[BUF_SIZE] = { 0 };
+    char cmp[BUF_SIZE] = { 0 };
     char *ptr = str;
-    size_t len = strlen(str);
-    size_t cnt = 0;
-    while (1)
+    int flag = 1;
+    
+    while (flag)
     {
         if (!memmove(buf, ptr, BUF_SIZE))
         {
@@ -43,9 +44,16 @@ int convert_to_list(char *str, node_t **head)
             free(*head);
             return COPY_ERR;
         }
-        for (char *tmp = buf; *tmp != '\0'; tmp++)
+        if (*ptr == '\0' || !memcmp(buf, cmp, BUF_SIZE))
         {
-            cnt++;
+            break;
+        }
+        for (size_t i = 0; i < BUF_SIZE; i++)
+        {
+            if (!buf[i])
+            {
+                break;
+            }
             ptr++;
         }
         node_t *new_node = create_node(buf);
@@ -63,10 +71,6 @@ int convert_to_list(char *str, node_t **head)
         }
         *head = tmp;
         memset(buf, 0, strlen(buf));
-        if (cnt >= len)
-        {
-            break;
-        }
     }
     return EXIT_SUCCESS;
 }
