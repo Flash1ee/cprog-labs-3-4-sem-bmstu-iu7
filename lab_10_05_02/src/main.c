@@ -11,7 +11,8 @@
 int main(void)
 {
     mode option;
-    int rc = input_process(&option);
+    int rc = 0;
+    rc = input_process(&option);
     if (rc)
     {
         return rc;

@@ -66,7 +66,7 @@ int convert_to_list(char *str, node_t **head)
             free_node(*head);
         }
         *head = tmp;
-        memset(buf, 0, BUF_SIZE);
+        memset(buf, 0, strlen(buf));
     }
     return EXIT_SUCCESS;
 }
