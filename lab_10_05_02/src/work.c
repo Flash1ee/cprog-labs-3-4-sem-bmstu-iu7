@@ -48,6 +48,10 @@ int convert_to_list(char *str, node_t **head)
         {
             flag = 0;
         }
+        if (*buf == '\0')
+        {
+            break;
+        }
         node_t *new_node = create_node(buf);
         if (!new_node)
         {
