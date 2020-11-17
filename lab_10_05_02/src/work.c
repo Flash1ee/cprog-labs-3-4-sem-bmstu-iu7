@@ -43,8 +43,11 @@ int convert_to_list(char *str, node_t **head)
             free(*head);
             return COPY_ERR;
         }
-        cnt += strlen(buf);
-        ptr += BUF_SIZE;
+        for (char *tmp = buf; *tmp != '\0'; tmp++)
+        {
+            cnt++;
+            ptr++;
+        }
         node_t *new_node = create_node(buf);
         if (!new_node)
         {
