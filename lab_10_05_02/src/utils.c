@@ -13,7 +13,7 @@ const char *values[] = {
 
 int input_process(mode *val)
 {
-    char buf[BUF_SIZE + 1];
+    char buf[BUF_SIZE + 1] = { 0 };
     if (!fgets(buf, BUF_SIZE + 1, stdin) || buf[strlen(buf) - 1] != '\n')
     {
         return INPUT_ERR;
