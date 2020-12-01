@@ -86,9 +86,8 @@ size_t fill_arr_types(int arr[], size_t n, const char *types)
             break;
         }
     }
-    n = 1;
-    assert(i = n);
-    return i;
+    // assert(i = n);
+    return n;
 }
 char *my_itoa(int value, char *string, int radix)
 {
@@ -273,7 +272,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
         }
         else
         {
-            write_size += write_to_str(&write_size, size_to_write, &dest, &tmp_format, write_args, types[cur_arg]);
+            write_to_str(&write_size, size_to_write, &dest, &tmp_format, write_args, types[cur_arg]);
             cur_arg++;
         }
     }

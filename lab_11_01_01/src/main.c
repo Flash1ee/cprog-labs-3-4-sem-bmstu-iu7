@@ -5,12 +5,15 @@
 
 int main()
 {
+    char temp[100] = {0};
+    char a = '0';
+    char b = '1';
+    char c = '2';
+    char d = '3';
 
-    // char temp[100] = {0};
-    // char c = '2';
 
-    // int n = my_snprintf(temp, sizeof(char), "mama%c", c);
-    // printf("%d\n%s\n", n, temp);
+    int n = my_snprintf(temp, sizeof(char) + 3, "%c%c%c", a,b,c);
+    printf("%d\n%c%c%c\n", n, temp[0],temp[1],temp[2]);
 
     // // n = my_snprintf(temp, sizeof(char) + 1, "op", c);
 
