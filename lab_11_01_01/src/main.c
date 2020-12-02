@@ -127,11 +127,11 @@ int main()
     printf("%d\n%s\n", n, temp_res);
     // *temp_res = '\0';
 
-    n = my_snprintf(temp, 100, "%cop", c);
+    n = my_snprintf(temp, 1, "%c", c);
     printf("%d\n%s\n", n,temp);
 
 
-    n = snprintf(temp_res, 100, "%cop", c);
+    n = snprintf(temp_res, 1, "%c", c);
     printf("%d\n%s\n", n,temp_res);
 
 

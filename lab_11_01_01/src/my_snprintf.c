@@ -342,7 +342,14 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     }
     if (writing)
     {
-        *(dest) = '\0';
+        if (size == 1)
+        {
+            *str = '\0';
+        }
+        else
+        {
+            *(dest) = '\0';
+        }
     }
 
     va_end(write_args);
