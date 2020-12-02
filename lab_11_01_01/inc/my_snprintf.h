@@ -8,9 +8,8 @@
 #include <assert.h>
 #include <stdarg.h>
 
-#define INT_MAX 11
-#define SHORT_MAX 6
-#define LONG_MAX 20
+#define INT_MAX_M 11
+#define LONG_MAX_M 20
 
 typedef enum
 {
@@ -37,9 +36,10 @@ int my_snprintf(char *str, size_t size, const char *format, ...);
 spec is_process_symbol(char *ptr);
 size_t args_to_write(const char *str);
 size_t fill_arr_types(int arr[], size_t n, const char *types);
-char *my_itoa(int value, char *string, int radix);
+char *my_itoa(long long value, char *string, int radix);
 size_t my_strcpy(char *dest, char *src);
 size_t my_strncpy(char *dest, char *src, size_t n);
+char *my_strncat(char *dest, char *src, size_t n);
 size_t my_strlen(char *str);
 size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, va_list write_args, spec type);
 

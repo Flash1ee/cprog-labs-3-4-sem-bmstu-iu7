@@ -11,7 +11,8 @@ INC:=$(wildcard $(INCPATH)*.h)
 SRCS := $(wildcard $(SRCPATH)*.c)
 OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
 UNITS:=$(patsubst $(UNITTESTSPATH)check%.c, $(OBJPATH)check%.o, $(wildcard $(UNITTESTSPATH)*.c))
-UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_insert.o $(OBJPATH)check_sort.o $(OBJPATH)node.o
+UNITS+= $(OBJPATH)my_snprintf.o
+# UNITS= $(OBJPATH)check_main.o $(OBJPATH)my_snprintf.o $(OBJPATH)check_my_snprintf_char.o $(OBJPATH)check_my_snprintf_int.o 
 dep = $(OBJS:.o=.d) 
 OUT := $(shell find -type f -name out)
 
@@ -27,7 +28,7 @@ debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
 
-unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g3 -c
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -g3 -c
 unit_tests.exe: clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
 	# valgrind --leak-check=full --show-leak-kinds=all ./unit_tests.exe
