@@ -142,30 +142,29 @@ char *my_itoa(long long value, char *string, int radix)
 // }
 char *my_strncat(char *dest, char *src, size_t n)
 {
-    char *ptr = NULL;
-    for (ptr = dest; *ptr; ptr++)
+    char *ptr = dest;
+    while (*ptr)
     {
-        ;
+        ptr++;
     }
     for (size_t i = 0; i < n; i++)
     {
         *ptr++ = *src++;
     }
+    *ptr = '\0';
     return dest;
 }
-// size_t my_strncpy(char *dest, char *src, size_t n)
-// {
-//     assert(dest && src);
-
-//     char *beg = dest;
-//     while (n)
-//     {
-//         *dest++ = *src++;
-//         n--;
-//     }
-//     *dest = '\0';
-//     return dest - beg;
-// }
+size_t my_strncpy(char *dest, char *src, size_t n)
+{
+    char *beg = dest;
+    while (n)
+    {
+        *dest++ = *src++;
+        n--;
+    }
+    *dest = '\0';
+    return dest - beg;
+}
 size_t my_strlen(char *str)
 {
     char *cur = str;
@@ -197,7 +196,14 @@ size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, v
         int n_to_write = my_strlen(val);
         if (*cur_size + n_to_write <= size_max)
         {
-            my_strncat(*str, val, n_to_write);
+            if (!*cur_size)
+            {
+                my_strncpy(*str, val, n_to_write);
+            }
+            else
+            {
+                my_strncat(*str, val, n_to_write);
+            }
             *fmt += 2;
             *cur_size += n_to_write;
             *str += n_to_write;
@@ -207,7 +213,14 @@ size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, v
         if (size_max > *cur_size)
         {
             size_t new_n = size_max - *cur_size;
-            my_strncat(*str, val, new_n);
+            if (!*cur_size)
+            {
+                my_strncpy(*str, val, new_n);
+            }
+            else
+            {
+                my_strncat(*str, val, new_n);
+            }
             *str += new_n;
         }
         *cur_size += n_to_write;
@@ -224,7 +237,14 @@ size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, v
 
         if (*cur_size + n <= size_max)
         {
-            *str = my_strncat(*str, temp, n);
+            if (!*cur_size)
+            {
+                my_strncpy(*str, temp, n);
+            }
+            else
+            {
+                my_strncat(*str, temp, n);
+            }
             *str += n;
         }
         *fmt += 3;
@@ -240,7 +260,14 @@ size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, v
 
         if (*cur_size + n <= size_max)
         {
-            my_strncat(*str, temp, n);
+            if (!*cur_size)
+            {
+                my_strncpy(*str, temp, n);
+            }
+            else
+            {
+                my_strncat(*str, temp, n);
+            }
             *str += n;
         }
         *fmt += 2;
@@ -288,6 +315,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
             if (write_size < size_to_write)
             {
                 *dest++ = *tmp_format;
+                *dest = '\0';
             }
             write_size++;
             tmp_format++;
@@ -297,6 +325,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
             if (write_size < size_to_write)
             {
                 *dest++ = *tmp_format;
+                *dest = '\0';
             }
             write_size++;
             tmp_format += 2;

@@ -87,6 +87,7 @@ START_TEST(snprintf_str_with_other_spec)
 
     int my_n = my_snprintf(my, len + 1, "%s%d%s", src_a, num, src_b);
     int n_res = snprintf(res, len + 1, "%s%d%s", src_a, num, src_b);
+    
 
     ck_assert_int_eq(my_n, n_res);
     ck_assert_str_eq(my, res);
@@ -108,6 +109,7 @@ START_TEST(snprintf_str_size_more_len)
 
     int my_n = my_snprintf(my, len + 1, "%s%d%s", src_a, num, src_b);
     int n_res = snprintf(res, len + 1, "%s%d%s", src_a, num, src_b);
+
 
     ck_assert_int_eq(my_n, n_res);
     ck_assert_str_eq(my, res);
