@@ -307,8 +307,12 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
             cur_arg++;
         }
     }
+    if (writing)
+    {
+        *(str + size_to_write) = '\0';
+    }
+
     va_end(write_args);
-    *(str + size_to_write) = '\0';
 
     return write_size;
 }
