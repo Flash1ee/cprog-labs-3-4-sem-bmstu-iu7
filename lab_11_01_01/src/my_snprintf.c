@@ -338,7 +338,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     }
     if (writing)
     {
-        *(str + size_to_write) = '\0';
+        *(dest) = '\0';
     }
 
     va_end(write_args);
