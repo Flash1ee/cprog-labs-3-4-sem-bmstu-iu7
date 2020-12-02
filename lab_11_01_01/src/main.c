@@ -11,7 +11,6 @@ int main()
     char a = 'A';
     char b = '1';
     char c = '2';
-    char d = '3';
 
     int int_a = 2020;
     const char *str1 = "Hello";
@@ -79,6 +78,14 @@ int main()
     n = snprintf(temp_res, 4 + 1, "maa");
     printf("%d\n%c%c%c\n", n, temp_res[0], temp_res[1], temp_res[2]);
     // *temp_res = '\0';
+
+    n = my_snprintf(temp, 1, "%t   ", 'W');
+    printf("%d\n%s\n", n, temp);
+
+    n = snprintf(temp_res, 1, "%t", 'W');
+    printf("%d\n%s\n", n, temp_res);
+
+
 
     n = my_snprintf(temp, sizeof(char) + 3, "%c%c%c", a, b, c);
     printf("%d\n%c%c%c\n", n, temp[0], temp[1], temp[2]);

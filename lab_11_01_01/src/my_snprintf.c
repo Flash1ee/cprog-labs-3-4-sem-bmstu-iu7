@@ -44,7 +44,10 @@ size_t args_to_write(const char *str)
         {
             cur++;
             spec type = is_process_symbol((char *)cur);
-            assert(type != ERR);
+            if (type == ERR)
+            {
+                return ERR;
+            }
             if (type == LONG)
             {
                 cur++;
@@ -252,10 +255,19 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     {
         return 0;
     }
-    size_t n = args_to_write(format);
+    bool writing = my_strlen((char *)format) && size;
+    if (writing)
+    {
+        memset(str, 0, my_strlen(str));
+    }
+    int n = args_to_write(format);
+    if (n == ERR)
+    {
+        return -1;
+    }
     int types[n];
     // Fill array flags of write types
-    if (fill_arr_types(types, n, format) != n)
+    if (fill_arr_types(types, n, format) != (size_t) n)
     {
         return -1;
     }
@@ -268,13 +280,8 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
     char *dest = str;
     const char *tmp_format = format;
-    bool writing = my_strlen((char *)format) && size;
-    if (writing)
-    {
-        memset(str, 0, my_strlen(str));
-    }
 
-    while (cur_arg < n || *tmp_format != '\0')
+    while (cur_arg < (size_t) n || *tmp_format != '\0')
     {
         while (*tmp_format && *tmp_format != '%')
         {

@@ -28,7 +28,7 @@ debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
 
-unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -g3 -c
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -g3 -c
 unit_tests.exe: clean $(UNITS)
 	$(CC) -o $@  $(UNITS) $(UFLAGS)
 	# valgrind --leak-check=full --show-leak-kinds=all ./unit_tests.exe
