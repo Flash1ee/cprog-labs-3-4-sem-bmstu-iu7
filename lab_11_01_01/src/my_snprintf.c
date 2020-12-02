@@ -174,7 +174,7 @@ size_t my_strlen(char *str)
     }
     return cur - str;
 }
-size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, va_list write_args, spec type)
+size_t write_to_str(size_t *cur_size, size_t size_max, char **str, const char **fmt, va_list write_args, spec type)
 {
     switch (type)
     {
@@ -287,21 +287,21 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     // {
     //     memset(str, 0, my_strlen(str));
     // }
-    int n = args_to_write(format);
+    size_t n = args_to_write(format);
     if (n == ERR)
     {
         return -1;
     }
     int types[n];
     // Fill array flags of write types
-    if (fill_arr_types(types, n, format) != (size_t)n)
+    if (fill_arr_types(types, n, format) != n)
     {
         return -1;
     }
     va_list write_args;
     va_start(write_args, format);
 
-    int write_size = 0;
+    size_t write_size = 0;
     size_t size_to_write = 0;
     if (size)
     {
@@ -312,11 +312,11 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     char *dest = str;
     const char *tmp_format = format;
 
-    while (cur_arg < (size_t)n || *tmp_format != '\0')
+    while (cur_arg < n || *tmp_format != '\0')
     {
         while (*tmp_format && *tmp_format != '%')
         {
-            if ((size_t) write_size < size_to_write)
+            if (write_size < size_to_write)
             {
                 *dest++ = *tmp_format;
                 *dest = '\0';
@@ -326,7 +326,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
         }
         if (*tmp_format && *(tmp_format + 1) == '%')
         {
-            if ((size_t) write_size < size_to_write)
+            if (write_size < size_to_write)
             {
                 *dest++ = *tmp_format;
                 *dest = '\0';

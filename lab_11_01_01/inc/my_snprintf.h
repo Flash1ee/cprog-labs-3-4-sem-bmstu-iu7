@@ -41,6 +41,6 @@ size_t my_strcpy(char *dest, char *src);
 size_t my_strncpy(char *dest, char *src, size_t n);
 char *my_strncat(char *dest, char *src, size_t n);
 size_t my_strlen(char *str);
-size_t write_to_str(int *cur_size, int size_max, char **str, const char **fmt, va_list write_args, spec type);
+size_t write_to_str(size_t *cur_size, size_t size_max, char **str, const char **fmt, va_list write_args, spec type);
 
 #endif // _MY_SNPRINTF_
