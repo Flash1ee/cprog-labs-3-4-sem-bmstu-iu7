@@ -134,6 +134,40 @@ START_TEST(snprintf_str_size_less_len)
     ck_assert_str_eq(my, res);
 }
 END_TEST
+START_TEST(snprintf_format_err)
+{
+    char my[BUF] = {0};
+    char res[BUF] = {0};
+
+    char num_buf[BUF] = {0};
+    const char *src_a = "This is ";
+
+    size_t len = strlen(src_a);
+
+    int my_n = my_snprintf(my, len + 1, "%#", src_a);
+    int n_res = snprintf(res, len + 1, "%#", src_a);
+
+    ck_assert_int_eq(my_n, n_res);
+    ck_assert_str_eq(my, res);
+}
+END_TEST
+START_TEST(snprintf_str_size_zero)
+{
+    char my[BUF] = {0};
+    char res[BUF] = {0};
+
+    char num_buf[BUF] = {0};
+    const char *src_a = "This is ";
+
+    size_t len = strlen(src_a);
+
+    int my_n = my_snprintf(my, 0, "%s", src_a);
+    int n_res = snprintf(res, 0, "%s", src_a);
+
+    ck_assert_int_eq(my_n, n_res);
+    ck_assert_str_eq(my, res);
+}
+END_TEST
 
 Suite *my_snprintf_str_suite(void)
 {
@@ -150,6 +184,10 @@ Suite *my_snprintf_str_suite(void)
     tcase_add_test(tests, snprintf_str_with_other_spec);
     tcase_add_test(tests, snprintf_str_size_more_len);
     tcase_add_test(tests, snprintf_str_size_less_len);
+    tcase_add_test(tests, snprintf_format_err);
+    tcase_add_test(tests, snprintf_str_size_zero);
+
+
 
     suite_add_tcase(t, tests);
     return t;
