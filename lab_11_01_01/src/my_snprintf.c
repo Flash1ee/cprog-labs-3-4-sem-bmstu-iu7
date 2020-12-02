@@ -64,7 +64,7 @@ size_t fill_arr_types(int arr[], size_t n, const char *types)
     char *cur = (char *)types;
     while (*cur)
     {
-        while (*cur != '\0' && *cur != '%')
+        while (*cur && *cur != '%')
         {
             cur++;
         }
@@ -128,22 +128,22 @@ char *my_itoa(long long value, char *string, int radix)
     }
     return string;
 }
-size_t my_strcpy(char *dest, char *src)
-{
-    assert(dest && src);
+// size_t my_strcpy(char *dest, char *src)
+// {
+//     assert(dest && src);
 
-    char *beg = dest;
-    while (*src)
-    {
-        *dest++ = *src++;
-    }
-    *dest = '\0';
-    return dest - beg;
-}
+//     char *beg = dest;
+//     while (*src)
+//     {
+//         *dest++ = *src++;
+//     }
+//     *dest = '\0';
+//     return dest - beg;
+// }
 char *my_strncat(char *dest, char *src, size_t n)
 {
     char *ptr = NULL;
-    for (ptr = dest; *ptr != '\0'; ptr++)
+    for (ptr = dest; *ptr; ptr++)
     {
         ;
     }
@@ -153,23 +153,23 @@ char *my_strncat(char *dest, char *src, size_t n)
     }
     return dest;
 }
-size_t my_strncpy(char *dest, char *src, size_t n)
-{
-    assert(dest && src);
+// size_t my_strncpy(char *dest, char *src, size_t n)
+// {
+//     assert(dest && src);
 
-    char *beg = dest;
-    while (n)
-    {
-        *dest++ = *src++;
-        n--;
-    }
-    *dest = '\0';
-    return dest - beg;
-}
+//     char *beg = dest;
+//     while (n)
+//     {
+//         *dest++ = *src++;
+//         n--;
+//     }
+//     *dest = '\0';
+//     return dest - beg;
+// }
 size_t my_strlen(char *str)
 {
     char *cur = str;
-    while (*cur != '\0')
+    while (*cur)
     {
         cur++;
     }
@@ -256,10 +256,10 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
         return 0;
     }
     bool writing = my_strlen((char *)format) && size;
-    if (writing)
-    {
-        memset(str, 0, my_strlen(str));
-    }
+    // if (writing)
+    // {
+    //     memset(str, 0, my_strlen(str));
+    // }
     int n = args_to_write(format);
     if (n == ERR)
     {
@@ -267,7 +267,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     }
     int types[n];
     // Fill array flags of write types
-    if (fill_arr_types(types, n, format) != (size_t) n)
+    if (fill_arr_types(types, n, format) != (size_t)n)
     {
         return -1;
     }
@@ -281,7 +281,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     char *dest = str;
     const char *tmp_format = format;
 
-    while (cur_arg < (size_t) n || *tmp_format != '\0')
+    while (cur_arg < (size_t)n || *tmp_format != '\0')
     {
         while (*tmp_format && *tmp_format != '%')
         {
@@ -292,7 +292,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
             write_size++;
             tmp_format++;
         }
-        if (*tmp_format && *(tmp_format + 1) && *(tmp_format + 1) == '%')
+        if (*tmp_format && *(tmp_format + 1) == '%')
         {
             if (write_size < size_to_write)
             {

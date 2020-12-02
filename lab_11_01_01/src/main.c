@@ -79,11 +79,11 @@ int main()
     printf("%d\n%c%c%c\n", n, temp_res[0], temp_res[1], temp_res[2]);
     // *temp_res = '\0';
 
-    n = my_snprintf(temp, 1, "%t   ", 'W');
-    printf("%d\n%s\n", n, temp);
+    // n = my_snprintf(temp, 1, "%t   ", 'W');
+    // printf("%d\n%s\n", n, temp);
 
-    n = snprintf(temp_res, 1, "%t", 'W');
-    printf("%d\n%s\n", n, temp_res);
+    // n = snprintf(temp_res, 1, "%t", 'W');
+    // printf("%d\n%s\n", n, temp_res);
 
 
 
