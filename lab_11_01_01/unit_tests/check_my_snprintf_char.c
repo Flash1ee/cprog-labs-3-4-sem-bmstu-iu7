@@ -96,6 +96,36 @@ START_TEST(snprintf_text_between_args)
     ck_assert_str_eq(my, res);
 }
 END_TEST
+START_TEST(snprintf_big_size)
+{
+    char my[BUF] = {0};
+    char res[BUF] = {0};
+
+    char a = 'I';
+    char b = 'U';
+    char c = '7';
+
+    int my_n = my_snprintf(my, 100, "%c%cIU7%c", a, b, c);
+    int n = snprintf(res, 100, "%c%cIU7%c", a, b, c);
+    ck_assert_int_eq(my_n, n);
+    ck_assert_str_eq(my, res);
+}
+END_TEST
+START_TEST(snprintf_small_size)
+{
+    char my[BUF] = {0};
+    char res[BUF] = {0};
+
+    char a = 'I';
+    char b = 'U';
+    char c = '7';
+
+    int my_n = my_snprintf(my, 4, "%c%cIU7%c", a, b, c);
+    int n = snprintf(res, 4, "%c%cIU7%c", a, b, c);
+    ck_assert_int_eq(my_n, n);
+    ck_assert_str_eq(my, res);
+}
+END_TEST
 
 Suite *my_snprintf_char_suite(void)
 {
@@ -112,6 +142,9 @@ Suite *my_snprintf_char_suite(void)
     tcase_add_test(tests, snprintf_few_args);
     tcase_add_test(tests, snprintf_args_with_format_text);
     tcase_add_test(tests, snprintf_text_between_args);
+    tcase_add_test(tests, snprintf_big_size);
+    tcase_add_test(tests, snprintf_small_size);
+
 
     suite_add_tcase(t, tests);
     return t;

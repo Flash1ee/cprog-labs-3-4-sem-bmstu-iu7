@@ -302,7 +302,11 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     va_start(write_args, format);
 
     int write_size = 0;
-    int size_to_write = size - 1;
+    size_t size_to_write = 0;
+    if (size)
+    {
+        size_to_write = size - 1;
+    }
     size_t cur_arg = 0;
 
     char *dest = str;
@@ -312,7 +316,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
     {
         while (*tmp_format && *tmp_format != '%')
         {
-            if (write_size < size_to_write)
+            if ((size_t) write_size < size_to_write)
             {
                 *dest++ = *tmp_format;
                 *dest = '\0';
@@ -322,7 +326,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
         }
         if (*tmp_format && *(tmp_format + 1) == '%')
         {
-            if (write_size < size_to_write)
+            if ((size_t) write_size < size_to_write)
             {
                 *dest++ = *tmp_format;
                 *dest = '\0';
