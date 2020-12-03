@@ -36,7 +36,7 @@ size_t args_to_write(const char *str)
     size_t cn = 0;
     for (const char *cur = str; *cur != '\0'; cur++)
     {
-        if (*cur == '%' && *(cur + 1) == '%')
+        if (is_percent(cur))
         {
             cur++;
         }
@@ -128,18 +128,6 @@ char *my_itoa(long long value, char *string, int radix)
     }
     return string;
 }
-// size_t my_strcpy(char *dest, char *src)
-// {
-//     assert(dest && src);
-
-//     char *beg = dest;
-//     while (*src)
-//     {
-//         *dest++ = *src++;
-//     }
-//     *dest = '\0';
-//     return dest - beg;
-// }
 char *my_strncat(char *dest, char *src, size_t n)
 {
     char *ptr = dest;
@@ -276,83 +264,83 @@ size_t write_to_str(size_t *cur_size, size_t size_max, char **str, const char **
     }
     }
 }
+int is_percent(const char *str)
+{
+    if (*str == '%' && *(str + 1) == '%')
+    {
+        return true;
+    }
+    return false;
+}
+size_t print_to_string(char *str, size_t size, const char *format, va_list args, int types[], size_t cn_args)
+{
+    size_t cur_size = 0;
+    size_t max_size = 0;
+    size_t cur_arg = 0;
+    char *dest = str;
+    const char *tmp_format = format;
+    bool writing = my_strlen((char *)format) && size;
+
+    if (size)
+    {
+        max_size = size - 1;
+    }
+    while (cur_arg < cn_args || *tmp_format)
+    {
+        while (*tmp_format != '%' || is_percent(tmp_format))
+        {
+            if (!*tmp_format)
+            {
+                break;
+            }
+            if (cur_size < max_size)
+            {
+                *dest++ = *tmp_format;
+                *dest = '\0';
+            }
+            cur_size++;
+            if (is_percent(tmp_format))
+            {
+                tmp_format += 2;
+                continue;
+            }
+            tmp_format++;
+        }
+        if (*tmp_format)
+        {
+            write_to_str(&cur_size, max_size, &dest, &tmp_format, args, types[cur_arg]);
+            cur_arg++;
+        }
+    }
+    if (writing)
+    {
+        (size == 1) ? *str = '\0' : (*dest = '\0');
+    }
+
+    return cur_size;
+}
+
 int my_snprintf(char *str, size_t size, const char *format, ...)
 {
     if (!format)
     {
         return 0;
     }
-    bool writing = my_strlen((char *)format) && size;
-    // if (writing)
-    // {
-    //     memset(str, 0, my_strlen(str));
-    // }
     size_t n = args_to_write(format);
     if (n == ERR)
     {
         return -1;
     }
     int types[n];
-    // Fill array flags of write types
-    if (fill_arr_types(types, n, format) != n)
+    if (fill_arr_types(types, n, format) != n) // Fill array flags of write types
     {
         return -1;
     }
-    va_list write_args;
-    va_start(write_args, format);
 
-    size_t write_size = 0;
-    size_t size_to_write = 0;
-    if (size)
-    {
-        size_to_write = size - 1;
-    }
-    size_t cur_arg = 0;
+    va_list args;
+    va_start(args, format);
+    size_t cnt_all = print_to_string(str, size, format, args, types, n);
+    va_end(args);
 
-    char *dest = str;
-    const char *tmp_format = format;
-
-    while (cur_arg < n || *tmp_format != '\0')
-    {
-        while (*tmp_format && *tmp_format != '%')
-        {
-            if (write_size < size_to_write)
-            {
-                *dest++ = *tmp_format;
-                *dest = '\0';
-            }
-            write_size++;
-            tmp_format++;
-        }
-        if (*tmp_format && *(tmp_format + 1) == '%')
-        {
-            if (write_size < size_to_write)
-            {
-                *dest++ = *tmp_format;
-                *dest = '\0';
-            }
-            write_size++;
-            tmp_format += 2;
-        }
-        else if (*tmp_format)
-        {
-            write_to_str(&write_size, size_to_write, &dest, &tmp_format, write_args, types[cur_arg]);
-            cur_arg++;
-        }
-    }
-    if (writing)
-    {
-        if (size == 1)
-        {
-            *str = '\0';
-        }
-        else
-        {
-            *(dest) = '\0';
-        }
-    }
-
-    va_end(write_args);
-
-    return write_size;
+    return cnt_all;
 }

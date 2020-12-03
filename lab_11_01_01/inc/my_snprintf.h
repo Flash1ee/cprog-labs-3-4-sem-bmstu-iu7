@@ -41,6 +41,8 @@ size_t my_strcpy(char *dest, char *src);
 size_t my_strncpy(char *dest, char *src, size_t n);
 char *my_strncat(char *dest, char *src, size_t n);
 size_t my_strlen(char *str);
+int is_percent(const char *str);
+size_t print_to_string(char *str, size_t size, const char *format, va_list args, int types[], size_t cn_args);
 size_t write_to_str(size_t *cur_size, size_t size_max, char **str, const char **fmt, va_list write_args, spec type);
 
 #endif // _MY_SNPRINTF_
