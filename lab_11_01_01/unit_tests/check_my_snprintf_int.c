@@ -137,6 +137,8 @@ START_TEST(snprintf_size_less_symbols)
     ck_assert_int_eq(my_n, n);
     ck_assert_str_eq(my, res);
 }
+END_TEST
+
 Suite *my_snprintf_int_suite(void)
 {
     Suite *t;

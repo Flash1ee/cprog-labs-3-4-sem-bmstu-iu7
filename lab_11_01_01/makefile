@@ -5,7 +5,7 @@ SRCPATH=./src/
 UNITTESTSPATH:=./unit_tests/
 CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g -c
 LFLAGS=--coverage -g -ggdb
-UFLAGS=-lcheck
+UFLAGS=-lcheck -lm -lrt -lpthread -lsubunit
 DIR_CR=mkdir -p
 INC:=$(wildcard $(INCPATH)*.h)
 SRCS := $(wildcard $(SRCPATH)*.c)
