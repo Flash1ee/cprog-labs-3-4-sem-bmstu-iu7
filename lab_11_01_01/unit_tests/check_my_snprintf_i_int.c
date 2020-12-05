@@ -137,6 +137,8 @@ START_TEST(snprintf_size_less_symbols)
     ck_assert_int_eq(my_n, n);
     ck_assert_str_eq(my, res);
 }
+END_TEST
+
 Suite *my_snprintf_i_int_suite(void)
 {
     Suite *t;
@@ -153,5 +155,6 @@ Suite *my_snprintf_i_int_suite(void)
     tcase_add_test(tests, snprintf_size_less_symbols);
 
     suite_add_tcase(t, tests);
+
     return t;
 }
