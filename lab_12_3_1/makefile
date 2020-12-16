@@ -2,22 +2,31 @@ CC=gcc
 INCPATH=./inc/
 OBJPATH=./out/
 SRCPATH=./src/
+LIBPATH=./lib/
+LIB_HEADERS=-I$(LIBPATH)
+FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
-CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g -c
-LFLAGS=--coverage -g -ggdb
+CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
+LFLAGS=--coverage
 UFLAGS=-lcheck
 DIR_CR=mkdir -p
-INC:=$(wildcard $(INCPATH)*.h)
-SRCS := $(wildcard $(SRCPATH)*.c)
-OBJS:=$(patsubst $(SRCPATH)%.c,$(OBJPATH)%.o, $(SRCS))
-UNITS:=$(patsubst $(UNITTESTSPATH)check%.c, $(OBJPATH)check%.o, $(wildcard $(UNITTESTSPATH)*.c))
-UNITS+= $(OBJPATH)my_snprintf.o
-# UNITS= $(OBJPATH)check_main.o $(OBJPATH)my_snprintf.o $(OBJPATH)check_my_snprintf_char.o $(OBJPATH)check_my_snprintf_int.o 
-dep = $(OBJS:.o=.d) 
+OBJS= $(OBJPATH)key.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
+UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_key.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)key.o
+
+inc = $(wildcard $(INCPATH)*.h)
+src = $(wildcard $(SRCPATH)*.c)
+obj = $(src:$(SRCPATH)%.c=$(OBJPATH)%.o)
+
+lib_src = $(wildcard $(LIBPATH)*.c)
+lib_obj= $(lib_src:.c=.o)
+lib_stat = $(LIBPATH)libarr.a
+lib_dyn = $(LIBPATH)libarr.so
+lib_flags=
+dep = $(obj:.o=.d) 
 OUT := $(shell find -type f -name out)
 
-
-.PHONY: clean dirs out cppcheck
+VARIANTS=func dirs out dyn_build dyn_load release debug
+.PHONY: clean func dirs out dyn_build dyn_load release debug
 .NOTPARALLEL: release debug
 
 release: CFLAGS=-std=c99 -I$(INCPATH) -o2 -c
@@ -27,20 +36,27 @@ release: LFLAGS=-o2
 debug: $(OBJPATH)debug.lastbuildstate app.exe
 release: $(OBJPATH)release.lastbuildstate app.exe
 
+dyn_build: lib_flags=-fPIC
+dyn_load: CFLAGS += -D DYN_LOAD
 
-unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -g3 -c
-unit_tests.exe: clean $(UNITS)
-	$(CC) -o $@  $(UNITS) $(UFLAGS)
+unit_tests.exe: CFLAGS=-std=c99 -I$(INCPATH) -Wall -Werror -g3 -c
+unit_tests.exe: clean $(UNITS) $(lib_stat)
+	$(CC) -o $@  $(UNITS) -L$(LIBPATH) -larr $(UFLAGS)
 	valgrind --leak-check=full ./unit_tests.exe
-	# ./unit_tests.exe
 
 
 $(OBJPATH)check%.o : $(UNITTESTSPATH)check%.c 
-	$(CC) $(CFLAGS) $< -o $@ 
+	$(CC) $(CFLAGS) -I$(LIBPATH) $< -o $@ 
 
-cppcheck: $(SRCS) | out
-	cppcheck --std=c99 -q --enable=all -I./inc/ --inconclusive --suppress=missingIncludeSystem ./src/
 
+func: debug | out
+	@echo
+	cd $(FUNCTESTSPATH) && bash all_test.sh
+	@echo
+	gcov -n $(OBJPATH)main.o
+	gcov -n $(OBJPATH)key.o
+	gcov -n $(OBJPATH)sort.o
+	gcov -n $(OBJPATH)io.o
 
 $(OBJPATH)debug.lastbuildstate: | out
 	rm -fv *.exe
@@ -59,17 +75,33 @@ $(OBJPATH)release.lastbuildstate: | out
 	touch $(OBJPATH)release.lastbuildstate
 
 
-app.exe: $(OBJS) | out
-	$(CC) -o $@ $(OBJS) $(LFLAGS) 
+app.exe: $(obj) $(lib_stat) | out
+	$(CC) -o $@ $(obj) -L$(LIBPATH) -larr $(LFLAGS) 
+
+dyn_build: $(obj) $(lib_dyn) | out
+	$(CC) -o app.exe $(obj) -L$(LIBPATH) -larr $(LFLAGS)
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(LIBPATH)
+
+dyn_load: $(obj) $(lib_dyn) | out
+	$(CC) -o app.exe $(obj) -ldl $(LFLAGS)
+
+$(lib_dyn): $(lib_obj)
+	$(CC) -o $@ -shared $^
 
 $(OBJPATH)%.o: $(SRCPATH)%.c | out
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(LIB_HEADERS) -o $@ $<
 
 $(OBJPATH)%.d : $(SRCPATH)%.c | out
-	$(CC) -I$(INCPATH) -MM -MT $(patsubst %.d,%.o,$@) $< > $@
+	$(CC) -I$(INCPATH) $(LIB_HEADERS) -MM -MT $(patsubst %.d,%.o,$@) $< > $@
 
-ifneq ($(MAKECMDGOALS), clean)
--include $(dep)
+$(lib_stat): $(lib_obj) 
+	ar rcs -o $@ $^ 
+
+$(LIBPATH)%.o : $(LIBPATH)%.c $(LIBPATH)%.h
+	$(CC) $(lib_flags) -c -o $@ $<
+
+ifneq ($(MAKECMDGOALS), $(VARIANTS))
+include $(dep)
 endif
 
 out:
@@ -96,3 +128,7 @@ clean:
 	rm -fv $(OBJPATH)*.gcno
 	rm -fv $(OBJPATH)*.gcda
 	rm -fv $(OBJPATH)*.lastbuildstate
+	rm -fv $(LIBPATH)*.o
+	rm -fv $(LIBPATH)*.a
+	rm -fv $(LIBPATH)*.gcno
+	rm -fv $(LIBPATH)*.so

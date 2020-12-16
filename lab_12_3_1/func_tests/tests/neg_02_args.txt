@@ -1,0 +1,1 @@
+./shared/neg_02_in.txt ./shared/neg_02_out.txt err_key
