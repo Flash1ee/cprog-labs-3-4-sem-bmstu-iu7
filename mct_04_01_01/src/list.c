@@ -116,18 +116,41 @@ void insert_bef_elem(d_linked_list_t *list, node_t *elm, int value) {
     list->size++;
 }
 
+int cmp(int a, int b) {
+    if (a == b) {
+        return 0;
+    }
+    if (a % 2 && b % 2 == 0) {
+        return 1;
+    }
+    if (a % 2 == 0 && b % 2 == 1) {
+        return -1;
+    }
 
-void insert_sort(d_linked_list_t **list) {
+    if (a % 2 == 1 && b % 2 == 1) {
+        if (a > b) {
+            return 1;
+        }
+        return -1;
+    }
+    if (a % 2 == 0 && b % 2 == 0) {
+        if (a > b) {
+            return 1;
+        }
+        return -1;
+    }
+}
+void insert_sort(d_linked_list_t **list, int (*cmp)(int, int)) {
     d_linked_list_t *new = create_d_linked_list();
     node_t *sort = NULL;
     node_t *unsort = NULL;
      
     push_front(new, pop_front(*list));
- 
+
     unsort = (*list)->head;
     while (unsort) {
         sort = new->head;      
-        while (sort && unsort->data > sort->data) {
+        while (sort && cmp(unsort->data, sort->data) == 1) {
             sort = sort->next;
         }
         if (sort) {
@@ -165,7 +188,6 @@ void bubble_sort(d_linked_list_t *list)
 
             }
         }
-    }
-   
-    
-} 
+    }  
+}
+

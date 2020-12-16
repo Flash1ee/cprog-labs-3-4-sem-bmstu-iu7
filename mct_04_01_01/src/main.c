@@ -1,18 +1,33 @@
+#include <stdio.h>
 #include "list.h"
 
 
 int main() {
 
-    int arr[] = {1,3,-10,5,7,8};
+    int size = 0;
+    if (scanf("%d", &size) != 1) {
+        return EXIT_FAILURE;
+    }
+    int tmp = 0;
     d_linked_list_t *list = create_d_linked_list();
-
-    for (size_t i = 0; i < 6; i++) {
-        push_front(list, arr[i]);
+    if (!list) {
+        return EXIT_FAILURE;
+    }
+    for (int i = 0; i < size; i++) {
+        if (scanf("%d", &tmp) != 1) {
+            delete_d_linked_list(list);
+            return EXIT_FAILURE;
+        }
+        push_back(list, tmp);
     }
     print(list);
-    // bubble_sort(list);
-    insert_sort(&list);
-    print(list);
+    if (list->size) {
+        insert_sort(&list, cmp);
+        print(list);
+    }
+    else {
+        puts("EMPTY");
+    }
     delete_d_linked_list(list);
     return 0;
 }

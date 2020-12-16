@@ -29,7 +29,10 @@ void push_back(d_linked_list_t *list, int value);
 void push_front(d_linked_list_t *list, int data);
 int pop_front(d_linked_list_t *list);
 void insert_bef_elem(d_linked_list_t *list, node_t *elm, int value);
-void insert_sort(d_linked_list_t **list);
+void insert_sort(d_linked_list_t **list, int (*cmp)(int, int));
+
+int cmp(int a, int b);
+
 
 
 #endif // __LIST_H__
