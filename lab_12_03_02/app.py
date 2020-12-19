@@ -26,20 +26,17 @@ def import_library_func():
 
 
 
-
-text = [[["---------------"],["Программа для работы с библиотекой libarr.so"], ["---------------"]],
-        [["Си-функции"],["Python-функции"],["Описание"]],
-        [["int fill_prime(int *arr, int n)"],["fill_prime(arr)"],["Заполнение массива простыми числами"]],
-        [["int form_arr_user_size(int *src, int src_n, int *dst, int dst_n)"],["form_arr_user(src)"],["Копирование из массива src в dst чисел,находящихся"
-        "после четных в src.Размер dst на вызывающей стороне"]],
-        [["int form_arr_my_size(int *src, int src_n, int *dst, int *dst_n)"],["form_arr_my(src)"],["Копирование из массива src в dst чисел,находящихся"
-        "после четных в src. Размер dst_n в случае нехватки исходного обновляется требуемым"]]
-]
-
 def show_help():
     new_window = tk.Toplevel()
     new_window.title("Справка")
-
+    text = [["---------------","Программа для работы с библиотекой libarr.so", "---------------"],
+        ["Си-функции","Python-функции","Описание"],
+        ["int fill_prime(int *arr, int n)","fill_prime(arr)","Заполнение массива простыми числами"],
+        ["int form_arr_user_size(int *src, int src_n, int *dst, int dst_n)","form_arr_user(src)","Копирование из массива src в dst чисел,находящихся"
+        "после четных в src.\nРазмер dst на вызывающей стороне"],
+        ["int form_arr_my_size(int *src, int src_n, int *dst, int *dst_n)","form_arr_my(src)","Копирование из массива src в dst чисел,находящихся"
+        "после четных в src.\nРазмер dst_n в случае нехватки исходного обновляется требуемым"]
+    ]
     for i in range (len(text)):
         new_window.columnconfigure(i, weight=1, minsize=75)
         new_window.rowconfigure(i, weight=1, minsize=50)
@@ -58,7 +55,7 @@ def show_help():
             label.pack(padx=5, pady=5)
 
     tk.Label(new_window, text = "Количество данных на вызывающей стороне,"
-    "при вводе больших значений возможно задержки выполнения").grid(row = len(text), column = 0, columnspan = 3)
+    "при вводе больших значений возможны задержки выполнения").grid(row = len(text), column = 0, columnspan = 3)
     
     
 
@@ -129,11 +126,11 @@ def calculate():
     cur_value = func_list.get()
     if (cur_value == FUNCS[0]):
         user_input = my_entry.get(1.0, tk.END).split()
-        if (len(user_input) != 1 or user_input[0].isdecimal()):
+        if (len(user_input) != 1 or not user_input[0].isdecimal()):
             messagebox.showinfo("Вас заметили", "Ввод некорректен")
             return
         n = int(user_input[0])
-        res = str(fill_prime(n))
+        res = fill_prime(n)
         my_result.configure(state=tk.NORMAL)
         my_result.delete(1.0, tk.END)
         my_result.insert(1.0, str(res))
@@ -161,11 +158,7 @@ def calculate():
         
 window = tk.Tk()
 window.resizable(width = False, height = False)
-# label = tk.Label(text="Добро пожаловать в программу для работы с библиотекой, написанной на языке СИ")
-# label2 = tk.Label(text = "Для информации о программе, воспользуйтесь меню \"Справка\"")
-# label3 = tk.Label(text = "Выберите функцию из списка и введите данные для взаимодействия.")
 tk.Label(text="Функция").grid(row=0, column=0, sticky=tk.W, pady=10, padx=10)
-# tk.Entry(width=30).grid(row=0, column=1, columnspan=3)
 func_list = ttk.Combobox(values=["Массив простых",
                             "Фильтрация массива_1",
                             "Фильтрация массива_2",
@@ -179,15 +172,22 @@ tk.Label(text="Входные").grid(row = 1, column = 0, rowspan = 2, columnspa
 
 my_entry = tk.Text(width = 60, height = 4)
 my_entry.grid(row = 1, column = 1, rowspan = 2, columnspan = 3, sticky = tk.W + tk.E, padx=10)
-# callback = window.register(only_numeric_input)
-# my_entry.configure(validate = "key", validatecommand = (callback, "%P"))
+
 
 tk.Button(text = "Запуск", command = calculate).grid(row = 3, column = 2, sticky = tk.W + tk.E)
 tk.Label(text="Выходные").grid(row=4, column=0, rowspan = 2, sticky = tk.W, pady = 10, padx = 10)
 my_result = tk.Text(width = 60, height = 4, state = tk.DISABLED)
 my_result.grid(row = 4, column = 1, columnspan = 3) #перед добавлением state = "normal"
-# tk.Label(text = "Результат").grid(row = 3, column = 2, columnspan = 2, sticky = tk.W)
-# tk.Spinbox(width=7, from_=1, to=100).grid(row=1, column=2)
+
+scroll_y = tk.Scrollbar(command=my_result.yview)
+scroll_x = tk.Scrollbar(orient='horizontal')
+
+scroll_y.grid(row = 4, column = 4)
+scroll_x.grid(row = 5, column = 2)
+
+my_result.config(yscrollcommand=scroll_y.set)
+my_result.config(xscrollcommand=scroll_x.set)
+
 
 tk.Button(text="Справка", command = show_help).grid(row=6, column=0, pady=10, padx=10)
 tk.Button(text="Случайное заполнение", command = random_fill).grid(row=6, column=2)
