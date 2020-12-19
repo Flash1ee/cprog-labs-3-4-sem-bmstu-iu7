@@ -8,7 +8,7 @@ FUNCTESTSPATH:=./func_tests/
 UNITTESTSPATH:=./unit_tests/
 CFLAGS=-std=c99 --coverage -ggdb -I$(INCPATH) -Wall -Wpedantic -Wextra -g3 -c
 LFLAGS=--coverage
-UFLAGS=-lcheck
+UFLAGS=-lcheck -lsubunit -lrt -lm -lpthread 
 DIR_CR=mkdir -p
 OBJS= $(OBJPATH)key.o $(OBJPATH)io.o $(OBJPATH)sort.o $(OBJPATH)arr.o
 UNITS= $(OBJPATH)check_main.o $(OBJPATH)check_key.o $(OBJPATH)check_sort.o $(OBJPATH)sort.o $(OBJPATH)key.o
