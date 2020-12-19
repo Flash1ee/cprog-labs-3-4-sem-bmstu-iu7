@@ -29,11 +29,11 @@ def import_library_func():
 
 text = [[["---------------"],["Программа для работы с библиотекой libarr.so"], ["---------------"]],
         [["Си-функции"],["Python-функции"],["Описание"]],
-        [["int fill_prime(int *arr, int n)"],["fill_prime(arr, n)"],["Заполнение массива простыми числами"]],
-        [["int form_arr_user_size(int *src, int src_n, int *dst, int dst_n)"],["form arr_user(src, src_n, dst, dst_n)"],["Копирование из массива src в dst чисел,\n находящихся"
-        "после четных в src.\n Размер dst на вызывающей стороне"]],
-        [["int form_arr_my_size(int *src, int src_n, int *dst, int *dst_n)"],["form_arr_my_size(src, src_n, dst, dst_n)"],["Копирование из массива src в dst чисел,находящихся\n"
-        "после четных в src.\nРазмер dst_n в случае нехватки исходного значения\n обновляется требуемым"]]
+        [["int fill_prime(int *arr, int n)"],["fill_prime(arr)"],["Заполнение массива простыми числами"]],
+        [["int form_arr_user_size(int *src, int src_n, int *dst, int dst_n)"],["form_arr_user(src)"],["Копирование из массива src в dst чисел,находящихся"
+        "после четных в src.Размер dst на вызывающей стороне"]],
+        [["int form_arr_my_size(int *src, int src_n, int *dst, int *dst_n)"],["form_arr_my(src)"],["Копирование из массива src в dst чисел,находящихся"
+        "после четных в src. Размер dst_n в случае нехватки исходного обновляется требуемым"]]
 ]
 
 def show_help():
@@ -52,10 +52,15 @@ def show_help():
             borderwidth=1
         )
             mes = text[i][j]
-            frame.grid(row=i, column=j, padx=5, pady=5, sticky = "w")
+            frame.grid(row=i, column=j, padx=5, pady=5, sticky = tk.W+tk.E+tk.S+tk.N)
  
-            label = tk.Label(master=frame, text=mes)
+            label = tk.Label(master=frame, text=str(mes), wraplen = 300, anchor = tk.W)
             label.pack(padx=5, pady=5)
+
+    tk.Label(new_window, text = "Количество данных на вызывающей стороне,"
+    "при вводе больших значений возможно задержки выполнения").grid(row = len(text), column = 0, columnspan = 3)
+    
+    
 
 def form_menu(main_menu : tk.Menu):
     main_menu.add_command(label = "Справка", command = show_help)
@@ -104,7 +109,6 @@ def change_func():
 
 def exit_app():
     msg = tk.messagebox.askquestion ('Уходите?','Выйти?',icon = 'error')    
-    print(msg)        
     if msg == 'yes':
         window.destroy()
     else:
@@ -124,8 +128,8 @@ def random_fill():
 def calculate():
     cur_value = func_list.get()
     if (cur_value == FUNCS[0]):
-        user_input = my_entry.get(1.0, tk.END).split()  
-        if (len(user_input) != 1 and not user_input[0].isdecimal()):
+        user_input = my_entry.get(1.0, tk.END).split()
+        if (len(user_input) != 1 or user_input[0].isdecimal()):
             messagebox.showinfo("Вас заметили", "Ввод некорректен")
             return
         n = int(user_input[0])
